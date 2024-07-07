@@ -9,6 +9,8 @@ module.exports = {
         main: "#232A29",
         secondary: "#86CCC2",
         third: "#3C4A48",
+        fourth: "#F9F9F9",
+        fifth: "#868686",
       }
     },
     fontFamily: {

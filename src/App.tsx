@@ -1,3 +1,4 @@
+import FoldersPage from "./Components/FoldersPage";
 import NavBar from "./Components/NavBar";
 import SideBar from "./Components/SideBar";
 
@@ -7,7 +8,7 @@ function App() {
       <NavBar></NavBar>
       <div className="flex h-full">
           <SideBar></SideBar>
-          <div>MAIN</div>
+          <FoldersPage/>
       </div>
     </div>
   );
