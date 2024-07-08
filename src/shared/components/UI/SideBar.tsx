@@ -9,7 +9,7 @@ const SideBar = () => {
                     <TbSquareRoundedLetterW className="text-2xl text-white"/>
                 </div>
                 <div className="text-white font-inter font-bold text-base">
-                    Zbiór Słówek
+                    Zbiory Słówek
                 </div>
             </div>
 
