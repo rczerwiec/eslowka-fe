@@ -1,6 +1,6 @@
-import FoldersPage from "./Components/FoldersPage";
-import NavBar from "./Components/NavBar";
-import SideBar from "./Components/SideBar";
+import FoldersPage from "./shared/components/FoldersPage";
+import NavBar from "./shared/components/NavBar";
+import SideBar from "./shared/components/SideBar";
 
 function App() {
   return (
