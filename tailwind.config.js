@@ -11,6 +11,7 @@ module.exports = {
         third: "#3C4A48",
         fourth: "#F9F9F9",
         fifth: "#868686",
+        gold: "#FFD700",
       }
     },
     fontFamily: {
