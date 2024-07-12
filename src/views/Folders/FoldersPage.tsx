@@ -2,6 +2,7 @@ import { HiPlus } from "react-icons/hi";
 import { useFetchWordsQuery } from "../../shared/store";
 import { IWord } from "../../shared/store/slices/WordsSlice";
 import character1 from "../../shared/img/character1.svg";
+import React from "react";
 
 
 const FoldersPage = () => {
@@ -50,16 +51,15 @@ const FoldersPage = () => {
             <div className="flex flex-col pl-4 h-20 items-left
                             text-black text-3xl font-medium">
                 <div className="flex flex-col w-3/4 shadow-lg justify-center">
-                    <table >
-                        <tr className="bg-secondary h-14 text-white ">
-                            <th className="rounded-tl-xl border-r-4 border-white">ID</th>
-                            <th className="border-r-4 border-white">Słowo</th>
-                            <th className="border-r-4 border-white">Tłumaczenie</th>
-                            <th className="rounded-tr-xl">...</th>    
-                        </tr>
-                        {renderedWords}
-                    </table>
-                    
+                <table >
+        <tr className="bg-secondary h-14 text-white ">
+            <th className="rounded-tl-xl border-r-4 border-white">ID</th>
+            <th className="border-r-4 border-white">Słowo</th>
+            <th className="border-r-4 border-white">Tłumaczenie</th>
+            <th className="rounded-tr-xl">...</th>    
+        </tr>
+        {renderedWords}
+    </table>
                 </div>
             </div>
             <div className="flex z-10 absolute bottom-0 right-0 m-8 h-16 w-16 bg-secondary hover:bg-third rounded-full shadow-md items-center justify-center">
@@ -71,5 +71,7 @@ const FoldersPage = () => {
         </>
     )
 }
+
+
 
 export default FoldersPage;

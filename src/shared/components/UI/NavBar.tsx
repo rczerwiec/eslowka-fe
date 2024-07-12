@@ -1,22 +1,55 @@
 import { FaFire } from "react-icons/fa6";
 import { FaUser } from "react-icons/fa";
 import { FaChevronDown } from "react-icons/fa";
+import { IoMdSettings } from "react-icons/io";
+import { FaDollarSign } from "react-icons/fa";
+import { FaDatabase } from "react-icons/fa";
+import { FaInfoCircle } from "react-icons/fa";
+import { RiLogoutBoxFill } from "react-icons/ri";
+import { MdOutlineImportContacts } from "react-icons/md";
+
+import {useState } from "react";
+
+interface IhandleClick{
+  dropDownClick: () => void;
+}
+
+interface IDropDownClass{
+  dropDownClass: string;
+}
 
 const NavBar = () => {
+  const [dropDown, setDropDown] = useState(false);
+
+  const handleClick = () => {
+    setDropDown(!dropDown);
+  }
+
+  let dropDownClass = "flex hidden flex-col absolute z-20 text-white w-56 bg-secondary top-12 h- right-0 rounded-b-lg"
+  if(dropDown) {
+    dropDownClass = "flex flex-col absolute z-20 text-white w-56 bg-secondary top-12 h- right-0 rounded-b-lg"
+  }
+
+
+
   return (
-    <div className="flex absolut top-0 right-0 bg-main w-full h-14 justify-between items-center">
-      <Logo />
-      <div className="flex h-full justify-center items-center">
-        <PremiumButton/>
-        <div
-          className="h-full  flex items-center justify-between
-                            bg-secondary 
-                            w-56 rounded-tl-xl rounded-bl-xl"
-        >
-          <Streak />
-          <UserMenu />
+    <div>
+      <div className="flex top-0 right-0 bg-main w-full h-14 justify-between items-center">
+        <Logo />
+        <div className="flex h-full justify-center items-center">
+          <PremiumButton/>
+          <div
+            className="h-full flex items-center justify-between
+                              bg-secondary 
+                              w-56 rounded-tl-xl rounded-bl-xl"
+          >
+            <Streak />
+          <UserMenu dropDownClick={handleClick} />   
+          <DropDown dropDownClass={dropDownClass}/>
+          </div>
         </div>
       </div>
+
     </div>
   );
 };
@@ -31,7 +64,45 @@ const Streak = () => {
     </div>
   );
 };
-const UserMenu = () => {
+
+const DropDown = ({dropDownClass}: IDropDownClass) => {
+  return(
+    <div className={dropDownClass}>
+    <div className="flex pl-4 gap-2 h-12 items-center text-main hover:bg-secondarylight hover:cursor-pointer font-inter">
+      <IoMdSettings className="text-xl"/>
+      <div className="text-lg">Ustawienia</div>
+    </div>
+
+    <div className="flex pl-4 gap-2 h-12 items-center text-main hover:bg-secondarylight hover:cursor-pointer font-inter">
+      <FaDollarSign className="text-xl"/>
+      <div className="text-lg">Płatności</div>
+    </div>
+
+    <div className="flex pl-4 gap-2 h-12 items-center text-main hover:bg-secondarylight hover:cursor-pointer font-inter">
+      <FaDatabase className="text-xl"/>
+      <div className="text-lg">Import/Export</div>
+    </div>
+
+    <div className="flex pl-4 gap-2 h-12 items-center text-main hover:bg-secondarylight hover:cursor-pointer font-inter">
+      <MdOutlineImportContacts className="text-xl"/>
+      <div className="text-lg">Kontakt</div>
+    </div>
+
+    <div className="flex pl-4 gap-2 h-12 items-center text-main hover:bg-secondarylight hover:cursor-pointer font-inter">
+      <FaInfoCircle className="text-xl"/>
+      <div className="text-lg">Regulamin</div>
+    </div>
+
+    <div className="flex pl-4 gap-2 h-12 items-center text-main hover:bg-secondarylight hover:cursor-pointer font-inter">
+      <RiLogoutBoxFill className="text-xl"/>
+      <div className="text-lg">Wyloguj</div>
+    </div>
+
+  </div>
+  )
+}
+
+const UserMenu = ({dropDownClick}:IhandleClick) => {
   return (
     <div className="flex items-center mr-4">
       <div className="font-bold font-inter text-xl text-white mr-2">Radek</div>
@@ -39,7 +110,7 @@ const UserMenu = () => {
         <FaUser className="text-2xl" />
       </div>
       <div>
-        <FaChevronDown className="text-lg mr-2" />
+        <FaChevronDown onClick={dropDownClick} className="text-lg mr-2 hover:text-xl hover:cursor-pointer" />
       </div>
     </div>
   );
