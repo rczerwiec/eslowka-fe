@@ -6,7 +6,7 @@ const mainApi = createApi({
       baseUrl: "http://localhost:3000"
     }),
     tagTypes: [
-      "Words",
+      "Words","Folders",
     ],
     endpoints(builder) {
       return {
@@ -18,10 +18,19 @@ const mainApi = createApi({
               method: "GET",
             }
           }
+        }),
+        fetchFolders: builder.query({
+          providesTags: ["Folders"],
+          query: () => {
+            return {
+              url: "/folders",
+              method: "GET",
+            }
+          }
         })
       }
     },
   });
 
-  export const {useFetchWordsQuery} = mainApi;
+  export const {useFetchWordsQuery, useFetchFoldersQuery} = mainApi;
   export {mainApi};

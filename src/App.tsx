@@ -1,3 +1,4 @@
+import WordsInFolderPage from "./views/Folders/WordsInFolderPage";
 import FoldersPage from "./views/Folders/FoldersPage";
 import NavBar from "./shared/components/UI/NavBar";
 import SideBar from "./shared/components/UI/SideBar";
@@ -15,4 +16,3 @@ function App() {
 }
 
 export default App;
-  

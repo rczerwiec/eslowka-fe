@@ -21,4 +21,4 @@ setupListeners(store.dispatch);
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
-export {useFetchWordsQuery} from "./api/main";
+export {useFetchWordsQuery, useFetchFoldersQuery} from "./api/main";

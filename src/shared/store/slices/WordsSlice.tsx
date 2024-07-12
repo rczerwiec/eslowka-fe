@@ -6,6 +6,12 @@ export interface IWord{
     translation: string,
 }
 
+export interface IFolder{
+    id: number;
+    folderName: string;
+    words: IWord[];
+}
+
 interface WordList{
     wordList: IWord[],
 }
