@@ -1,12 +1,14 @@
 import { HiPlus } from "react-icons/hi";
-import { useFetchWordsQuery } from "../../shared/store";
-import { IWord } from "../../shared/store/slices/WordsSlice";
+
+import { RootState, useFetchSpecificWordsQuery } from "../../shared/store";
+import {IWord } from "../../shared/store/slices/FolderSlice";
 import character1 from "../../shared/img/character1.svg";
-import React from "react";
+import { useSelector } from "react-redux";
 
 
 const WordsInFolderPage = () => {
-    const response = useFetchWordsQuery("");
+    const folder = useSelector((state: RootState) => state.folderProfile);
+    const response = useFetchSpecificWordsQuery(folder.id);
 
     let renderedWords;
     if (response.isLoading) {

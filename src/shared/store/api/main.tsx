@@ -19,6 +19,15 @@ const mainApi = createApi({
             }
           }
         }),
+        fetchSpecificWords: builder.query({
+          providesTags: ["Words"],
+          query: (folderID) => {
+            return {
+              url: `/words/getById/${folderID}`,
+              method: "GET",
+            }
+          }
+        }),
         fetchFolders: builder.query({
           providesTags: ["Folders"],
           query: () => {
@@ -32,5 +41,5 @@ const mainApi = createApi({
     },
   });
 
-  export const {useFetchWordsQuery, useFetchFoldersQuery} = mainApi;
+  export const {useFetchWordsQuery, useFetchFoldersQuery, useFetchSpecificWordsQuery} = mainApi;
   export {mainApi};

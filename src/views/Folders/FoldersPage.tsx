@@ -1,11 +1,17 @@
 import character1 from "../../shared/img/character1.svg";
 import { HiPlus } from "react-icons/hi";
 import { TbFolderFilled } from "react-icons/tb";
-import { useFetchFoldersQuery } from "../../shared/store";
-import { IFolder } from "../../shared/store/slices/WordsSlice";
+import { RootState, useFetchFoldersQuery } from "../../shared/store";
+import { IFolder } from "../../shared/store/slices/FolderSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {change} from "../../shared/store/slices/FolderSlice"
+import { useNavigate } from "react-router-dom";
 
 const FoldersPage = () => {
   const response = useFetchFoldersQuery("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const folderProfile = useSelector((state: RootState) => state.folderProfile);
 
   let renderedFolders;
   if (response.isLoading) {
@@ -14,6 +20,7 @@ const FoldersPage = () => {
     renderedFolders = <div>Error</div>;
   } else if (response.isSuccess) {
     renderedFolders = response.data.map((folder: IFolder, index: number) => {
+      console.log(folderProfile.id)
       return (
         <div
           className="flex flex-col pl-4 mb-2 items-left
@@ -22,7 +29,10 @@ const FoldersPage = () => {
           <div className="flex flex-col w-3/4 justify-center">
             <div className="flex items-center gap-4 p-2 bg-fourth rounded-lg shadow-lg hover:cursor-pointer hover:bg-secondarylight">
               <TbFolderFilled className="bg-main text-white rounded-md" />
-              <div className="text-xl">{folder.folderName}</div>
+              <div onClick={()=>{
+                  dispatch(change(folder));
+                  navigate('/folders/words');
+              }} className="text-xl">{folder.folderName}</div>
             </div>
           </div>
         </div>

@@ -1,13 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from '@reduxjs/toolkit/query'
 import {mainApi} from "./api/main";
-import wordsReducer from "./slices/WordsSlice";
+import folderReducer from "./slices/FolderSlice";
 
 
 export const store = configureStore({
   reducer: {
       [mainApi.reducerPath]: mainApi.reducer,
-      words: wordsReducer,
+      folderProfile: folderReducer,
     },
     middleware: (getDefaultMiddleware) => {
       return getDefaultMiddleware().concat(
@@ -21,4 +21,4 @@ setupListeners(store.dispatch);
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
-export {useFetchWordsQuery, useFetchFoldersQuery} from "./api/main";
+export {useFetchWordsQuery, useFetchFoldersQuery, useFetchSpecificWordsQuery} from "./api/main";
