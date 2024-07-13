@@ -1,12 +1,15 @@
 import { HiPlus } from "react-icons/hi";
+import { IoMdArrowRoundBack } from "react-icons/io";
 
 import { RootState, useFetchSpecificWordsQuery } from "../../shared/store";
 import {IWord } from "../../shared/store/slices/FolderSlice";
 import character1 from "../../shared/img/character1.svg";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 
 const WordsInFolderPage = () => {
+    const navigate = useNavigate();
     const folder = useSelector((state: RootState) => state.folderProfile);
     const response = useFetchSpecificWordsQuery(folder.id);
 
@@ -44,11 +47,19 @@ const WordsInFolderPage = () => {
         <div className="flex flex-col w-full h-full">
             <div className="flex pl-4 bg-fourth h-8  items-center
                             text-fifth text-sm font-medium">
-                Foldery
+                Foldery - {folder.folderName}
             </div>
-            <div className="flex pl-4 h-20 items-center
+            <div className="flex pl-4 h-20 w-3/4 items-center justify-between
                             text-black text-3xl font-medium">
-                Foldery
+                <div>
+                {folder.folderName}
+                </div>
+                <div onClick={()=>{
+                    navigate("/folders");
+                }} className="flex items-center bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight">
+                    <IoMdArrowRoundBack/>
+                    <div className="text-lg">Powrót </div>
+                </div>
             </div>
             <div className="flex flex-col pl-4 h-20 items-left
                             text-black text-3xl font-medium">

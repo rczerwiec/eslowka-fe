@@ -6,6 +6,8 @@ import { IFolder } from "../../shared/store/slices/FolderSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {change} from "../../shared/store/slices/FolderSlice"
 import { useNavigate } from "react-router-dom";
+import { FaEdit } from "react-icons/fa";
+import { FaPlayCircle } from "react-icons/fa";
 
 const FoldersPage = () => {
   const response = useFetchFoldersQuery("");
@@ -27,12 +29,33 @@ const FoldersPage = () => {
                 text-black text-3xl font-medium"
         >
           <div className="flex flex-col w-3/4 justify-center">
-            <div className="flex items-center gap-4 p-2 bg-fourth rounded-lg shadow-lg hover:cursor-pointer hover:bg-secondarylight">
-              <TbFolderFilled className="bg-main text-white rounded-md" />
+            <div className="flex items-center justify-between p-2 bg-fourth rounded-lg shadow-lg  hover:bg-secondarylight">
               <div onClick={()=>{
                   dispatch(change(folder));
                   navigate('/folders/words');
-              }} className="text-xl">{folder.folderName}</div>
+              }} className="flex items-center gap-4 hover:cursor-pointer">
+                <TbFolderFilled className="bg-main text-white rounded-md" />
+                <div  className="text-xl">{folder.folderName}</div>
+                <div className="text-xs text-fifth">(Słówka:{folder.words.length})</div>
+              </div>
+              <div className="flex gap-4 mr-4">
+                <div className="flex items-center">
+                  <div className="text-fifth font-inter font-medium text-base">Progress:</div>
+                  <div className="text-red-600 font-inter font-medium text-base">0%</div>
+                </div>
+                <div onClick={() => {
+                  dispatch(change(folder));
+                  navigate('/folders/words');
+                  }} className="flex flex-col gap-1 text-fifth hover:cursor-pointer hover:text-main font-inter items-center">
+                  <FaEdit className="text-lg"/>
+                  <div className="text-xs">Edytuj</div>
+                </div>
+                <div className="flex flex-col gap-1 text-fifth hover:cursor-pointer hover:text-main font-inter items-center">
+                  <FaPlayCircle className="text-lg"/>
+                  <div className="text-xs">Ćwicz</div>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
