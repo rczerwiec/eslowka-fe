@@ -13,6 +13,7 @@ module.exports = {
         fourth: "#F9F9F9",
         fifth: "#868686",
         gold: "#FFD700",
+        transparent_gray: "rgba(0,0,0, .6)",
       }
     },
     fontFamily: {

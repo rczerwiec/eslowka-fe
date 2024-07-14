@@ -8,8 +8,11 @@ import {change} from "../../shared/store/slices/FolderSlice"
 import { useNavigate } from "react-router-dom";
 import { FaEdit } from "react-icons/fa";
 import { FaPlayCircle } from "react-icons/fa";
+import useModal from "../../shared/components/Modal/useModal";
+import { Modal } from "../../shared/components/Modal";
 
 const FoldersPage = () => {
+  const {isVisible, closeModal, toggleModal} = useModal();
   const response = useFetchFoldersQuery("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -79,7 +82,9 @@ const FoldersPage = () => {
           Twoje Foldery
         </div>
         {renderedFolders}
-        <div className="flex z-10 absolute bottom-0 right-0 m-8 h-16 w-16 bg-secondary hover:bg-third rounded-full shadow-md items-center justify-center">
+        <div onClick={()=>{
+          toggleModal();
+        }} className="flex z-10 absolute bottom-0 right-0 m-8 h-16 w-16 bg-secondary hover:bg-third hover:cursor-pointer rounded-full shadow-md items-center justify-center">
           <HiPlus className="text-2xl" />
         </div>
       </div>
@@ -88,6 +93,13 @@ const FoldersPage = () => {
         className="absolute z-0 w-1/5 bottom-0 right-0"
         src={character1}
       ></img>
+            <Modal isVisible={isVisible} onClose={closeModal}>
+        <div className="absolute bg-whiteMain mt-20 z-20 h-3/4 w-full top-0 bg-white rounded xl:w-1/3 xl:left-0 xl:right-0 xl:mr-auto xl:ml-auto">
+          <div className="absolute flex flex-col justify-between p-8 shrink h-full w-full overflow-y-auto  scrollbar-hide">
+
+          </div>
+        </div>
+      </Modal>
     </>
   );
 };
