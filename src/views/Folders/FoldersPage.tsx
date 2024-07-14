@@ -5,20 +5,35 @@ import { FaEdit, FaPlayCircle, FaCheckCircle  } from "react-icons/fa";
 import { TbFolderFilled } from "react-icons/tb";
 import { BiSolidExit } from "react-icons/bi";
 
-import { RootState, useFetchFoldersQuery } from "../../shared/store";
+import { RootState, useCreateFolderMutation, useFetchFoldersQuery } from "../../shared/store";
 import { IFolder } from "../../shared/store/slices/FolderSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {change} from "../../shared/store/slices/FolderSlice"
 import { useNavigate } from "react-router-dom";
 import useModal from "../../shared/components/Modal/useModal";
 import { Modal } from "../../shared/components/Modal";
+import { useState } from "react";
 
 const FoldersPage = () => {
+  const [newFolder, setNewFolder] = useState('');
   const {isVisible, closeModal, toggleModal} = useModal();
   const response = useFetchFoldersQuery("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const folderProfile = useSelector((state: RootState) => state.folderProfile);
+  const [createFolder] = useCreateFolderMutation();
+
+  
+  const onCreateFolder = async (newFolder: IFolder) => {
+    return await createFolder(newFolder)
+      .unwrap()
+      .then((res) => {
+        console.log("res from api:", res);
+      })
+      .catch((err) => {
+        console.log("Error:", err)
+      });
+  };
 
   let renderedFolders;
   if (response.isLoading) {
@@ -104,7 +119,8 @@ const FoldersPage = () => {
               <div className="font-inter font-bold text-3xl text-fifth">Nowy Folder</div>
               <div className="flex flex-col justify-center items-center mt-8">
                 <div className="font-inter font-medium text-xl text-fifth">Nazwa Folderu</div>
-                <input className="bg-fifth_light w-2/4 h-10 rounded-md p-3" placeholder="np. warzywa"></input>
+                <input className="bg-fifth_light w-2/4 h-10 rounded-md p-3" placeholder="np. warzywa" value={newFolder}
+                onChange={e => setNewFolder(e.target.value)}></input>
               </div>
 
               <img
@@ -113,7 +129,10 @@ const FoldersPage = () => {
         src={character2}
       ></img>
               <div className="absolute top-0 right-0 pr-8 pt-6 text-3xl text-fifth hover:text-4xl hover:cursor-pointer"><BiSolidExit onClick={closeModal} /></div>
-              <div className="absolute bottom-0 right-0 pr-8 pb-6 text-3xl text-secondary hover:text-4xl hover:cursor-pointer"><FaCheckCircle/></div>
+              <div className="absolute bottom-0 right-0 pr-8 pb-6 text-3xl text-secondary hover:text-4xl hover:cursor-pointer"><FaCheckCircle onClick={()=>{
+                onCreateFolder({ id: 0, folderName: newFolder, words: [] },
+                );
+              }}/></div>
           </div>
         </div>
       </Modal>
