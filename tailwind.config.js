@@ -12,6 +12,7 @@ module.exports = {
         third: "#3C4A48",
         fourth: "#F9F9F9",
         fifth: "#868686",
+        fifth_light: "#F5F4F4",
         gold: "#FFD700",
         transparent_gray: "rgba(0,0,0, .6)",
       }

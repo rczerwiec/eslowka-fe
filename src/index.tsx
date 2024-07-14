@@ -13,6 +13,7 @@ import NavBar from './shared/components/UI/NavBar';
 import SideBar from './shared/components/UI/SideBar';
 import FoldersPage from './views/Folders/FoldersPage';
 import WordsInFolderPage from './views/Folders/WordsInFolderPage';
+import TrainingPage from './views/Folders/TrainingPage';
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
     path: "/folders/words",
     element: <WordsInFolderPage/>,
   },
+  {
+    path: "/folders/training",
+    element: <TrainingPage/>
+  }
 ]);
 
 const root = ReactDOM.createRoot(
