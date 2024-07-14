@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { Modal, useModal } from "../../shared/components/Modal";
 import { BiSolidExit } from "react-icons/bi";
 import { FaCheckCircle } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const WordsInFolderPage = () => {
   const [newWord, setNewWord] = useState('');
@@ -38,6 +38,7 @@ const WordsInFolderPage = () => {
     renderedWords = <div>Ładowanie...</div>;
   } else if (response.isError) {
     renderedWords = <div>Error</div>;
+    navigate("/folders");
   } else if (response.isSuccess) {
     renderedWords = response.data.map((word: IWord, index: number) => {
       let tr = (
@@ -155,6 +156,9 @@ const WordsInFolderPage = () => {
             </div>
             <div className="absolute bottom-0 right-0 pr-8 pb-6 text-3xl text-secondary hover:text-4xl hover:cursor-pointer">
               <FaCheckCircle onClick={()=>{
+                closeModal();
+                setNewWord("");
+                setWordTranslation("");
                 onWordCreate({
                     word: { id: 0, word: newWord, translation: wordTranslation },
                     folderID: folder.id

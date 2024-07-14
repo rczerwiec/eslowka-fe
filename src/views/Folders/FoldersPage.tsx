@@ -12,7 +12,7 @@ import {change} from "../../shared/store/slices/FolderSlice"
 import { useNavigate } from "react-router-dom";
 import useModal from "../../shared/components/Modal/useModal";
 import { Modal } from "../../shared/components/Modal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const FoldersPage = () => {
   const [newFolder, setNewFolder] = useState('');
@@ -22,9 +22,9 @@ const FoldersPage = () => {
   const dispatch = useDispatch();
   const folderProfile = useSelector((state: RootState) => state.folderProfile);
   const [createFolder] = useCreateFolderMutation();
-
   
   const onCreateFolder = async (newFolder: IFolder) => {
+    
     return await createFolder(newFolder)
       .unwrap()
       .then((res) => {
@@ -40,6 +40,7 @@ const FoldersPage = () => {
     renderedFolders = <div>Ładowanie...</div>;
   } else if (response.isError) {
     renderedFolders = <div>Error</div>;
+    navigate("/folders");
   } else if (response.isSuccess) {
     renderedFolders = response.data.map((folder: IFolder, index: number) => {
       console.log(folderProfile.id)
@@ -130,7 +131,10 @@ const FoldersPage = () => {
       ></img>
               <div className="absolute top-0 right-0 pr-8 pt-6 text-3xl text-fifth hover:text-4xl hover:cursor-pointer"><BiSolidExit onClick={closeModal} /></div>
               <div className="absolute bottom-0 right-0 pr-8 pb-6 text-3xl text-secondary hover:text-4xl hover:cursor-pointer"><FaCheckCircle onClick={()=>{
+                setNewFolder("");
+                closeModal();
                 onCreateFolder({ id: 0, folderName: newFolder, words: [] },
+                  
                 );
               }}/></div>
           </div>

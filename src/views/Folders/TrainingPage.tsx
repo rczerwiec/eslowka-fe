@@ -3,6 +3,7 @@ import character1 from "../../shared/img/character1.svg";
 import { useNavigate } from "react-router-dom";
 
 const TrainingPage = () => {
+    
   const navigate = useNavigate();
   return (
     <>

@@ -130,7 +130,7 @@ const PremiumButton = () => {
     return (
         <div
         className="flex w-28  mr-5 h-2/3 justify-center items-center
-                            bg-gold rounded-xl font-bold font-inter"
+                            bg-gold rounded-xl font-bold font-inter hover:cursor-pointer"
       >
         Premium
       </div>

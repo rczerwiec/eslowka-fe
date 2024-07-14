@@ -17,7 +17,9 @@ const SideBar = () => {
                 <div>
                     <TbFolderFilled className="text-2xl text-white"/>
                 </div>
-                <div className="text-white font-inter font-bold text-base">
+                <div onClick={()=>{
+                    
+                }} className="text-white font-inter font-bold text-base">
                     Foldery
                 </div>
             </div>
