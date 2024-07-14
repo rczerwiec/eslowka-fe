@@ -1,4 +1,6 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
+import { INewWord, IWord } from "../slices/FolderSlice";
+import { AnyARecord } from "dns";
 
 const mainApi = createApi({
     reducerPath: "main",
@@ -28,6 +30,16 @@ const mainApi = createApi({
             }
           }
         }),
+        createWord: builder.mutation({
+          invalidatesTags: ["Words","Folders"],
+          query: (newWord: INewWord) => {
+            return {
+              url: `/words/${newWord.folderID}`,
+              method: "POST",
+              body: newWord.word,
+            };
+          },
+        }),
         fetchFolders: builder.query({
           providesTags: ["Folders"],
           query: () => {
@@ -41,5 +53,5 @@ const mainApi = createApi({
     },
   });
 
-  export const {useFetchWordsQuery, useFetchFoldersQuery, useFetchSpecificWordsQuery} = mainApi;
+  export const {useFetchWordsQuery, useFetchFoldersQuery, useFetchSpecificWordsQuery, useCreateWordMutation} = mainApi;
   export {mainApi};

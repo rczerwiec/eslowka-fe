@@ -6,6 +6,11 @@ export interface IWord{
     translation: string,
 }
 
+export interface INewWord{
+    word: IWord,
+    folderID: number,
+}
+
 export interface IFolder{
     id: number | any ;
     folderName: string | any;
