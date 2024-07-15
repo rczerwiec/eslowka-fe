@@ -1,10 +1,7 @@
+//ICONS & SVG
 import { FaFire } from "react-icons/fa6";
-import { FaUser } from "react-icons/fa";
-import { FaChevronDown } from "react-icons/fa";
+import { FaUser, FaChevronDown, FaDatabase, FaInfoCircle, FaDollarSign } from "react-icons/fa";
 import { IoMdSettings } from "react-icons/io";
-import { FaDollarSign } from "react-icons/fa";
-import { FaDatabase } from "react-icons/fa";
-import { FaInfoCircle } from "react-icons/fa";
 import { RiLogoutBoxFill } from "react-icons/ri";
 import { MdOutlineImportContacts } from "react-icons/md";
 
@@ -34,7 +31,7 @@ const NavBar = () => {
 
   return (
     <div>
-      <div className="flex top-0 right-0 bg-main w-full h-14 justify-between items-center">
+      <div className="flex top-0 right-0 bg-gradient-to-r from-main to-secondary from-70% w-full h-14 justify-between items-center">
         <Logo />
         <div className="flex h-full justify-center items-center">
           <PremiumButton/>
@@ -56,7 +53,7 @@ const NavBar = () => {
 
 const Streak = () => {
   return (
-    <div className="flex items-center ml-6">
+    <div className="flex items-center ml-6 ">
       <div className="font-bold font-inter text-2xl">3</div>
       <div>
         <FaFire className="text-xl" />
@@ -118,7 +115,7 @@ const UserMenu = ({dropDownClick}:IhandleClick) => {
 const Logo = () => {
   return (
     <div
-      className="text-white font-bold font-inter text-3xl
+      className="text-secondary font-bold font-inter text-3xl
         pl-4"
     >
       ESłówka.pl

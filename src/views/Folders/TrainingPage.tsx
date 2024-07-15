@@ -1,18 +1,26 @@
+//ICONS & SVG
 import { IoMdArrowRoundBack } from "react-icons/io";
 import character1 from "../../shared/img/character1.svg";
+
 import { useNavigate } from "react-router-dom";
+import { FaPlayCircle } from "react-icons/fa";
 
 const TrainingPage = () => {
-    
   const navigate = useNavigate();
   return (
     <>
       <div className="flex flex-col w-full h-full">
-      <div
+        <div
+          className="flex pl-4 bg-fourth h-8  items-center
+                            text-fifth text-sm font-medium"
+        >
+          Tryby
+        </div>
+        <div
           className="flex pl-4 h-20 w-3/4 items-center justify-between
                             text-black text-3xl font-medium"
         >
-          <div>Ćwicz</div>
+          <div>Wybierz Tryb</div>
           <div
             onClick={() => {
               navigate("/folders");
@@ -22,7 +30,26 @@ const TrainingPage = () => {
             <IoMdArrowRoundBack />
             <div className="text-lg">Powrót </div>
           </div>
-        </div>
+          </div>
+          <div
+              className="flex flex-col pl-4 mb-2 items-left
+                text-black text-3xl font-medium"
+            >
+              <div className="flex flex-col w-3/4 justify-center">
+                <div className="flex items-center justify-between p-2 bg-fourth rounded-lg shadow-lg  hover:bg-secondarylight hover:cursor-pointer">
+                  <div
+                    onClick={() => {
+                      navigate("/folders/training/play");
+                    }}
+                    className="flex items-center gap-4 hover:cursor-pointer"
+                  >
+                    <FaPlayCircle className="bg-main text-white rounded-md" />
+                    <div className="text-xl">Słówko - Tłumaczenie</div>
+                  </div>
+                  <div className="flex gap-4 mr-4"></div>
+                </div>
+              </div>
+            </div>
       </div>
       <img
         alt="character1"

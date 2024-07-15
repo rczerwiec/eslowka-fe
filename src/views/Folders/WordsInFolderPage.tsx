@@ -1,16 +1,17 @@
+//ICONS & SVG
 import { HiPlus } from "react-icons/hi";
+import { FaCheckCircle } from "react-icons/fa";
+import { BiSolidExit } from "react-icons/bi";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import character3 from "../../shared/img/character3.svg";
+import character1 from "../../shared/img/character1.svg";
 
 import { RootState, useFetchSpecificWordsQuery, useCreateWordMutation } from "../../shared/store";
 import { INewWord, IWord } from "../../shared/store/slices/FolderSlice";
-import character1 from "../../shared/img/character1.svg";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Modal, useModal } from "../../shared/components/Modal";
-import { BiSolidExit } from "react-icons/bi";
-import { FaCheckCircle } from "react-icons/fa";
-import { useEffect, useState } from "react";
+import {useState } from "react";
 
 const WordsInFolderPage = () => {
   const [newWord, setNewWord] = useState('');
@@ -65,7 +66,7 @@ const WordsInFolderPage = () => {
 
   return (
     <>
-      <div className="flex flex-col w-full h-full">
+      <div className="flex flex-col size-full">
         <div
           className="flex pl-4 bg-fourth h-8  items-center
                             text-fifth text-sm font-medium"
