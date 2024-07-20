@@ -138,10 +138,10 @@ const FoldersPage = () => {
       <Modal isVisible={isVisible} onClose={closeModal}>
         <div className="absolute bg-whiteMain mt-20 z-20 h-2/4 w-full top-0 bg-white rounded xl:w-1/3 xl:left-0 xl:right-0 xl:mr-auto xl:ml-auto">
           <div className="absolute flex flex-col p-8 shrink h-full w-full overflow-y-auto  scrollbar-hide">
-            <div className="font-inter font-bold text-3xl text-fifth">
+            <div className="font-inter font-bold text-3xl text-fifth z-10">
               Nowy Folder
             </div>
-            <div className="flex flex-col justify-center items-center mt-8">
+            <div className="flex flex-col justify-center items-center mt-8 z-10">
               <div className="font-inter font-medium text-xl text-fifth">
                 Nazwa Folderu
               </div>
@@ -166,7 +166,7 @@ const FoldersPage = () => {
                 onClick={() => {
                   setNewFolder("");
                   closeModal();
-                  onCreateFolder({ id: 0, folderName: newFolder, words: [] });
+                  onCreateFolder({ id:renderedFolders.length , folderName: newFolder, words: [] });
                 }}
               />
             </div>

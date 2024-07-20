@@ -2,8 +2,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface IWord{
     id: number,
+    folderId: number,
     word: string,
     translation: string,
+    repeated: number,
+    known: number,
 }
 
 export interface INewWord{

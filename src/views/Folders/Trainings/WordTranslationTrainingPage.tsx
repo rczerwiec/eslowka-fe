@@ -38,6 +38,8 @@ const WordTranslationTraining = () => {
           className="flex flex-col pl-4 mb-2 w-3/4 items-center gap-8
                 text-black text-3xl font-medium"
         >
+          <div className="font-bold text-red-600 text-5xl hidden">Źle!</div>
+          <div className="font-bold text-green-600 text-5xl hidden">Dobrze!</div>
           <div className="font-thin text-5xl">Jablko</div>
           <div className="flex gap-4">
             <input
