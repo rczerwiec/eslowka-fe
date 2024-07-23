@@ -13,6 +13,11 @@ export interface INewWord{
     word: IWord,
     folderID: number,
 }
+export interface INewWords{
+    words: IWord[],
+    folderID: number,
+}
+
 
 export interface IFolder{
     id: number | any ;

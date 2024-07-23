@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { IFolder, INewWord, IWord } from "../slices/FolderSlice";
+import { IFolder, INewWord, INewWords, IWord } from "../slices/FolderSlice";
 import { AnyARecord } from "dns";
 //http://localhost:3000/users/669787b41e2ea369890f4f67/folders/0/words
 const mainApi = createApi({
@@ -26,6 +26,16 @@ const mainApi = createApi({
             url: `/users/669787b41e2ea369890f4f67/word`,
             method: "PATCH",
             body: newWord.word,
+          };
+        },
+      }),
+      createWords: builder.mutation({
+        invalidatesTags: ["Words", "Folders"],
+        query: (newWords: INewWords) => {
+          return {
+            url: `/users/669787b41e2ea369890f4f67/words`,
+            method: "PATCH",
+            body: newWords.words,
           };
         },
       }),
@@ -68,5 +78,6 @@ export const {
   useCreateWordMutation,
   useRemoveWordMutation,
   useCreateFolderMutation,
+  useCreateWordsMutation
 } = mainApi;
 export { mainApi };

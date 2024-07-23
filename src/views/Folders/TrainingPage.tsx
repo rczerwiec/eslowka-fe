@@ -4,6 +4,7 @@ import character1 from "../../shared/img/character1.svg";
 
 import { useNavigate } from "react-router-dom";
 import { FaPlayCircle } from "react-icons/fa";
+import Character from "../../shared/components/Character";
 
 const TrainingPage = () => {
   const navigate = useNavigate();
@@ -51,11 +52,7 @@ const TrainingPage = () => {
               </div>
             </div>
       </div>
-      <img
-        alt="character1"
-        className="absolute z-0 w-1/5 bottom-0 right-0"
-        src={character1}
-      ></img>
+      <Character alt="character1" className="absolute z-0 w-1/5 bottom-0 right-0" character={character1}/>
     </>
   );
 };

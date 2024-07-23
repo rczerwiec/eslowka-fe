@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import useModal from "../../shared/components/Modal/useModal";
 import { Modal } from "../../shared/components/Modal";
 import { useState } from "react";
+import Character from "../../shared/components/Character";
 
 const FoldersPage = () => {
   const [newFolder, setNewFolder] = useState("");
@@ -130,11 +131,7 @@ const FoldersPage = () => {
           <HiPlus className="text-2xl" />
         </div>
       </div>
-      <img
-        alt="character1"
-        className="absolute z-0 w-1/5 bottom-0 right-0"
-        src={character1}
-      ></img>
+      <Character alt="character1" className="absolute z-0 w-1/5 bottom-0 right-0" character={character1}/>
       <Modal isVisible={isVisible} onClose={closeModal}>
         <div className="absolute bg-whiteMain mt-20 z-20 h-2/4 w-full top-0 bg-white rounded xl:w-1/3 xl:left-0 xl:right-0 xl:mr-auto xl:ml-auto">
           <div className="absolute flex flex-col p-8 shrink h-full w-full overflow-y-auto  scrollbar-hide">
@@ -152,12 +149,8 @@ const FoldersPage = () => {
                 onChange={(e) => setNewFolder(e.target.value)}
               ></input>
             </div>
-
-            <img
-              alt="character2"
-              className="absolute z-0 w-3/6 bottom-0 left-auto"
-              src={character2}
-            ></img>
+            
+            <Character alt="character2" className="absolute z-0 w-3/6 bottom-0 left-auto" character={character2}/>
             <div className="absolute top-0 right-0 pr-8 pt-6 text-3xl text-fifth hover:text-4xl hover:cursor-pointer">
               <BiSolidExit onClick={closeModal} />
             </div>
