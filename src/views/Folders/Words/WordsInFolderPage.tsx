@@ -143,22 +143,12 @@ const WordsInFolderPage = () => {
       </div>
       <Character alt="character1" className="absolute z-0 w-1/5 bottom-0 right-0" character={character1}/>
       <Modal isVisible={isVisible} onClose={closeModal}>
-        <div className="absolute bg-whiteMain mt-20 z-20 h-2/4 w-full top-0 bg-white rounded xl:w-1/3 xl:left-0 xl:right-0 xl:mr-auto xl:ml-auto">
+        <div className="absolute bg-whiteMain mt-20 z-20 h-3/4 w-full top-0 bg-white rounded xl:w-1/3 xl:left-0 xl:right-0 xl:mr-auto xl:ml-auto">
           <div className="absolute flex flex-col p-8 shrink h-full w-full overflow-y-auto  scrollbar-hide z-10">
-            <div className="font-inter font-bold text-2xl text-fifth z-10 truncate">
-              Nowe Słówko - {folder.folderName}
-            </div>
             <AddWordsForm folder={folder} newID={newID} closeModal={closeModal}/>
             <Character alt="character2" className="absolute z-0 w-3/6 bottom-0 left-auto" character={character3}/>
             <div className="absolute top-0 right-0 pr-8 pt-6 text-3xl z-20 text-fifth ">
               <BiSolidExit className="hover:text-4xl hover:cursor-pointer" onClick={closeModal} />
-            </div>
-            <div className="absolute bottom-0 right-0 pr-8 pb-6 text-3xl text-secondary">
-              <FaCheckCircle className="hover:text-4xl hover:cursor-pointer"
-                onClick={() => {
-                  closeModal();
-                }}
-              />
             </div>
           </div>
         </div>
