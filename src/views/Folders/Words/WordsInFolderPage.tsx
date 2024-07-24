@@ -21,6 +21,7 @@ import { useState } from "react";
 import StatusBox from "../../../shared/components/StatusBox";
 import Character from "../../../shared/components/Character";
 import AddWordsForm from "./AddWordsForm";
+import WordStatusForm from "./WordStatusForm";
 
 const WordsInFolderPage = () => {
   const { isVisible, toggleModal, closeModal } = useModal();
@@ -40,19 +41,14 @@ const WordsInFolderPage = () => {
     navigate("/folders");
   } else if (response.isSuccess) {
     renderedWords = response.data.map((word: IWord, index: number) => {
-      let statusIcon = <div className="flex justify-center items-center h-14 p-4"><FaCheckCircle className="flex justify-center items-center h-14 text-green-500" /></div>;
-      if (word.known === 0) {
-        statusIcon = <div className="flex justify-center items-center h-14 p-4"><FaFrownOpen className="flex justify-center items-center h-14 text-red-500" /></div>;
-      } else if (word.known === 1) {
-        statusIcon = <div className="flex justify-center items-center h-14 p-4"><GrInProgress className="flex justify-center items-center h-14 text-orange-500"/></div>
-      }
-
       let tr = (
         <tr className="h-14 font-inter font-medium text-xl" key={word.id}>
           <th className="border-r-4 border-white">{word.id}</th>
           <th className="border-r-4 border-white">{word.word}</th>
           <th className="border-r-4 border-white">{word.translation}</th>
-          <th className="border-r-4 border-white">{statusIcon}</th>
+          <th className="border-r-4 border-white">
+           <WordStatusForm word={word}/>
+          </th>
           <th className="flex justify-between items-center h-14 p-4">
             <FaTrashAlt
               className="hover:cursor-pointer"
@@ -72,7 +68,9 @@ const WordsInFolderPage = () => {
             <th className="border-r-4 border-white">{word.id}</th>
             <th className="border-r-4 border-white">{word.word}</th>
             <th className="border-r-4 border-white">{word.translation}</th>
-            <th className="border-r-4 border-white">{statusIcon}</th>
+            <th className="border-r-4 border-white">
+              <WordStatusForm word={word}/>
+            </th>
             <th className="flex justify-between items-center h-14 p-4">
               <FaTrashAlt
                 className="hover:cursor-pointer"

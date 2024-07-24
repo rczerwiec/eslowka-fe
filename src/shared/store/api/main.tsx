@@ -39,6 +39,16 @@ const mainApi = createApi({
           };
         },
       }),
+      updateWordStatus: builder.mutation({
+        invalidatesTags: ["Words"],
+        query: (newWords: INewWord) => {
+          return {
+            url: `/users/669787b41e2ea369890f4f67/word/status`,
+            method: "PATCH",
+            body: newWords.word,
+          };
+        },
+      }),
       removeWord: builder.mutation({
         invalidatesTags: ["Words", "Folders"],
         query: (newWord: INewWord) => {
@@ -78,6 +88,7 @@ export const {
   useCreateWordMutation,
   useRemoveWordMutation,
   useCreateFolderMutation,
-  useCreateWordsMutation
+  useCreateWordsMutation,
+  useUpdateWordStatusMutation
 } = mainApi;
 export { mainApi };
