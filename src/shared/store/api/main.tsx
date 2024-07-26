@@ -19,6 +19,15 @@ const mainApi = createApi({
           };
         },
       }),
+      fetchRandomWordsArray: builder.query({
+        providesTags: ["Words"],
+        query: (folderID) => {
+          return {
+            url: `/users/669787b41e2ea369890f4f67/folders/${folderID}/randomWords`,
+            method: "GET",
+          };
+        },
+      }),
       createWord: builder.mutation({
         invalidatesTags: ["Words", "Folders"],
         query: (newWord: INewWord) => {
@@ -89,6 +98,7 @@ export const {
   useRemoveWordMutation,
   useCreateFolderMutation,
   useCreateWordsMutation,
-  useUpdateWordStatusMutation
+  useUpdateWordStatusMutation,
+  useFetchRandomWordsArrayQuery,
 } = mainApi;
 export { mainApi };
