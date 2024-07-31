@@ -63,7 +63,7 @@ const WordTranslationTraining = () => {
 
 
     //IF IT'S CORRECT
-    if (translation === currentWord.translation) {
+    if (translation.toLowerCase() === currentWord.translation.toLowerCase()) {
 
       if (currentWord.known === 0 && currentWord.streak === 4){
         known = 1;
@@ -130,7 +130,7 @@ const WordTranslationTraining = () => {
   };
 
   const setStatusBar = () => {
-    if (translation === wordsState[wordsState.length - 1].translation) {
+    if (translation.toLocaleLowerCase() === wordsState[wordsState.length - 1].translation.toLocaleLowerCase()) {
       setButtonsState(["text-lg text-white hidden", "text-lg text-white","font-bold text-green-600 text-5xl", "Dobrze!", "Błędne tłumaczenie!", "bg-fifth_light h-14 rounded-md w-96 p-3 font-thin text-base bg-green-200"]);
       setIsDisabled(true);
     }
