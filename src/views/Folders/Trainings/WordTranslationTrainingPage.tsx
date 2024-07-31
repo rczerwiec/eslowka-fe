@@ -2,10 +2,11 @@
 import { IoMdArrowRoundBack } from "react-icons/io";
 import character1 from "../../../shared/img/character1.svg";
 import { FaCheckCircle, FaFrownOpen } from "react-icons/fa";
+import { FaFire, FaSkull } from "react-icons/fa6";
 import { GrInProgress } from "react-icons/gr";
 
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Character from "../../../shared/components/Character";
 import { useSelector } from "react-redux";
 import { RootState, useFetchRandomWordsArrayQuery, useUpdateWordStatusMutation } from "../../../shared/store";
@@ -16,20 +17,26 @@ const WordTranslationTraining = () => {
 
   const [isDisabled, setIsDisabled] = useState(false);
   const [ButtonsState, setButtonsState] = useState(["text-lg text-white", "text-lg text-white hidden", "font-bold text-green-600 text-5xl hidden", "Dobrze!", "wpisz tłumaczenie!", "bg-fifth_light h-14 rounded-md w-96 p-3 font-thin text-base"]);
-  const [wordsState, setWordsState] = useState<IWord[]>([{word: "Ładowanie...", id: -1, translation: "Ładowanie...", repeated: 0, known: 0, folderId: -1}]);
+  const [wordsState, setWordsState] = useState<IWord[]>([{word: "Ładowanie...", id: -1, translation: "Ładowanie...", repeated: 0, known: 0, folderId: -1, streak:0, reverseStreak: 0,}]);
   const folder = useSelector((state: RootState) => state.folderProfile);
   //getRandomWordFromFolder
   const navigate = useNavigate();
   const {isLoading, isSuccess, error, data} = useFetchRandomWordsArrayQuery(folder.id);
-  
+  const inputRef = useRef<any>(null);
+  const [currentWord, setCurrentWord] = useState<IWord>({word: "Ładowanie...", id: -1, translation: "Ładowanie...", repeated: 0, known: 0, folderId: -1, streak:0, reverseStreak: 0});
+
+
+  const [status, setStatus] = useState<number>(-1);
+  if(inputRef.current !== null) {inputRef.current.focus();}
   useEffect(() => {
     if (isLoading) {
       console.log("Ładowanie słów");
     } else if (error) {
       navigate("/folders");
     } else{
+        setStatus(data[data.length -1].known);
         setWordsState(data);
-        console.log("SLOWKA:",wordsState);
+        setCurrentWord(data[data.length -1])
     }
   }, [isSuccess])
 
@@ -42,37 +49,82 @@ const WordTranslationTraining = () => {
     console.log("Zaaktualizowano!", updatedWord.word);
   }
 
+  const changeStatus = async (changeTo: number) => {
+    setStatus(changeTo);
+  }
+
   const checkTranslation = () => {
-    const wordUpdated = {
-      id: wordsState[wordsState.length - 1].id,
-      word: wordsState[wordsState.length - 1].word,
-      translation: wordsState[wordsState.length - 1].translation,
-      repeated: wordsState[wordsState.length - 1].repeated + 1,
-      known: wordsState[wordsState.length - 1].known,
-      folderId: wordsState[wordsState.length - 1].folderId,
-    };
-    updateWord(wordUpdated);
+    
+    let known = currentWord.known;
+    if(status!== -1){
+      known = status;
+    }
+
+
 
     //IF IT'S CORRECT
-    if (translation === wordsState[wordsState.length - 1].translation) {
+    if (translation === currentWord.translation) {
+
+      if (currentWord.known === 0 && currentWord.streak === 4){
+        known = 1;
+      }
+      if (currentWord.known === 1 && currentWord.streak === 10){
+        known = 2;
+      }
+
+      const wordUpdated = {
+        id: currentWord.id,
+        word: currentWord.word,
+        translation: currentWord.translation,
+        repeated: currentWord.repeated + 1,
+        known: known,
+        folderId: currentWord.folderId,
+        streak: currentWord.streak +1,
+        reverseStreak: 0,
+      };
+      updateWord(wordUpdated);
+
       const newState = [...wordsState].splice(0, wordsState.length - 1);
       if (newState.length >= 1) {
         setIsDisabled(false);
         setWordsState(newState);
         setTranslation("");
+        setStatus(newState[newState.length - 1].known)
+        setCurrentWord(newState[newState.length - 1]);
         setButtonsState(["text-lg text-white", "text-lg text-white hidden", "font-bold text-green-600 text-5xl hidden", "Dobrze!", "wpisz tłumaczenie!", "bg-fifth_light h-14 rounded-md w-96 p-3 font-thin text-base"])
       } else {
         navigate("/folders");
       }
       //IF NOT CORRECT
     } else {
-      let lastWord = wordsState[wordsState.length - 1];
-      lastWord = { ...lastWord, repeated: lastWord.repeated + 1 };
+      const wordUpdated = {
+        id: currentWord.id,
+        word: currentWord.word,
+        translation: currentWord.translation,
+        repeated: currentWord.repeated + 1,
+        known: known,
+        folderId: currentWord.folderId,
+        streak: 0,
+        reverseStreak: currentWord.reverseStreak + 1,
+      };
+      updateWord(wordUpdated);
+      let lastWord = currentWord;
+      if(lastWord.reverseStreak >= 2 && known === 1){
+        known = 0;
+      }
+      if(lastWord.reverseStreak >= 4 && known === 2){
+        known = 1;
+      }
+      console.log(lastWord.reverseStreak);
+      console.log(known);
+      lastWord = { ...lastWord, repeated: lastWord.repeated + 1, reverseStreak: lastWord.reverseStreak + 1, streak: 0, known: known};
       let newState = [...wordsState].splice(0, wordsState.length - 1);
       newState = [lastWord].concat(newState);
       setIsDisabled(false);
       setWordsState(newState);
       setTranslation("");
+      setStatus(newState[newState.length - 1].known)
+      setCurrentWord(newState[newState.length - 1]);
       setButtonsState(["text-lg text-white", "text-lg text-white hidden", "font-bold text-green-600 text-5xl hidden", "Dobrze!", "wpisz tłumaczenie!", "bg-fifth_light h-14 rounded-md w-96 p-3 font-thin text-base"])
     }
   };
@@ -96,6 +148,7 @@ const WordTranslationTraining = () => {
       placeholder={ButtonsState[4]}
       disabled={isDisabled}
       value={translation}
+      ref={inputRef}
       onChange={(e) => setTranslation(e.target.value)}
     ></input>
     <div
@@ -106,6 +159,133 @@ const WordTranslationTraining = () => {
       <button onClick={checkTranslation} className={ButtonsState[1]}>Dalej </button>
     </div>
   </div>)
+
+
+let renderStatus;
+if (status === 0) {
+  renderStatus = (
+    <div className="flex gap-16">
+    <div className="flex flex-col items-center" onClick={() => {
+      changeStatus(0);
+    }}>
+      <div className="flex items-center justify-center text-red-600 text-3xl size-12 hover:size-14 hover:text-4xl hover:cursor-pointer border border-main border-x-2 border-y-2 rounded-xl">
+        <FaFrownOpen />
+      </div>
+      <div className="font-thin text-base w-14 text-center">
+        Jest dla mnie kłopotliwe
+      </div>
+    </div>
+    <div className="flex flex-col items-center" onClick={() => {
+      changeStatus(1);
+    }}>
+      <div className="flex items-center justify-center text-orange-400 text-3xl size-12 hover:size-14 hover:text-4xl hover:cursor-pointer border  rounded-xl">
+        <GrInProgress />
+      </div>
+      <div className="font-thin text-base w-14 text-center">
+        Wciąż się uczę
+      </div>
+    </div>
+    <div className="flex flex-col items-center" onClick={() => {
+      changeStatus(2);
+    }}>
+      <div className="flex items-center justify-center text-green-600 text-3xl size-12 hover:size-14 hover:text-4xl hover:cursor-pointer border border-mainrounded-xl">
+        <FaCheckCircle />
+      </div>
+      <div className="font-thin text-base w-14 text-center">
+        Znam
+      </div>
+    </div>
+  </div>
+  );
+} else if (status === 1) {
+  renderStatus = (
+    <div className="flex gap-16">
+    <div className="flex flex-col items-center" onClick={() => {
+      changeStatus(0);
+    }}>
+      <div className="flex items-center justify-center text-red-600 text-3xl size-12 hover:size-14 hover:text-4xl hover:cursor-pointer border rounded-xl">
+        <FaFrownOpen />
+      </div>
+      <div className="font-thin text-base w-14 text-center">
+        Jest dla mnie kłopotliwe
+      </div>
+    </div>
+    <div className="flex flex-col items-center" onClick={() => {
+      changeStatus(1);
+    }}>
+      <div className="flex items-center justify-center text-orange-400 text-3xl size-12 hover:size-14 hover:text-4xl hover:cursor-pointer border border-main border-x-2 border-y-2  rounded-xl">
+        <GrInProgress />
+      </div>
+      <div className="font-thin text-base w-14 text-center">
+        Wciąż się uczę
+      </div>
+    </div>
+    <div className="flex flex-col items-center" onClick={() => {
+      changeStatus(2);
+    }}>
+      <div className="flex items-center justify-center text-green-600 text-3xl size-12 hover:size-14 hover:text-4xl hover:cursor-pointer border rounded-xl">
+        <FaCheckCircle />
+      </div>
+      <div className="font-thin text-base w-14 text-center">
+        Znam
+      </div>
+    </div>
+  </div>
+  );
+} else if (status===2){
+  renderStatus = (
+    <div className="flex gap-16">
+    <div className="flex flex-col items-center" onClick={() => {
+      changeStatus(0);
+    }}>
+      <div className="flex items-center justify-center text-red-600 text-3xl size-12 hover:size-14 hover:text-4xl hover:cursor-pointer border  rounded-xl">
+        <FaFrownOpen />
+      </div>
+      <div className="font-thin text-base w-14 text-center">
+        Jest dla mnie kłopotliwe
+      </div>
+    </div>
+    <div className="flex flex-col items-center" onClick={() => {
+      changeStatus(1);
+    }}>
+      <div className="flex items-center justify-center text-orange-400 text-3xl size-12 hover:size-14 hover:text-4xl hover:cursor-pointer border  rounded-xl">
+        <GrInProgress />
+      </div>
+      <div className="font-thin text-base w-14 text-center">
+        Wciąż się uczę
+      </div>
+    </div>
+    <div className="flex flex-col items-center">
+      <div className="flex items-center justify-center text-green-600 text-3xl size-12 hover:size-14 hover:text-4xl hover:cursor-pointer border border-main border-x-2 border-y-2 rounded-xl">
+        <FaCheckCircle />
+      </div>
+      <div className="font-thin text-base w-14 text-center">
+        Znam
+      </div>
+    </div>
+  </div>
+  );
+}
+else{
+  renderStatus = (<div>Błąd ładowania statusu!</div>)
+}
+
+let streakIcon;
+if (currentWord.streak>=5 && currentWord.streak < 15){
+  streakIcon = <div className="flex flex-col justify-center items-center pt-3"><FaFire className=" text-2xl text-orange-600"/><div className="text-sm font-bold text-fifth">{currentWord.streak}</div></div>
+}
+else if (currentWord.streak>=15  && currentWord.streak<35){
+  streakIcon = <div className="flex flex-col justify-center items-center pt-3"><FaFire className=" text-2xl text-zinc-400"/><div className="text-sm font-bold text-fifth">{currentWord.streak}</div></div>
+}
+else if (currentWord.streak>=35){
+  streakIcon = <div className="flex flex-col justify-center items-center pt-3"><FaFire className=" text-2xl text-gold"/><div className="text-sm font-bold text-fifth">{currentWord.streak}</div></div>
+}
+else if(currentWord.reverseStreak>=5){
+  streakIcon = <div className="flex flex-col justify-center items-center pt-3"><FaSkull className=" text-2xl text-red-600"/><div className="text-sm font-bold text-fifth">-{currentWord.reverseStreak}</div></div>
+}
+else{
+  streakIcon = <></>
+}
 
     return (
       <>
@@ -139,39 +319,16 @@ const WordTranslationTraining = () => {
         <div className={ButtonsState[2]}>
                 {ButtonsState[3]}
               </div>
-            <div className="font-thin text-5xl">            {wordsState[wordsState.length-1].word}</div>
+            <div className="flex items-center justify-center gap-2 font-thin text-5xl">            {currentWord.word}{streakIcon}
+            </div>
             {ButtonInput}
             {/* STATUSY SŁÓWKA */}
             <div className="flex flex-col justify-center items-center w-1/3 text-center font-inter gap-4">
-              <div className="flex gap-16">
-                <div className="flex flex-col items-center">
-                  <div className="flex items-center justify-center text-red-600 text-3xl size-12 hover:size-14 hover:text-4xl hover:cursor-pointer border border-fifth rounded-xl">
-                    <FaFrownOpen />
-                  </div>
-                  <div className="font-thin text-base w-14 text-center">
-                    Jest dla mnie kłopotliwe
-                  </div>
-                </div>
-                <div className="flex flex-col items-center">
-                  <div className="flex items-center justify-center text-orange-400 text-3xl size-12 hover:size-14 hover:text-4xl hover:cursor-pointer border border-fifth rounded-xl">
-                    <GrInProgress />
-                  </div>
-                  <div className="font-thin text-base w-14 text-center">
-                    Wciąż się uczę
-                  </div>
-                </div>
-                <div className="flex flex-col items-center">
-                  <div className="flex items-center justify-center text-green-600 text-3xl size-12 hover:size-14 hover:text-4xl hover:cursor-pointer border border-fifth rounded-xl">
-                    <FaCheckCircle />
-                  </div>
-                  <div className="font-thin text-base w-14 text-center">
-                    Znam
-                  </div>
-                </div>
-              </div>
+              {renderStatus}
               <div className="flex text-center font-thin text-sm text-fifth">
                 Wybrany status określa, jak często dane słówko będzie pojawiało
-                się w ćwiczeniach. Status możesz zmieniać w dowolnej chwili.
+                się w ćwiczeniach. Status możesz zmieniać w dowolnej chwili, zmienia on się również wraz 
+                z ilością powtórzeń danego słowa.
               </div>
             </div>
           </div>

@@ -22,6 +22,7 @@ import StatusBox from "../../../shared/components/StatusBox";
 import Character from "../../../shared/components/Character";
 import AddWordsForm from "./AddWordsForm";
 import WordStatusForm from "./WordStatusForm";
+import { FaFire, FaSkull } from "react-icons/fa6";
 
 const WordsInFolderPage = () => {
   const { isVisible, toggleModal, closeModal } = useModal();
@@ -41,10 +42,27 @@ const WordsInFolderPage = () => {
     navigate("/folders");
   } else if (response.isSuccess) {
     renderedWords = response.data.map((word: IWord, index: number) => {
+      let streakIcon;
+      if (word.streak>=5 && word.streak<15){
+        streakIcon = <FaFire className=" text-2xl text-orange-600"/>
+      }
+      else if (word.streak>=15  && word.streak<35){
+        streakIcon = <FaFire className=" text-2xl text-zinc-400"/>
+      }
+      else if (word.streak>=35){
+        streakIcon = <FaFire className=" text-2xl text-gold"/>
+      }
+      else if(word.reverseStreak>=5){
+        streakIcon = <FaSkull className=" text-2xl text-red-600"/>
+      }
+      else{
+        streakIcon = <FaFire className=" text-2xl text-transparent"/>
+      }
+
+
       let tr = (
         <tr className="h-14 font-inter font-medium text-xl" key={word.id}>
-          <th className="border-r-4 border-white">{word.id}</th>
-          <th className="border-r-4 border-white">{word.word}</th>
+          <th className="flex justify-center items-center gap-2 border-r-4 border-white">  {streakIcon}{word.word}</th>
           <th className="border-r-4 border-white">{word.translation}</th>
           <th className="border-r-4 border-white">
            <WordStatusForm word={word}/>
@@ -65,8 +83,7 @@ const WordsInFolderPage = () => {
             className="h-14 bg-fourth font-inter font-medium text-xl"
             key={word.id}
           >
-            <th className="border-r-4 border-white">{word.id}</th>
-            <th className="border-r-4 border-white">{word.word}</th>
+            <th className="flex justify-center items-center gap-2 border-r-4 border-white"> {streakIcon}{word.word}</th>
             <th className="border-r-4 border-white">{word.translation}</th>
             <th className="border-r-4 border-white">
               <WordStatusForm word={word}/>
@@ -119,7 +136,6 @@ const WordsInFolderPage = () => {
           <div className="flex flex-col w-3/4 shadow-lg justify-center">
             <table>
               <tr className="bg-secondary h-14 text-white ">
-                <th className="rounded-tl-xl border-r-4 border-white">ID</th>
                 <th className="border-r-4 border-white">Słowo</th>
                 <th className="border-r-4 border-white">Tłumaczenie</th>
                 <th className="border-r-4 border-white">Status</th>

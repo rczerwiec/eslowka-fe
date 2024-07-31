@@ -31,6 +31,8 @@ const AddWordsForm: FC<{
           folderId: props.folder.id,
           repeated: 0,
           known: 0,
+          streak: 0,
+          reverseStreak: 0,
         },
         {
           id: props.newID + 1,
@@ -39,6 +41,8 @@ const AddWordsForm: FC<{
           folderId: props.folder.id,
           repeated: 0,
           known: 0,
+          streak: 0,
+          reverseStreak: 0,
         },
         {
           id: props.newID + 2,
@@ -47,6 +51,8 @@ const AddWordsForm: FC<{
           folderId: props.folder.id,
           repeated: 0,
           known: 0,
+          streak: 0,
+          reverseStreak: 0,
         },
         {
           id: props.newID + 3,
@@ -55,6 +61,8 @@ const AddWordsForm: FC<{
           folderId: props.folder.id,
           repeated: 0,
           known: 0,
+          streak: 0,
+          reverseStreak: 0,
         },
         {
           id: props.newID + 4,
@@ -63,6 +71,8 @@ const AddWordsForm: FC<{
           folderId: props.folder.id,
           repeated: 0,
           known: 0,
+          streak: 0,
+          reverseStreak: 0,
         },
         {
           id: props.newID + 5,
@@ -71,6 +81,8 @@ const AddWordsForm: FC<{
           folderId: props.folder.id,
           repeated: 0,
           known: 0,
+          streak: 0,
+          reverseStreak: 0,
         },
         {
           id: props.newID + 6,
@@ -79,6 +91,8 @@ const AddWordsForm: FC<{
           folderId: props.folder.id,
           repeated: 0,
           known: 0,
+          streak: 0,
+          reverseStreak: 0,
         },
         {
           id: props.newID + 7,
@@ -87,6 +101,8 @@ const AddWordsForm: FC<{
           folderId: props.folder.id,
           repeated: 0,
           known: 0,
+          streak: 0,
+          reverseStreak: 0,
         },
         {
           id: props.newID + 8,
@@ -95,6 +111,8 @@ const AddWordsForm: FC<{
           folderId: props.folder.id,
           repeated: 0,
           known: 0,
+          streak: 0,
+          reverseStreak: 0,
         },
       ],
     },
@@ -111,6 +129,8 @@ const AddWordsForm: FC<{
             translation: values.translation,
             repeated: 0,
             known: 0,
+            streak: 0,
+            reverseStreak: 0,
           },
           folderID: props.folder.id,
         });

@@ -7,6 +7,8 @@ export interface IWord{
     translation: string,
     repeated: number,
     known: number,
+    streak: number,
+    reverseStreak: number,
 }
 
 export interface INewWord{

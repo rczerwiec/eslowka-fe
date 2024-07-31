@@ -17,6 +17,8 @@ const AddWordsForm: FC<{ word: IWord }> = (props): JSX.Element => {
         id: props.word.id,
         known: changeTo,
         repeated: props.word.repeated,
+        streak: props.word.streak,
+        reverseStreak: props.word.reverseStreak,
       },
       folderID: props.word.folderId,
     });
