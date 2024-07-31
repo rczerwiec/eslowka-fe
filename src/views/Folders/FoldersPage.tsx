@@ -61,7 +61,7 @@ const FoldersPage = () => {
                   dispatch(change(folder));
                   navigate("/folders/words");
                 }}
-                className="flex items-center gap-4 hover:cursor-pointer"
+                className="flex items-center gap-4 hover:cursor-pointer w-full"
               >
                 <TbFolderFilled className="bg-main text-white rounded-md" />
                 <div className="text-xl">{folder.folderName}</div>

@@ -42,7 +42,7 @@ const TrainingPage = () => {
                     onClick={() => {
                       navigate("/folders/training/play");
                     }}
-                    className="flex items-center gap-4 hover:cursor-pointer"
+                    className="flex items-center w-full gap-4 hover:cursor-pointer"
                   >
                     <FaPlayCircle className="bg-main text-white rounded-md" />
                     <div className="text-xl">Słówko - Tłumaczenie</div>

@@ -11,24 +11,38 @@ import Character from "../../../shared/components/Character";
 import { useSelector } from "react-redux";
 import { RootState, useFetchRandomWordsArrayQuery, useUpdateWordStatusMutation } from "../../../shared/store";
 import { IWord } from "../../../shared/store/slices/FolderSlice";
+import { useFormik } from "formik";
 
 const WordTranslationTraining = () => {
-  const [translation, setTranslation] = useState("");
+
+  //FORMIK HOOK
+  const formik = useFormik({
+    initialValues: {
+      translation: '',
+    },
+    onSubmit: values => {
+      
+    },
+  });
 
   const [isDisabled, setIsDisabled] = useState(false);
-  const [ButtonsState, setButtonsState] = useState(["text-lg text-white", "text-lg text-white hidden", "font-bold text-green-600 text-5xl hidden", "Dobrze!", "wpisz tłumaczenie!", "bg-fifth_light h-14 rounded-md w-96 p-3 font-thin text-base"]);
+  const [ButtonsState, setButtonsState] = useState(["text-lg text-white h-14 bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight", "text-lg text-white hidden", "font-bold text-green-600 text-5xl hidden", "Dobrze!", "wpisz tłumaczenie!", "bg-fifth_light h-14 rounded-md w-96 p-3 font-thin text-base"]);
   const [wordsState, setWordsState] = useState<IWord[]>([{word: "Ładowanie...", id: -1, translation: "Ładowanie...", repeated: 0, known: 0, folderId: -1, streak:0, reverseStreak: 0,}]);
   const folder = useSelector((state: RootState) => state.folderProfile);
-  //getRandomWordFromFolder
   const navigate = useNavigate();
   const {isLoading, isSuccess, error, data} = useFetchRandomWordsArrayQuery(folder.id);
+  const [updateStatus] = useUpdateWordStatusMutation();
   const inputRef = useRef<any>(null);
+  const buttonRef = useRef<any>(null);
   const [currentWord, setCurrentWord] = useState<IWord>({word: "Ładowanie...", id: -1, translation: "Ładowanie...", repeated: 0, known: 0, folderId: -1, streak:0, reverseStreak: 0});
-
-
   const [status, setStatus] = useState<number>(-1);
-  if(inputRef.current !== null) {inputRef.current.focus();}
+
+  //IF INPUT IS NOT NULL - MAKE IT FOCUSED
+  if(inputRef.current !== null && !isDisabled) {inputRef.current.focus();}
+  else if(buttonRef.current !==null) {buttonRef.current.focus();}
+
   useEffect(() => {
+    console.log("refresh")
     if (isLoading) {
       console.log("Ładowanie słów");
     } else if (error) {
@@ -38,9 +52,10 @@ const WordTranslationTraining = () => {
         setWordsState(data);
         setCurrentWord(data[data.length -1])
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess])
 
-  const [updateStatus] = useUpdateWordStatusMutation();
+  //UPDATE WORD IN DB
   const updateWord = async (updatedWord: IWord) => {
     await updateStatus({
       word: updatedWord,
@@ -49,21 +64,21 @@ const WordTranslationTraining = () => {
     console.log("Zaaktualizowano!", updatedWord.word);
   }
 
+  //CHANGE STATUS
   const changeStatus = async (changeTo: number) => {
     setStatus(changeTo);
   }
 
+  //CONFIRM TRANSLATION - ON_BUTTON_CLICK AFTER CHECK
   const checkTranslation = () => {
     
     let known = currentWord.known;
     if(status!== -1){
       known = status;
     }
-
-
-
+    console.log(formik.values.translation);
     //IF IT'S CORRECT
-    if (translation.toLowerCase() === currentWord.translation.toLowerCase()) {
+    if (formik.values.translation.toLowerCase() === currentWord.translation.toLowerCase()) {
 
       if (currentWord.known === 0 && currentWord.streak === 4){
         known = 1;
@@ -86,12 +101,12 @@ const WordTranslationTraining = () => {
 
       const newState = [...wordsState].splice(0, wordsState.length - 1);
       if (newState.length >= 1) {
+        formik.values.translation = "";
         setIsDisabled(false);
         setWordsState(newState);
-        setTranslation("");
         setStatus(newState[newState.length - 1].known)
         setCurrentWord(newState[newState.length - 1]);
-        setButtonsState(["text-lg text-white", "text-lg text-white hidden", "font-bold text-green-600 text-5xl hidden", "Dobrze!", "wpisz tłumaczenie!", "bg-fifth_light h-14 rounded-md w-96 p-3 font-thin text-base"])
+        setButtonsState(["text-lg text-white h-14 bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight", "text-lg text-white hidden", "font-bold text-green-600 text-5xl hidden", "Dobrze!", "wpisz tłumaczenie!", "bg-fifth_light h-14 rounded-md w-96 p-3 font-thin text-base"])
       } else {
         navigate("/folders");
       }
@@ -121,44 +136,26 @@ const WordTranslationTraining = () => {
       let newState = [...wordsState].splice(0, wordsState.length - 1);
       newState = [lastWord].concat(newState);
       setIsDisabled(false);
+      formik.values.translation = "";
       setWordsState(newState);
-      setTranslation("");
       setStatus(newState[newState.length - 1].known)
       setCurrentWord(newState[newState.length - 1]);
-      setButtonsState(["text-lg text-white", "text-lg text-white hidden", "font-bold text-green-600 text-5xl hidden", "Dobrze!", "wpisz tłumaczenie!", "bg-fifth_light h-14 rounded-md w-96 p-3 font-thin text-base"])
+      setButtonsState(["text-lg text-white h-14 bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight", "text-lg text-white hidden", "font-bold text-green-600 text-5xl hidden", "Dobrze!", "wpisz tłumaczenie!", "bg-fifth_light h-14 rounded-md w-96 p-3 font-thin text-base"])
     }
   };
 
+  //CHECK TRANSLATION - ON_BUTTON_CLICK BEFORE CHECK
   const setStatusBar = () => {
-    if (translation.toLocaleLowerCase() === wordsState[wordsState.length - 1].translation.toLocaleLowerCase()) {
-      setButtonsState(["text-lg text-white hidden", "text-lg text-white","font-bold text-green-600 text-5xl", "Dobrze!", "Błędne tłumaczenie!", "bg-fifth_light h-14 rounded-md w-96 p-3 font-thin text-base bg-green-200"]);
+    if (formik.values.translation.toLocaleLowerCase() === wordsState[wordsState.length - 1].translation.toLocaleLowerCase()) {
+      setButtonsState(["text-lg text-white hidden", "text-lg text-white h-14 bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight","font-bold text-green-600 text-5xl", "Dobrze!", "Błędne tłumaczenie!", "bg-fifth_light h-14 rounded-md w-96 p-3 font-thin text-base bg-green-200"]);
       setIsDisabled(true);
+      buttonRef.current.focus();
     }
-    else{
-      setButtonsState(["text-lg text-white hidden", "text-lg text-white","font-bold text-red-600 text-5xl", "Źle!", "Błędne tłumaczenie!", "bg-fifth_light h-14 rounded-md w-96 p-3 font-thin text-base bg-red-200"]);
+    else{ 
+      setButtonsState(["text-lg text-white hidden", "text-lg text-white h-14 bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight","font-bold text-red-600 text-5xl", "Źle!", "Błędne tłumaczenie!", "bg-fifth_light h-14 rounded-md w-96 p-3 font-thin text-base bg-red-200"]);
       setIsDisabled(true);
     }
   }
-
-  
-  let ButtonInput = (
-    <div className="flex gap-4">
-    <input
-      className={ButtonsState[5]}
-      placeholder={ButtonsState[4]}
-      disabled={isDisabled}
-      value={translation}
-      ref={inputRef}
-      onChange={(e) => setTranslation(e.target.value)}
-    ></input>
-    <div
-      onClick={() => {}}
-      className="relative left-0 flex items-center h-14 bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight"
-    >
-      <button onClick={setStatusBar} className={ButtonsState[0]}>Sprawdź </button>
-      <button onClick={checkTranslation} className={ButtonsState[1]}>Dalej </button>
-    </div>
-  </div>)
 
 
 let renderStatus;
@@ -287,6 +284,30 @@ else{
   streakIcon = <></>
 }
 
+
+//BUTTON AND TRANSLATION INPUTS
+let ButtonInput = (
+  <div className="flex gap-4">
+  <input
+    className={ButtonsState[5]}
+    placeholder={ButtonsState[4]}
+    disabled={isDisabled}
+    ref={inputRef}
+    id="translation"
+    name="translation"
+    type="text"
+    onChange={formik.handleChange}
+    value={formik.values.translation}
+  ></input>
+  <div
+    onClick={() => {}}
+    className="relative left-0 flex items-center"
+  >
+    <button onClick={setStatusBar} className={ButtonsState[0]} >Sprawdź </button>
+    <button onClick={checkTranslation} className={ButtonsState[1]} ref={buttonRef}>Dalej </button>
+  </div>
+</div>)
+
     return (
       <>
         <div className="flex flex-col w-full h-full">
@@ -317,11 +338,14 @@ else{
           >
 
         <div className={ButtonsState[2]}>
-                {ButtonsState[3]}
+                {ButtonsState[3]} - {currentWord.translation}
               </div>
             <div className="flex items-center justify-center gap-2 font-thin text-5xl">            {currentWord.word}{streakIcon}
             </div>
-            {ButtonInput}
+       <form onSubmit={formik.handleSubmit}>
+        {ButtonInput}         
+
+     </form>
             {/* STATUSY SŁÓWKA */}
             <div className="flex flex-col justify-center items-center w-1/3 text-center font-inter gap-4">
               {renderStatus}

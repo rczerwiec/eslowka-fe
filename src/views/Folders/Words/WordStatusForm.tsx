@@ -58,10 +58,3 @@ const AddWordsForm: FC<{ word: IWord }> = (props): JSX.Element => {
 };
 
 export default AddWordsForm;
-
-// let statusIcon = <div className="flex justify-center items-center h-14 p-4"><FaCheckCircle className="flex justify-center items-center h-14 text-green-500" /></div>;
-// if (word.known === 0) {
-//   statusIcon = <div className="flex justify-center items-center h-14 p-4"><FaFrownOpen className="flex justify-center items-center h-14 text-red-500" /></div>;
-// } else if (word.known === 1) {
-//   statusIcon = <div className="flex justify-center items-center h-14 p-4"><GrInProgress className="flex justify-center items-center h-14 text-orange-500"/></div>
-// }
