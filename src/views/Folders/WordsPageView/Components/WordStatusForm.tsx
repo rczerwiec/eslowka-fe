@@ -1,8 +1,8 @@
 import { FC, useState } from "react";
-import { IWord } from "../../../shared/store/slices/FolderSlice";
+import { IWord } from "../../../../shared/store/slices/FolderSlice";
 import { FaCheckCircle, FaFrownOpen } from "react-icons/fa";
 import { GrInProgress } from "react-icons/gr";
-import { useUpdateWordStatusMutation } from "../../../shared/store";
+import { useUpdateWordStatusMutation } from "../../../../shared/store";
 
 const AddWordsForm: FC<{ word: IWord }> = (props): JSX.Element => {
   const [status, setStatus] = useState(props.word.known);

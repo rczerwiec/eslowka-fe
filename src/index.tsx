@@ -15,10 +15,10 @@ import {
 //PAGES
 import NavBar from './shared/components/UI/NavBar';
 import SideBar from './shared/components/UI/SideBar';
-import FoldersPage from './views/Folders/FoldersPage';
-import WordsInFolderPage from './views/Folders/Words/WordsInFolderPage';
-import TrainingPage from './views/Folders/TrainingPage';
-import WordTranslationTraining from './views/Folders/Trainings/WordTranslationTrainingPage';
+import FoldersPage from './views/Folders/FoldersPageView/FoldersPage';
+import WordsInFolderPage from './views/Folders/WordsPageView/WordsInFolderPage';
+import TrainingPage from './views/Folders/TrainingsPageview/TrainingPage';
+import WordTranslationTraining from './views/Folders/TrainingsPageview/WordTranslationTrainingPage';
 
 const router = createBrowserRouter([
   {

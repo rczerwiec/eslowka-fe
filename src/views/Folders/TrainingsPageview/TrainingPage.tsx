@@ -1,13 +1,24 @@
 //ICONS & SVG
 import { IoMdArrowRoundBack } from "react-icons/io";
-import character1 from "../../shared/img/character1.svg";
+import character1 from "../../../shared/img/character1.svg";
 
 import { useNavigate } from "react-router-dom";
 import { FaPlayCircle } from "react-icons/fa";
-import Character from "../../shared/components/Character";
+import Character from "../../../shared/components/Character";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../shared/store";
+import { useEffect } from "react";
 
 const TrainingPage = () => {
   const navigate = useNavigate();
+  const folder = useSelector((state: RootState) => state.folderProfile);
+  useEffect(()=>{
+    console.log(folder.id);
+    if(folder.id===undefined){
+      navigate("/folders");
+    }
+  },[])
+
   return (
     <>
       <div className="flex flex-col w-full h-full">

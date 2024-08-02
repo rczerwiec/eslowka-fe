@@ -2,12 +2,12 @@ import { Field, useFormik } from "formik";
 import {
   useCreateWordMutation,
   useCreateWordsMutation,
-} from "../../../shared/store";
+} from "../../../../shared/store";
 import {
   IFolder,
   INewWord,
   INewWords,
-} from "../../../shared/store/slices/FolderSlice";
+} from "../../../../shared/store/slices/FolderSlice";
 import { FC } from "react";
 import { FaCheckCircle } from "react-icons/fa";
 
@@ -255,20 +255,3 @@ const AddWordsForm: FC<{
 };
 
 export default AddWordsForm;
-// <div className="flex flex-col justify-center items-center mt-6">
-//   <div className="font-inter font-medium text-xl text-fifth z-10">
-//     Słówko
-//   </div>
-
-// </div>
-// <div className="flex flex-col justify-center items-center mt-6 z-10">
-//   <div className="font-inter font-medium text-xl text-fifth ">
-//     Tłumaczenie
-//   </div>
-//   <input
-//     className="bg-fifth_light w-2/4 h-10 rounded-md p-3"
-//     placeholder="np. świnia"
-//     value={wordTranslation}
-//     onChange={(e) => setWordTranslation(e.target.value)}
-//   ></input>
-// </div>

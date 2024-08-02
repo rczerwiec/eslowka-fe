@@ -42,7 +42,10 @@ const WordTranslationTraining = () => {
   else if(buttonRef.current !==null) {buttonRef.current.focus();}
 
   useEffect(() => {
-    console.log("refresh")
+    console.log(folder.id);
+    if(folder.id===undefined){
+      navigate("/folders");
+    }
     if (isLoading) {
       console.log("Ładowanie słów");
     } else if (error) {
