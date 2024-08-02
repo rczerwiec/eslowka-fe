@@ -49,7 +49,7 @@ const TrainingPage = () => {
             >
               <div className="flex flex-col w-3/4 justify-center">
                 <div className="flex items-center justify-between p-2 bg-fourth rounded-lg shadow-lg  hover:bg-secondarylight hover:cursor-pointer">
-                  <div
+                  <button
                     onClick={() => {
                       navigate("/folders/training/play");
                     }}
@@ -57,7 +57,7 @@ const TrainingPage = () => {
                   >
                     <FaPlayCircle className="bg-main text-white rounded-md" />
                     <div className="text-xl">Słówko - Tłumaczenie</div>
-                  </div>
+                  </button>
                   <div className="flex gap-4 mr-4"></div>
                 </div>
               </div>

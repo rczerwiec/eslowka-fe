@@ -81,7 +81,7 @@ const WordTranslationTraining = () => {
     }
     console.log(formik.values.translation);
     //IF IT'S CORRECT
-    if (formik.values.translation.toLowerCase() === currentWord.translation.toLowerCase()) {
+    if (formik.values.translation.toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") === wordsState[wordsState.length - 1].translation.toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "")){
 
       if (currentWord.known === 0 && currentWord.streak === 4){
         known = 1;
@@ -149,7 +149,10 @@ const WordTranslationTraining = () => {
 
   //CHECK TRANSLATION - ON_BUTTON_CLICK BEFORE CHECK
   const setStatusBar = () => {
-    if (formik.values.translation.toLocaleLowerCase() === wordsState[wordsState.length - 1].translation.toLocaleLowerCase()) {
+    console.log()
+    console.log()
+
+    if (formik.values.translation.toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") === wordsState[wordsState.length - 1].translation.toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "")) {
       setButtonsState(["text-lg text-white hidden", "text-lg text-white h-14 bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight","font-bold text-green-600 text-5xl", "Dobrze!", "Błędne tłumaczenie!", "bg-fifth_light h-14 rounded-md w-96 p-3 font-thin text-base bg-green-200"]);
       setIsDisabled(true);
       buttonRef.current.focus();

@@ -62,7 +62,7 @@ const FoldersPage = () => {
                     0%
                   </div>
                 </div>
-                <div
+                <button
                   onClick={() => {
                     dispatch(change(folder));
                     navigate("/folders/words");
@@ -71,8 +71,8 @@ const FoldersPage = () => {
                 >
                   <FaEdit className="text-lg" />
                   <div className="text-xs">Edytuj</div>
-                </div>
-                <div
+                </button>
+                <button
                   onClick={() => {
                     dispatch(change(folder));
                     navigate("/folders/training");
@@ -81,7 +81,7 @@ const FoldersPage = () => {
                 >
                   <FaPlayCircle className="text-lg" />
                   <div className="text-xs">Ćwicz</div>
-                </div>
+                </button>
               </div>
             </div>
           </div>
