@@ -83,10 +83,10 @@ const WordTranslationTraining = () => {
     //IF IT'S CORRECT
     if (formik.values.translation.toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\u0142/g, "l") === wordsState[wordsState.length - 1].translation.toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").replace(/\u0142/g, "l")){
 
-      if (currentWord.known === 0 && currentWord.streak === 4){
+      if (currentWord.known === 0 && currentWord.streak === 2){
         known = 1;
       }
-      if (currentWord.known === 1 && currentWord.streak === 10){
+      if (currentWord.known === 1 && currentWord.streak === 5){
         known = 2;
       }
 
