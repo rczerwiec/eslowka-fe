@@ -141,6 +141,8 @@ const AddWordsForm: FC<{
 
   //CREATE NEW WORD
   const onWordCreate = async (newWord: INewWord) => {
+
+    //UPDATE FOLDER - ADD WORD IN DB
     return await createWord(newWord)
       .unwrap()
       .then((res) => {
@@ -153,6 +155,8 @@ const AddWordsForm: FC<{
 
   //CREATE NEW WORD
   const onWordsCreate = async (newWords: INewWords) => {
+    
+    //UPDATE FOLDER - ADD WORDS IN DB
     return await createWords(newWords)
       .unwrap()
       .then((res) => {

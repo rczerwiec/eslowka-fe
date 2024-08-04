@@ -53,7 +53,7 @@ return(
         onClick={() => {
             setNewFolder("");
           props.closeModal();
-          onCreateFolder({ id:props.renderedFoldersLength , folderName: newFolder, words: [] });
+          onCreateFolder({ id:props.renderedFoldersLength , folderName: newFolder, words: [], currentProgress: 0, maxProgress: 0  });
         }}
       />
     </div>

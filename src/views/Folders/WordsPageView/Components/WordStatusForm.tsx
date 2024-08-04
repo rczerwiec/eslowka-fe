@@ -4,7 +4,7 @@ import { FaCheckCircle, FaFrownOpen } from "react-icons/fa";
 import { GrInProgress } from "react-icons/gr";
 import { useUpdateWordStatusMutation } from "../../../../shared/store";
 
-const AddWordsForm: FC<{ word: IWord }> = (props): JSX.Element => {
+const WordStatusForm: FC<{ word: IWord }> = (props): JSX.Element => {
   const [status, setStatus] = useState(props.word.known);
   const [updateStatus] = useUpdateWordStatusMutation();
   const changeStatus = async (changeTo: number) => {
@@ -57,4 +57,4 @@ const AddWordsForm: FC<{ word: IWord }> = (props): JSX.Element => {
   );
 };
 
-export default AddWordsForm;
+export default WordStatusForm;
