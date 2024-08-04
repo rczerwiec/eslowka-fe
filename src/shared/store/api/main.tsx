@@ -49,7 +49,7 @@ const mainApi = createApi({
         },
       }),
       updateWordStatus: builder.mutation({
-        invalidatesTags: ["Words"],
+        invalidatesTags: ["Words", "Folders"],
         query: (newWords: INewWord) => {
           return {
             url: `/users/669787b41e2ea369890f4f67/word/status`,

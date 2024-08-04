@@ -33,6 +33,41 @@ const FoldersPage = () => {
   } else if (response.isSuccess) {
     renderedFolders = response.data.map((folder: IFolder, index: number) => {
       console.log(folderProfile.id);
+
+
+
+      const percentage = ~~((100*folder.currentProgress)/folder.maxProgress);
+
+    let progressPanel = <div className="flex items-center">
+    <div className="text-fifth font-inter font-medium text-base">
+      Progress:
+    </div>
+    <div className="text-red-600 font-inter font-medium text-base">
+      {percentage}%
+    </div>
+  </div>
+    if (percentage >40 && percentage < 70){
+      progressPanel = (<div className="flex items-center">
+      <div className="text-fifth font-inter font-medium text-base">
+        Progress:
+      </div>
+      <div className="text-orange-500 font-inter font-medium text-base">
+        {percentage}%
+      </div>
+    </div>)
+    }
+    else if (percentage >=70){
+      progressPanel = (<div className="flex items-center">
+      <div className="text-fifth font-inter font-medium text-base">
+        Progress:
+      </div>
+      <div className="text-green-600 font-inter font-medium text-base">
+        {percentage}%
+      </div>
+    </div>)
+    }
+
+
       return (
         <div
           className="flex flex-col pl-4 mb-2 items-left
@@ -54,14 +89,7 @@ const FoldersPage = () => {
                 </div>
               </button>
               <div className="flex gap-4 mr-4">
-                <div className="flex items-center">
-                  <div className="text-fifth font-inter font-medium text-base">
-                    Progress:
-                  </div>
-                  <div className="text-red-600 font-inter font-medium text-base">
-                    0%
-                  </div>
-                </div>
+                {progressPanel}
                 <button
                   onClick={() => {
                     dispatch(change(folder));
