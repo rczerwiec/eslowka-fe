@@ -14,6 +14,7 @@ import { IWord } from "../../../shared/store/slices/FolderSlice";
 import { useFormik } from "formik";
 
 const WordTranslationTraining = () => {
+  const user = useSelector((state: RootState) => state.userProfile);
 
   //FORMIK HOOK
   const formik = useFormik({
@@ -30,7 +31,7 @@ const WordTranslationTraining = () => {
   const [wordsState, setWordsState] = useState<IWord[]>([{word: "Ładowanie...", id: -1, translation: "Ładowanie...", repeated: 0, known: 0, folderId: -1, streak:0, reverseStreak: 0,}]);
   const folder = useSelector((state: RootState) => state.folderProfile);
   const navigate = useNavigate();
-  const {isLoading, isSuccess, error, data} = useFetchRandomWordsArrayQuery(folder.id);
+  const {isLoading, isSuccess, error, data} = useFetchRandomWordsArrayQuery({folderID:folder.id, userID: user.value});
   const [updateStatus] = useUpdateWordStatusMutation();
   const inputRef = useRef<any>(null);
   const buttonRef = useRef<any>(null);
@@ -44,12 +45,12 @@ const WordTranslationTraining = () => {
   useEffect(() => {
     console.log(folder.id);
     if(folder.id===undefined){
-      navigate("/folders");
+      navigate("/app/folders");
     }
     if (isLoading) {
       console.log("Ładowanie słów");
     } else if (error) {
-      navigate("/folders");
+      navigate("/app/folders");
     } else{
         setStatus(data[data.length -1].known);
         setWordsState(data);
@@ -60,10 +61,10 @@ const WordTranslationTraining = () => {
 
   //UPDATE WORD IN DB
   const updateWord = async (updatedWord: IWord) => {
-    await updateStatus({
+    await updateStatus({updatedWord:{
       word: updatedWord,
       folderID: updatedWord.folderId,
-    });
+    }, userID: user.value});
     console.log("Zaaktualizowano!", updatedWord.word);
   }
 
@@ -111,7 +112,7 @@ const WordTranslationTraining = () => {
         setCurrentWord(newState[newState.length - 1]);
         setButtonsState(["text-lg text-white h-14 bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight", "text-lg text-white hidden", "font-bold text-green-600 text-5xl hidden", "Dobrze!", "wpisz tłumaczenie!", "bg-fifth_light h-14 rounded-md w-96 p-3 font-thin text-base"])
       } else {
-        navigate("/folders");
+        navigate("/app/folders");
       }
       //IF NOT CORRECT
     } else {
@@ -330,7 +331,7 @@ let ButtonInput = (
             <div>Słówko - Tłumaczenie</div>
             <div
               onClick={() => {
-                navigate("/folders/training");
+                navigate("/app/folders/training");
               }}
               className="flex items-center bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight"
             >

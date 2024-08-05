@@ -5,24 +5,55 @@ import { IoMdSettings } from "react-icons/io";
 import { RiLogoutBoxFill } from "react-icons/ri";
 import { MdOutlineImportContacts } from "react-icons/md";
 
-import {useState } from "react";
+import {FC, useState } from "react";
+import { signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../../../firebase/firebas";
+import { useSelector } from "react-redux";
+import { RootState, useFetchUserQuery } from "../../store";
 
 interface IhandleClick{
   dropDownClick: () => void;
+  userName: string;
 }
 
-interface IDropDownClass{
-  dropDownClass: string;
-}
-
-const NavBar = () => {
+const NavBar:FC<{}> = (props):JSX.Element => {
+  const user = useSelector((state: RootState) => state.userProfile);
+  const response = useFetchUserQuery(user.value);
+  
   const [dropDown, setDropDown] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {               
+    signOut(auth).then(() => {
+    // Sign-out successful.
+        navigate("/");
+        console.log("Signed out successfully")
+    }).catch((error) => {
+    // An error happened.
+    });
+  }
+
+  let userData;
+  let userName;
+  if(response.isLoading){
+    userName = "Ładowanie...";
+  }
+  else if(response.isError){
+    userName = "Error";
+  } 
+  if (response.isSuccess) {
+    userData = response.data;
+    userName = response.data.userName;
+  }
+
+  console.log(userData);
 
   const handleClick = () => {
     setDropDown(!dropDown);
   }
 
-  let dropDownClass = "flex hidden flex-col absolute z-20 text-white w-56 bg-secondary top-12 h- right-0 rounded-b-lg"
+  let dropDownClass: string = "flex hidden flex-col absolute z-20 text-white w-56 bg-secondary top-12 h- right-0 rounded-b-lg"
   if(dropDown) {
     dropDownClass = "flex flex-col absolute z-20 text-white w-56 bg-secondary top-12 h- right-0 rounded-b-lg"
   }
@@ -41,8 +72,8 @@ const NavBar = () => {
                               w-56 rounded-tl-xl rounded-bl-xl"
           >
             <Streak />
-          <UserMenu dropDownClick={handleClick} />   
-          <DropDown dropDownClass={dropDownClass}/>
+          <UserMenu dropDownClick={handleClick} userName={userName} />   
+          <DropDown dropDownClass={dropDownClass} signOut={handleLogout}/>
           </div>
         </div>
       </div>
@@ -62,9 +93,9 @@ const Streak = () => {
   );
 };
 
-const DropDown = ({dropDownClass}: IDropDownClass) => {
+const DropDown:FC<{dropDownClass: string, signOut: () => void}> = (props) => {
   return(
-    <div className={dropDownClass}>
+    <div className={props.dropDownClass}>
     <div className="flex pl-4 gap-2 h-12 items-center text-main hover:bg-secondarylight hover:cursor-pointer font-inter">
       <IoMdSettings className="text-xl"/>
       <div className="text-lg">Ustawienia</div>
@@ -90,7 +121,7 @@ const DropDown = ({dropDownClass}: IDropDownClass) => {
       <div className="text-lg">Regulamin</div>
     </div>
 
-    <div className="flex pl-4 gap-2 h-12 items-center text-main hover:bg-secondarylight hover:cursor-pointer font-inter">
+    <div onClick={()=>props.signOut()} className="flex pl-4 gap-2 h-12 items-center text-main hover:bg-secondarylight hover:cursor-pointer font-inter">
       <RiLogoutBoxFill className="text-xl"/>
       <div className="text-lg">Wyloguj</div>
     </div>
@@ -99,10 +130,13 @@ const DropDown = ({dropDownClass}: IDropDownClass) => {
   )
 }
 
-const UserMenu = ({dropDownClick}:IhandleClick) => {
+const UserMenu = ({dropDownClick, userName}:IhandleClick) => {
+  let shortUserName = userName.split('@')[0];
+
+
   return (
     <div className="flex items-center mr-4">
-      <div className="font-bold font-inter text-xl text-white mr-2">Radek</div>
+      <div className="font-bold font-inter text-xl text-white mr-2">{shortUserName}</div>
       <div>
         <FaUser className="text-2xl" />
       </div>

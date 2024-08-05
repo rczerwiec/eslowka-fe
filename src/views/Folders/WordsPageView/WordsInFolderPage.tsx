@@ -21,7 +21,8 @@ const WordsInFolderPage = () => {
   const [newID, setNewID] = useState(0)
   const navigate = useNavigate();
   const folder = useSelector((state: RootState) => state.folderProfile);
-  const response = useFetchSpecificWordsQuery(folder.id);
+  const user = useSelector((state: RootState) => state.userProfile);
+  const response = useFetchSpecificWordsQuery({folderID:folder.id, userID:user.value});
 
   let renderedWords;
   
@@ -30,7 +31,7 @@ const WordsInFolderPage = () => {
     renderedWords = <div>Ładowanie...</div>;
   } else if (response.isError) {
     renderedWords = <div>Error</div>;
-    navigate("/folders");
+    navigate("/app/folders");
   } else if (response.isSuccess) {
     renderedWords = <WordRenderer data={response.data} folder={folder} setNewID={setNewID}/>
   }
@@ -51,7 +52,7 @@ const WordsInFolderPage = () => {
           <div>{folder.folderName}</div>
           <div
             onClick={() => {
-              navigate("/folders");
+              navigate("/app/folders");
             }}
             className="flex items-center bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight"
           >

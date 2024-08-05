@@ -5,16 +5,18 @@ import { BiSolidExit } from "react-icons/bi";
 import { FaCheckCircle } from "react-icons/fa";
 import { IFolder } from "../../../../shared/store/slices/FolderSlice";
 import character2 from "../../../../shared/img/character2.svg";
-import { useCreateFolderMutation } from "../../../../shared/store";
+import { RootState, useCreateFolderMutation } from "../../../../shared/store";
+import { useSelector } from "react-redux";
 
 const FoldersPageModal: FC<{renderedFoldersLength: Number, isVisible: boolean, closeModal: () => void}> = (props): JSX.Element => {
 
     const [newFolder, setNewFolder] = useState("");
 
     const [createFolder] = useCreateFolderMutation();
+    const user = useSelector((state: RootState) => state.userProfile);
 
     const onCreateFolder = async (newFolder: IFolder) => {
-      return await createFolder(newFolder)
+      return await createFolder({newFolder: newFolder,userID:user.value})
         .unwrap()
         .then((res) => {
           console.log("res from api:", res);

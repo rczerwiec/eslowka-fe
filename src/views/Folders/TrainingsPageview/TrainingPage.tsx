@@ -15,7 +15,7 @@ const TrainingPage = () => {
   useEffect(()=>{
     console.log(folder.id);
     if(folder.id===undefined){
-      navigate("/folders");
+      navigate("/app/folders");
     }
   },[])
 
@@ -35,7 +35,7 @@ const TrainingPage = () => {
           <div>Wybierz Tryb</div>
           <div
             onClick={() => {
-              navigate("/folders");
+              navigate("/app/folders");
             }}
             className="flex items-center bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight"
           >
@@ -51,7 +51,7 @@ const TrainingPage = () => {
                 <div className="flex items-center justify-between p-2 bg-fourth rounded-lg shadow-lg  hover:bg-secondarylight hover:cursor-pointer">
                   <button
                     onClick={() => {
-                      navigate("/folders/training/play");
+                      navigate("/app/folders/training/play");
                     }}
                     className="flex items-center w-full gap-4 hover:cursor-pointer"
                   >

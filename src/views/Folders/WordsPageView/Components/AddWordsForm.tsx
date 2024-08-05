@@ -1,5 +1,6 @@
 import { Field, useFormik } from "formik";
 import {
+  RootState,
   useCreateWordMutation,
   useCreateWordsMutation,
 } from "../../../../shared/store";
@@ -10,12 +11,14 @@ import {
 } from "../../../../shared/store/slices/FolderSlice";
 import { FC } from "react";
 import { FaCheckCircle } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 const AddWordsForm: FC<{
   folder: IFolder;
   newID: number;
   closeModal: () => void;
 }> = (props): JSX.Element => {
+  const user = useSelector((state: RootState) => state.userProfile);
   const [createWord] = useCreateWordMutation();
   const [createWords] = useCreateWordsMutation();
   const formik = useFormik({
@@ -143,7 +146,7 @@ const AddWordsForm: FC<{
   const onWordCreate = async (newWord: INewWord) => {
 
     //UPDATE FOLDER - ADD WORD IN DB
-    return await createWord(newWord)
+    return await createWord({newWord:newWord, userID: user.value})
       .unwrap()
       .then((res) => {
         console.log("res from api:", res);
@@ -157,7 +160,7 @@ const AddWordsForm: FC<{
   const onWordsCreate = async (newWords: INewWords) => {
     
     //UPDATE FOLDER - ADD WORDS IN DB
-    return await createWords(newWords)
+    return await createWords({newWords:newWords, userID: user.value})
       .unwrap()
       .then((res) => {
         console.log("res from api:", res);

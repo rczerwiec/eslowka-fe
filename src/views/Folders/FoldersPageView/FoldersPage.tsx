@@ -17,8 +17,10 @@ import Character from "../../../shared/components/Character";
 import FoldersPageModal from "./Components/FoldersPageModal";
 
 const FoldersPage = () => {
+  const user = useSelector((state: RootState) => state.userProfile);
   const { isVisible, closeModal, toggleModal } = useModal();
-  const response = useFetchFoldersQuery("");
+  console.log(user.value);
+  const response = useFetchFoldersQuery(user.value);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const folderProfile = useSelector((state: RootState) => state.folderProfile);
@@ -26,10 +28,10 @@ const FoldersPage = () => {
 
   let renderedFolders;
   if (response.isLoading) {
-    renderedFolders = <div>Ładowanie...</div>;
+    renderedFolders = <div>Ładowanie.p..</div>;
   } else if (response.isError) {
     renderedFolders = <div>Error</div>;
-    navigate("/folders");
+
   } else if (response.isSuccess) {
     renderedFolders = response.data.map((folder: IFolder, index: number) => {
       console.log(folderProfile.id);
@@ -78,7 +80,7 @@ const FoldersPage = () => {
               <button
                 onClick={() => {
                   dispatch(change(folder));
-                  navigate("/folders/words");
+                  navigate("/app/folders/words");
                 }}
                 className="flex items-center gap-4 p-2 hover:cursor-pointer w-full h-full"
               >
@@ -93,7 +95,7 @@ const FoldersPage = () => {
                 <button
                   onClick={() => {
                     dispatch(change(folder));
-                    navigate("/folders/words");
+                    navigate("/app/folders/words");
                   }}
                   className="flex flex-col gap-1 text-fifth hover:cursor-pointer hover:text-main font-inter items-center"
                 >
@@ -103,7 +105,7 @@ const FoldersPage = () => {
                 <button
                   onClick={() => {
                     dispatch(change(folder));
-                    navigate("/folders/training");
+                    navigate("/app/folders/training");
                   }}
                   className="flex flex-col gap-1 text-fifth hover:cursor-pointer hover:text-main font-inter items-center"
                 >
