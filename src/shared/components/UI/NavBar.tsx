@@ -69,7 +69,7 @@ const NavBar:FC<{}> = (props):JSX.Element => {
           <div
             className="h-full flex items-center justify-between
                               bg-secondary 
-                              w-56 rounded-tl-xl rounded-bl-xl"
+                      w-min:54 gap-2 rounded-tl-xl rounded-bl-xl"
           >
             <Streak />
           <UserMenu dropDownClick={handleClick} userName={userName} />   

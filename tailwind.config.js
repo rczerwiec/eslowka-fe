@@ -15,6 +15,11 @@ module.exports = {
         fifth_light: "#F5F4F4",
         gold: "#FFD700",
         transparent_gray: "rgba(0,0,0, .6)",
+        gradient_from: "#D9D9D9",
+        gradient_to: "#93DED3"
+      },
+      borderRadius: {
+        login_screen: '190px',
       }
     },
     fontFamily: {

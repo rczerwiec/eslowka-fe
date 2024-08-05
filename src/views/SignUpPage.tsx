@@ -4,6 +4,9 @@ import { useCreateUserMutation } from "../shared/store";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { IUser } from "../shared/store/slices/UserSlice";
 import { auth } from "../firebase/firebas";
+import { HiMail } from "react-icons/hi";
+import loginPageSvg from "../shared/img/loginPage.svg"
+import Character from "../shared/components/Character";
 
 const SignUpPage = () => {
     const [createUser] = useCreateUserMutation();
@@ -36,30 +39,48 @@ const SignUpPage = () => {
         },
       });
 
-    return(
-    <div>
-            Register
-          <form onSubmit={formik.handleSubmit}>
-            <label htmlFor="email">Email Address</label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              onChange={formik.handleChange}
-              value={formik.values.email}
-            />
-            <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              onChange={formik.handleChange}
-              value={formik.values.password}
-            />
-
-            <button type="submit">Submit</button>
-          </form>
-        </div>)
-}
+      return (
+        <div className="flex flex-col h-screen items-center justify-center bg-gradient-to-r from-gradient_from to-gradient_to">
+          <section className="flex relative rounded-3xl min-h-[42rem] min-w-[80rem] bg-white shadow-lg">
+            <div className="flex flex-col gap-5 p-4 w-1/2 h-full justify-center items-center rounded-tl-3xl rounded-bl-3xl z-20">
+              <div className="font-inter font-bold text-[54px]">Utwórz konto!</div>
+              <form className="flex flex-col gap-3" onSubmit={formik.handleSubmit}>
+                <div className="flex justify-center items-center font-inter text-fifth font-bold">Wprowadź swoje dane!</div>
+                <div className="flex flex-col gap-4">
+                <input
+                  className="bg-fifth_light h-10 rounded-md p-3 w-[20rem]"
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="email"
+                  onChange={formik.handleChange}
+                  value={formik.values.email}
+                />
+                <input
+                  className="bg-fifth_light h-10 rounded-md p-3"
+                  id="password"
+                  name="password"
+                  type="password"
+                  placeholder="hasło"
+                  onChange={formik.handleChange}
+                  value={formik.values.password}
+                />
+                </div>
+                <div className="flex justify-center items-center">
+                  <button className="bg-secondary font-inter text-white font-bold text-xl w-fit px-16 py-2 rounded-xl" type="submit">Rejestruj!</button>
+                </div>
+              </form>
+            </div>
+            <div className="flex flex-col z-0 gap-5 p-4 w-1/2 justify-center items-center bg-secondary rounded-tr-3xl rounded-br-3xl rounded-tl-login_screen rounded-bl-login_screen">
+              <div className="font-inter font-bold z-20 text-[54px] text-white">Masz już konto?</div>
+              <button onClick={()=>{
+                navigate('/login')
+              }} className="bg-secondary z-20 font-inter text-white font-bold text-xl w-fit mt-2 px-16 py-3 rounded-2xl  border-white border-x-[5px] border-y-[5px]" type="submit">Logowanie!</button>
+            </div>
+            <Character alt="LoginPage character" className="absolute z-10 bottom-0 left-1/3 h-[30rem]" character={loginPageSvg}/>
+          </section>
+        </div>
+      );
+    }
 
 export default SignUpPage;
