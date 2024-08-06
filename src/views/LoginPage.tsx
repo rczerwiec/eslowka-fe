@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { HiMail } from "react-icons/hi";
 import loginPageSvg from "../shared/img/loginPage.svg"
 import Character from "../shared/components/Character";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -13,13 +15,21 @@ const LoginPage = () => {
       password: "",
     },
     onSubmit: (values) => {
-      doSignInWithEmailAndPassword(values.email, values.password);
+      doSignInWithEmailAndPassword(values.email, values.password).then(()=>{
+        toast.success("Pomyślnie zalogowano! Zostaniesz przekierowany!");
+        setTimeout(() => {
+          navigate("/app");
+        }, 5000);
+      }).catch((err)=>{
+        console.log(err);
+        toast.error("Błedny login lub hasło!");
+      });
       //CREATE USER IN MONGODB
-      navigate("/app");
     },
   });
 
   return (
+    <>
     <div className="flex flex-col h-screen items-center justify-center bg-gradient-to-r from-gradient_from to-gradient_to">
       <section className="flex relative rounded-3xl min-h-[42rem] min-w-[80rem] bg-white shadow-lg">
         <div className="flex flex-col gap-5 p-4 w-1/2 h-full justify-center items-center rounded-tl-3xl rounded-bl-3xl z-20">
@@ -68,6 +78,19 @@ const LoginPage = () => {
         <Character alt="LoginPage character" className="absolute z-10 bottom-0 left-1/3 h-[30rem]" character={loginPageSvg}/>
       </section>
     </div>
+    <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
+    </>
   );
 }
 

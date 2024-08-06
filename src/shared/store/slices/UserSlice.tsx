@@ -9,6 +9,7 @@ export interface IUser{
     id: string,
     uid: string,
     userName: string,
+    email: string,
     folders: [],
 }
 

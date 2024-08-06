@@ -27,16 +27,17 @@ const FoldersPage = () => {
 
 
   let renderedFolders;
+  let renderedFolderLength;
   if (response.isLoading) {
     renderedFolders = <div>Ładowanie.p..</div>;
   } else if (response.isError) {
     renderedFolders = <div>Error</div>;
 
   } else if (response.isSuccess) {
+    let wordAmount = 0;
     renderedFolders = response.data.map((folder: IFolder, index: number) => {
       console.log(folderProfile.id);
-
-
+      wordAmount = folder.words.length;
 
       const percentage = ~~((100*folder.currentProgress)/folder.maxProgress);
 
@@ -87,7 +88,7 @@ const FoldersPage = () => {
                 <TbFolderFilled className="bg-main text-white rounded-md" />
                 <div className="text-xl">{folder.folderName}</div>
                 <div className="text-xs text-fifth">
-                  (Słówka:{folder.words.length})
+                  (Słówka:{wordAmount})
                 </div>
               </button>
               <div className="flex gap-4 mr-4">
@@ -118,6 +119,7 @@ const FoldersPage = () => {
         </div>      
       );
     });
+    renderedFolderLength = renderedFolders.length;
   }
 
   return (
@@ -148,7 +150,7 @@ const FoldersPage = () => {
         </div>
       </div>
       <Character alt="character1" className="absolute z-0 w-1/5 bottom-0 right-0" character={character1}/>
-      <FoldersPageModal renderedFoldersLength={renderedFolders.length} isVisible={isVisible} closeModal={closeModal} />
+      <FoldersPageModal renderedFoldersLength={renderedFolderLength} isVisible={isVisible} closeModal={closeModal} />
     </>
   );
 };

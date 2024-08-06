@@ -131,7 +131,15 @@ const DropDown:FC<{dropDownClass: string, signOut: () => void}> = (props) => {
 }
 
 const UserMenu = ({dropDownClick, userName}:IhandleClick) => {
-  let shortUserName = userName.split('@')[0];
+  let shortUserName
+  if(userName!=undefined){
+    //shortUserName = userName.split('@')[0];
+    shortUserName = userName;
+  }
+  else{
+    shortUserName = "Ładowanie...";
+  }
+
 
 
   return (

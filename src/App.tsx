@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { RootState, useAppDispatch } from "./shared/store"
 import { getCurrentUser } from "./shared/store/slices/UserSlice"
 import { useNavigate } from "react-router-dom"
+import { ToastContainer } from "react-toastify"
 
 type Props = {
     children: string | JSX.Element | JSX.Element[] | ReactNode
