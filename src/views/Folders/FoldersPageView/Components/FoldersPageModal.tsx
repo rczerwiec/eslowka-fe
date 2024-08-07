@@ -7,6 +7,7 @@ import { IFolder } from "../../../../shared/store/slices/FolderSlice";
 import character2 from "../../../../shared/img/character2.svg";
 import { RootState, useCreateFolderMutation } from "../../../../shared/store";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const FoldersPageModal: FC<{renderedFoldersLength: Number, isVisible: boolean, closeModal: () => void}> = (props): JSX.Element => {
 
@@ -18,13 +19,18 @@ const FoldersPageModal: FC<{renderedFoldersLength: Number, isVisible: boolean, c
     const onCreateFolder = async (newFolder: IFolder) => {
       return await createFolder({newFolder: newFolder,userID:user.value})
         .unwrap()
-        .then((res) => {
-          console.log("res from api:", res);
-        })
-        .catch((err) => {
-          console.log("Error:", err);
+        .then(() => {
+          toast.success("Pomyślnie utworzono folder!");
+        }).catch(() => {
+          toast.error("Błąd podczas tworzenia folderu!");
         });
     };
+
+    const onSubmit = () => {
+      setNewFolder("");
+      props.closeModal();
+      onCreateFolder({ id:props.renderedFoldersLength , folderName: newFolder, words: [], currentProgress: 0, maxProgress: 0  });
+    }
 
 
 return(
@@ -34,31 +40,28 @@ return(
     <div className="font-inter font-bold text-3xl text-fifth z-10">
       Nowy Folder
     </div>
-    <div className="flex flex-col justify-center items-center mt-8 z-10">
+      <form onSubmit={onSubmit} className="flex flex-col justify-center items-center mt-8 z-10">
       <div className="font-inter font-medium text-xl text-fifth">
         Nazwa Folderu
       </div>
       <input
-        className="bg-fifth_light w-2/4 h-10 rounded-md p-3"
+        className="bg-fifth_light w-3/4 h-10 rounded-md p-3"
         placeholder="np. warzywa"
         value={newFolder}
         onChange={(e) => setNewFolder(e.target.value)}  
       ></input>
-    </div>
+          <button className="absolute bottom-0 right-0 pr-8 pb-6 text-3xl text-secondary hover:text-4xl hover:cursor-pointer">
+      <FaCheckCircle
+        onClick={onSubmit}
+      />
+    </button>
+      </form>
     
     <Character alt="character2" className="absolute z-0 w-3/6 bottom-0 left-auto" character={character2}/>
-    <div className="absolute top-0 right-0 pr-8 pt-6 text-3xl text-fifth hover:text-4xl hover:cursor-pointer">
-      <BiSolidExit onClick={props.closeModal} />
+    <div className="absolute z-20 top-0 right-0 pr-8 pt-6 text-3xl text-fifth"  >
+      <BiSolidExit onClick={props.closeModal}  className="hover:text-4xl hover:cursor-pointer"/>
     </div>
-    <div className="absolute bottom-0 right-0 pr-8 pb-6 text-3xl text-secondary hover:text-4xl hover:cursor-pointer">
-      <FaCheckCircle
-        onClick={() => {
-            setNewFolder("");
-          props.closeModal();
-          onCreateFolder({ id:props.renderedFoldersLength , folderName: newFolder, words: [], currentProgress: 0, maxProgress: 0  });
-        }}
-      />
-    </div>
+
   </div>
 </div>
 </Modal>)

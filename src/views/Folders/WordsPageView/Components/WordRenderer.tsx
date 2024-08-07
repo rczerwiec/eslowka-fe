@@ -5,6 +5,7 @@ import WordStatusForm from "./WordStatusForm";
 import { FaTrashAlt } from "react-icons/fa";
 import { RootState, useRemoveWordMutation } from "../../../../shared/store";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 export const WordsTable: FC<{ renderedWords: JSX.Element | undefined }> = (
   props
@@ -65,7 +66,11 @@ const WordRenderer: FC<{
                 removeWord({
                   wordToRemove: { word: word, folderID: props.folder.id },
                   userID: user.value,
-                });
+                }).then(() => {
+                  toast.success("Pomyślnie usunięto słówko!");
+                }).catch(() => {
+                  toast.error("Błąd podczas usuwania słówka!");
+                });;
               }}
             />
           </th>

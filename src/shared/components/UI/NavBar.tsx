@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { auth } from "../../../firebase/firebas";
 import { useSelector } from "react-redux";
 import { RootState, useFetchUserQuery } from "../../store";
+import { toast } from "react-toastify";
 
 interface IhandleClick{
   dropDownClick: () => void;
@@ -27,10 +28,13 @@ const NavBar:FC<{}> = (props):JSX.Element => {
   const handleLogout = () => {               
     signOut(auth).then(() => {
     // Sign-out successful.
-        navigate("/");
-        console.log("Signed out successfully")
+        toast.success("Pomyślnie wylogowano! Zostaniesz przekierowany!");
+        setTimeout(() => {
+          navigate("/");
+        }, 3000);
     }).catch((error) => {
-    // An error happened.
+    // An error happened
+    toast.success("Błąd podczas wylogowywania!");
     });
   }
 

@@ -75,7 +75,7 @@ const LoginPage = () => {
             navigate('/signup')
           }} className="bg-secondary z-20 font-inter text-white font-bold text-xl w-fit mt-8 px-16 py-3 rounded-2xl  border-white border-x-[5px] border-y-[5px]" type="submit">Dołącz do nas!</button>
         </div>
-        <Character alt="LoginPage character" className="absolute z-10 bottom-0 left-1/3 h-[30rem]" character={loginPageSvg}/>
+        <Character alt="LoginPage character" className="absolute z-10 bottom-0 left-1/3 h-[30rem] select-none" character={loginPageSvg}/>
       </section>
     </div>
     <ToastContainer
@@ -88,8 +88,9 @@ const LoginPage = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="colored"
+        theme="light"
       />
+      
     </>
   );
 }

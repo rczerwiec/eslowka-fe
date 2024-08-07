@@ -125,7 +125,7 @@ const SignUpPage = () => {
           </div>
           <Character
             alt="LoginPage character"
-            className="absolute z-10 bottom-0 left-1/3 h-[30rem]"
+            className="absolute z-10 bottom-0 left-1/3 h-[30rem] select-none"
             character={loginPageSvg}
           />
         </section>
@@ -140,7 +140,7 @@ const SignUpPage = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="colored"
+        theme="light"
       />
     </>
   );

@@ -12,6 +12,7 @@ import {
 import { FC } from "react";
 import { FaCheckCircle } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import { toast} from 'react-toastify';
 
 const AddWordsForm: FC<{
   folder: IFolder;
@@ -121,7 +122,11 @@ const AddWordsForm: FC<{
     },
     onSubmit: (values) => {
       if (values.toggle) {
-        onWordsCreate({ words: values.words, folderID: props.folder.id });
+        onWordsCreate({ words: values.words, folderID: props.folder.id }).then(() => {
+          toast.success("Pomyślnie utworzono słówka!");
+        }).catch(() => {
+          toast.error("Błąd podczas tworzenia słówek!");
+        });
         props.closeModal();
       } else {
         onWordCreate({
@@ -136,7 +141,11 @@ const AddWordsForm: FC<{
             reverseStreak: 0,
           },
           folderID: props.folder.id,
-        });
+        }).then(() => {
+          toast.success("Pomyślnie utworzono słówko!");
+        }).catch(() => {
+          toast.error("Błąd podczas tworzenia słówka!");
+        });;
         props.closeModal();
       }
     },
