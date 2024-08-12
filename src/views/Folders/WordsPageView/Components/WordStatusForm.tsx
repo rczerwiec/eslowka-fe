@@ -21,6 +21,7 @@ const WordStatusForm: FC<{ word: IWord }> = (props): JSX.Element => {
         repeated: props.word.repeated,
         streak: props.word.streak,
         reverseStreak: props.word.reverseStreak,
+        note: props.word.note,
       },
       folderID: props.word.folderId,
     }, userID: user.value });
@@ -31,23 +32,23 @@ const WordStatusForm: FC<{ word: IWord }> = (props): JSX.Element => {
     renderStatus = (
         <div className="flex justify-center gap-3">
             <FaFrownOpen className="text-red-500 border rounded-lg border-black"/>
-            <GrInProgress className="hover:cursor-pointer" onClick={()=>{changeStatus(1)}} />
-            <FaCheckCircle className="hover:cursor-pointer" onClick={()=>{changeStatus(2)}} />
+            <GrInProgress className="hover:cursor-pointer hover:text-secondary" onClick={()=>{changeStatus(1)}} />
+            <FaCheckCircle className="hover:cursor-pointer hover:text-secondary" onClick={()=>{changeStatus(2)}} />
         </div>
 )
   }
   else if (status === 1){
     renderStatus = (
     <div className="flex justify-center gap-3">
-    <FaFrownOpen className="hover:cursor-pointer" onClick={()=>{changeStatus(0)}}/>
+    <FaFrownOpen className="hover:cursor-pointer hover:text-secondary" onClick={()=>{changeStatus(0)}}/>
     <GrInProgress className="text-orange-600 border rounded-lg border-black" />
-    <FaCheckCircle className="hover:cursor-pointer" onClick={()=>{changeStatus(2)}} />
+    <FaCheckCircle className="hover:cursor-pointer hover:text-secondary" onClick={()=>{changeStatus(2)}} />
 </div>)}
   else{
     renderStatus = (
     <div className="flex justify-center gap-3">
-    <FaFrownOpen className="hover:cursor-pointer" onClick={()=>{changeStatus(0)}} />
-    <GrInProgress className="hover:cursor-pointer" onClick={()=>{changeStatus(1)}} />
+    <FaFrownOpen className="hover:cursor-pointer hover:text-secondary" onClick={()=>{changeStatus(0)}} />
+    <GrInProgress className="hover:cursor-pointer hover:text-secondary" onClick={()=>{changeStatus(1)}} />
     <FaCheckCircle className="text-green-500 border rounded-lg border-black" />
 </div>)
   }

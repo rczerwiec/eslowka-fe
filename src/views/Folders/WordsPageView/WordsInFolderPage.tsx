@@ -10,24 +10,37 @@ import {
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../../../shared/components/Modal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import StatusBox from "../../../shared/components/StatusBox";
 import Character from "../../../shared/components/Character";
 import AddWordsModal from "./Components/AddWordsModal";
 import WordRenderer, { WordsTable } from "./Components/WordRenderer";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
+import UpdateWordsModal from "./Components/UpdateWordsModal";
+import { IWord } from "../../../shared/store/slices/FolderSlice";
 
 const WordsInFolderPage = () => {
   const { isVisible, toggleModal, closeModal } = useModal();
+  const updateModal = useModal();
   const [newID, setNewID] = useState(0)
   const navigate = useNavigate();
   const folder = useSelector((state: RootState) => state.folderProfile);
+  const [currentWord, setCurrentWord] = useState<IWord>();
   const [page, setPage] = useState(1);
   const user = useSelector((state: RootState) => state.userProfile);
   const response = useFetchSpecificWordsQuery({folderID:folder.id, userID:user.value});
 
   let renderedWords;
   let availablePages=0;
+  useEffect(() => {
+    console.log(response.data);
+    console.log(folder.words);
+      if(folder.words === undefined){
+        console.log("nawiguje do strony z folderami")
+        navigate("/app/folders");
+      }
+
+  }, [])
   //LOADING THE TABLE
   if (response.isLoading) {
     renderedWords = <div>Ładowanie...</div>;
@@ -36,7 +49,12 @@ const WordsInFolderPage = () => {
     navigate("/app/folders");
   } else if (response.isSuccess) {
     //CALCULATE DATA PER PAGE
-    availablePages = response.data.length/12;
+    let responseDataLength = 0;
+    if(response !== undefined){
+      console.log("DŁUGOSC RESPONSE",response.data.length);
+      responseDataLength = response.data.length;
+    } 
+    availablePages = responseDataLength/12;
     availablePages = ~~availablePages+1;
     console.log(availablePages);
     let wordsData;
@@ -44,8 +62,9 @@ const WordsInFolderPage = () => {
     /////////////////////////////
 
 
-    renderedWords = <WordRenderer data={wordsData} folder={folder} setNewID={setNewID}/>
+    renderedWords = <WordRenderer setCurrentWord={setCurrentWord} data={wordsData} folder={folder} setNewID={setNewID} openUpdateModal={updateModal.toggleModal}/>
   }
+
 
   let pageArrows = <></>
   if(availablePages>1){
@@ -68,7 +87,12 @@ const WordsInFolderPage = () => {
       
     )
   }
-  const wordAmount = folder.words.length;
+  console.log("FOLDEr:", folder);
+  let folderLength = 1;
+  if(folder.words !== undefined){
+    folderLength = folder.words.length;
+  }
+  const wordAmount = folderLength;
   return (
     <>
       <div className="flex flex-col size-full">
@@ -129,6 +153,7 @@ const WordsInFolderPage = () => {
         folder={folder}
         newID={newID}
       />
+      <UpdateWordsModal currentWord={currentWord} isVisible={updateModal.isVisible} closeModal={updateModal.closeModal} folder={folder} newID={0}/>
     </>
   );
 };

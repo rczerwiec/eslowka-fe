@@ -28,14 +28,14 @@ const WordTranslationTraining = () => {
 
   const [isDisabled, setIsDisabled] = useState(false);
   const [ButtonsState, setButtonsState] = useState(["text-lg text-white h-14 bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight", "text-lg text-white hidden", "font-bold text-green-600 text-5xl hidden", "Dobrze!", "wpisz tłumaczenie!", "bg-fifth_light h-14 rounded-md w-96 p-3 font-thin text-base"]);
-  const [wordsState, setWordsState] = useState<IWord[]>([{word: "Ładowanie...", id: -1, translation: "Ładowanie...", repeated: 0, known: 0, folderId: -1, streak:0, reverseStreak: 0,}]);
+  const [wordsState, setWordsState] = useState<IWord[]>([{word: "Ładowanie...", id: -1, translation: "Ładowanie...",note: "", repeated: 0, known: 0, folderId: -1, streak:0, reverseStreak: 0,}]);
   const folder = useSelector((state: RootState) => state.folderProfile);
   const navigate = useNavigate();
   const {isLoading, isSuccess, error, data} = useFetchRandomWordsArrayQuery({folderID:folder.id, userID: user.value});
   const [updateStatus] = useUpdateWordStatusMutation();
   const inputRef = useRef<any>(null);
   const buttonRef = useRef<any>(null);
-  const [currentWord, setCurrentWord] = useState<IWord>({word: "Ładowanie...", id: -1, translation: "Ładowanie...", repeated: 0, known: 0, folderId: -1, streak:0, reverseStreak: 0});
+  const [currentWord, setCurrentWord] = useState<IWord>({word: "Ładowanie...", id: -1, translation: "Ładowanie...", note: "", repeated: 0, known: 0, folderId: -1, streak:0, reverseStreak: 0});
   const [status, setStatus] = useState<number>(-1);
 
   //IF INPUT IS NOT NULL - MAKE IT FOCUSED
@@ -95,6 +95,7 @@ const WordTranslationTraining = () => {
         id: currentWord.id,
         word: currentWord.word,
         translation: currentWord.translation,
+        note: currentWord.note,
         repeated: currentWord.repeated + 1,
         known: known,
         folderId: currentWord.folderId,
@@ -120,6 +121,7 @@ const WordTranslationTraining = () => {
         id: currentWord.id,
         word: currentWord.word,
         translation: currentWord.translation,
+        note: currentWord.note,
         repeated: currentWord.repeated + 1,
         known: known,
         folderId: currentWord.folderId,
@@ -347,7 +349,10 @@ let ButtonInput = (
         <div className={ButtonsState[2]}>
                 {ButtonsState[3]} - {currentWord.translation}
               </div>
+              <div className="flex flex-col gap-2 items-center justify-center">
             <div className="flex items-center justify-center gap-2 font-thin text-5xl">            {currentWord.word}{streakIcon}
+              </div>
+              <div className="text-sm font-inter font-thin text-fifth">{currentWord.note}</div>
             </div>
        <form onSubmit={formik.handleSubmit}>
         {ButtonInput}         

@@ -5,6 +5,7 @@ export interface IWord{
     folderId: number,
     word: string,
     translation: string,
+    note: string,
     repeated: number,
     known: number,
     streak: number,

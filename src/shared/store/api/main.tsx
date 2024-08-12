@@ -94,6 +94,16 @@ const mainApi = createApi({
           };
         },
       }),
+      updateWordDetails: builder.mutation({
+        invalidatesTags: ["Words", "Folders"],
+        query: (data:{updatedWord: INewWord, userID: string}) => {
+          return {
+            url: `/users/${data.userID}/word/details`,
+            method: "PATCH",
+            body: data.updatedWord.word,
+          };
+        },
+      }),
       removeWord: builder.mutation({
         invalidatesTags: ["Words", "Folders"],
         query: (data:{wordToRemove: INewWord, userID: string}) => {
@@ -128,6 +138,7 @@ export const {
   useCreateWordsMutation,
   useUpdateWordStatusMutation,
   useFetchRandomWordsArrayQuery,
-  useCreateUserMutation
+  useCreateUserMutation,
+  useUpdateWordDetailsMutation,
 } = mainApi;
 export { mainApi };

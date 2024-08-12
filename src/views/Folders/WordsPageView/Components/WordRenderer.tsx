@@ -6,8 +6,9 @@ import { FaTrashAlt } from "react-icons/fa";
 import { RootState, useRemoveWordMutation } from "../../../../shared/store";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { FiEdit } from "react-icons/fi";
 
-export const WordsTable: FC<{ renderedWords: JSX.Element | undefined }> = (
+export const WordsTable: FC<{ renderedWords: JSX.Element | undefined}> = (
   props
 ): JSX.Element => {
   return (
@@ -27,6 +28,8 @@ const WordRenderer: FC<{
   data: IWord[];
   folder: IFolder;
   setNewID: (newID: number) => void;
+  openUpdateModal: () => void;
+  setCurrentWord: (word: IWord) => void;
 }> = (props): JSX.Element => {
   const user = useSelector((state: RootState) => state.userProfile);
 
@@ -59,19 +62,29 @@ const WordRenderer: FC<{
           <th className="border-r-4 border-white">
             <WordStatusForm word={word} />
           </th>
-          <th className="flex justify-between items-center h-14 p-4">
+          <th className="flex justify-start gap-3 items-center h-14 p-4">
             <FaTrashAlt
-              className="hover:cursor-pointer"
+              className="hover:cursor-pointer hover:text-secondary"
               onClick={() => {
                 removeWord({
                   wordToRemove: { word: word, folderID: props.folder.id },
                   userID: user.value,
-                }).then(() => {
-                  toast.success("Pomyślnie usunięto słówko!");
-                }).catch(() => {
-                  toast.error("Błąd podczas usuwania słówka!");
-                });;
+                })
+                  .then(() => {
+                    toast.success("Pomyślnie usunięto słówko!");
+                  })
+                  .catch(() => {
+                    toast.error("Błąd podczas usuwania słówka!");
+                  });
               }}
+            />
+            <FiEdit
+              onClick={() => {
+                props.openUpdateModal();
+                console.log("setCurrentWord ->", word);
+                props.setCurrentWord(word);
+              }}
+              className="hover:cursor-pointer hover:text-secondary"
             />
           </th>
         </tr>
@@ -91,15 +104,24 @@ const WordRenderer: FC<{
             <th className="border-r-4 border-white">
               <WordStatusForm word={word} />
             </th>
-            <th className="flex justify-between items-center h-14 p-4">
-              <FaTrashAlt
-                className="hover:cursor-pointer"
+            <th className="flex justify-start gap-3 items-center h-14 p-4">
+            <FaTrashAlt
+                className="hover:cursor-pointer hover:text-secondary"
                 onClick={() => {
                   removeWord({
                     wordToRemove: { word: word, folderID: props.folder.id },
                     userID: user.value,
                   });
                 }}
+                
+              />
+                      <FiEdit
+                      onClick={() => {
+                        props.openUpdateModal();
+                        console.log("setCurrentWord ->", word);
+                        props.setCurrentWord(word);
+                      }}
+                className="hover:cursor-pointer hover:text-secondary"
               />
             </th>
           </tr>

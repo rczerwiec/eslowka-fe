@@ -28,7 +28,7 @@ type Props = {
     console.log(user.value)
     if(user.value === "b"){
         console.log("Nawiguje do strony z logowaniem")
-        navigate('/login')
+        //navigate('/login')
     }
 
     return (
