@@ -1,14 +1,27 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IFolder, INewWord, INewWords, IWord } from "../slices/FolderSlice";
 import { AnyARecord } from "dns";
-import { IUser } from "../slices/UserSlice";
+import { getCurrentUser, IUser } from "../slices/UserSlice";
 import { isUpsertQuery } from "@reduxjs/toolkit/dist/query/core/buildInitiate";
 import { useSelector } from "react-redux";
+import { RootState } from "../../store"
+
 //http://localhost:3000/users/669787b41e2ea369890f4f67/folders/0/words
 const mainApi = createApi({
   reducerPath: "main",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:3000",
+    prepareHeaders: async (headers, {getState}) => {
+      const user = await getCurrentUser();
+      console.log(user);
+      const store  = await getState() as RootState;
+      console.log("myTOKEN",store.userProfile.token);
+      console.log("UID",store.userProfile.value);
+      if (store) {
+        headers.set('Authorization', `${store.userProfile.token}`)
+      }
+      return headers;
+  }
   }),
   tagTypes: ["Words", "Folders"],
   endpoints(builder) {

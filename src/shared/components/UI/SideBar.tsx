@@ -14,7 +14,7 @@ const SideBar = () => {
                     <TbSquareRoundedLetterW className="text-2xl text-white"/>
                 </div>
                 <div  className="text-white font-inter font-bold text-base">
-                    Zbiory Słówek
+                    Kolekcje Słówek
                 </div>
             </div>
 
@@ -25,7 +25,7 @@ const SideBar = () => {
                     <TbFolderFilled className="text-2xl text-white"/>
                 </div>
                 <div  className="text-white font-inter font-bold text-base">
-                    Foldery
+                    Moje Foldery
                 </div>
             </div>
             

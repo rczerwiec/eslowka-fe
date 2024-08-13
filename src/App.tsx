@@ -25,7 +25,7 @@ type Props = {
         dispatch(getCurrentUser());
     }, [dispatch])
 
-    console.log(user.value)
+    console.log("TOKEN:",user.token)
     if(user.value === "b"){
         console.log("Nawiguje do strony z logowaniem")
         //navigate('/login')

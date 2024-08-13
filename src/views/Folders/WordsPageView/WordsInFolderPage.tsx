@@ -115,6 +115,15 @@ const WordsInFolderPage = () => {
             {pageArrows}
             <div
               onClick={() => {
+                toggleModal();
+              }}
+              className="flex items-center bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight"
+            >
+              <HiPlus />
+              <div className="text-lg">Nowe Słówko </div>
+            </div>
+            <div
+              onClick={() => {
                 navigate("/app/folders");
               }}
               className="flex items-center bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight"

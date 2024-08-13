@@ -81,7 +81,7 @@ const NavBar:FC<{}> = (props):JSX.Element => {
     <div>
       <div className="flex top-0 right-0 bg-gradient-to-r from-main to-secondary from-70% w-full h-14 justify-between items-center">
         <Logo />
-        <div className="flex h-full justify-center items-center">
+        <div className="flex gap-2 h-full justify-center items-center">
           <PremiumButton/>
           <div
             className="h-full flex items-center justify-between
@@ -100,7 +100,7 @@ const NavBar:FC<{}> = (props):JSX.Element => {
 const Streak = () => {
   return (
     <div className="flex items-center ml-6 ">
-      <div className="font-bold font-inter text-2xl">3</div>
+      <div className="font-bold font-inter text-2xl">0</div>
       <div>
         <FaFire className="text-xl" />
       </div>
@@ -162,7 +162,7 @@ const DropDown:FC<{signOut:()=>void, hoverOn:() => void, hoverOff:() => void}> =
   const navigate = useNavigate();
 
   return(
-    <div onMouseEnter={props.hoverOn} onMouseLeave={props.hoverOff} className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
+    <div onMouseEnter={props.hoverOn} onMouseLeave={props.hoverOff} className="absolute z-20 right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
     <div className="py-1" role="none">
     <a onClick={()=>{navigate('/app/settings')}} className="flex gap-2 block px-4 py-2 text-sm text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><IoMdSettings className="text-xl"/>Ustawienia</a>
     <a onClick={()=>{navigate('/app/importexport')}}  className="flex gap-2 block px-4 py-2 text-sm text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><FaDatabase className="text-xl"/>Import/Export</a>

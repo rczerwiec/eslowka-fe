@@ -15,10 +15,12 @@ export interface IUser{
 
 export interface IUserId{
     value: string,
+    token: string,
 }
 
 const initialState: IUserId = {
   value: "b",
+  token: "b",
 };
 
 export const userSlice = createSlice({
@@ -28,18 +30,23 @@ export const userSlice = createSlice({
     setCurrentUser: (state, action) => {
       state.value = action.payload;
     },
+    setCurrentToken: (state, action) => {
+      state.token = action.payload;
+    }
   },
 });
 
-export const { setCurrentUser } = userSlice.actions;
+export const { setCurrentUser, setCurrentToken } = userSlice.actions;
 
 export const getCurrentUser = () => (dispatch: any) => {
-  onAuthStateChanged(auth, (user) => {
+  onAuthStateChanged(auth, async (user) => {
     if (user) {
-      const uid = user.uid;  
+      user.getIdToken().then((token) => {
+        dispatch(setCurrentToken(token))
+        dispatch(setCurrentUser(user.uid));
+      })
       
-      dispatch(setCurrentUser(uid));
-      console.log("User dispatched", uid);
+      console.log("User dispatched", );
     } else {
       console.log("Unable to get current user");
     }
