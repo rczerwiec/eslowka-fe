@@ -88,7 +88,7 @@ const FoldersPage = () => {
       }
 
       return (
-        <div
+        <div key={folder.id}
           className="flex flex-col pl-4 mb-2 items-left
                 text-black text-3xl font-medium"
         >

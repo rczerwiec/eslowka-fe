@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IFolder, INewWord, INewWords, IWord } from "../slices/FolderSlice";
 import { AnyARecord } from "dns";
-import { getCurrentUser, IUser } from "../slices/UserSlice";
+import { getCurrentUser, ISettings, IUser } from "../slices/UserSlice";
 import { isUpsertQuery } from "@reduxjs/toolkit/dist/query/core/buildInitiate";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store"
@@ -23,7 +23,7 @@ const mainApi = createApi({
       return headers;
   }
   }),
-  tagTypes: ["Words", "Folders"],
+  tagTypes: ["Words", "Folders", "User"],
   endpoints(builder) {
     return {
       //CREATE USER============================================================
@@ -39,6 +39,7 @@ const mainApi = createApi({
       }),
       //GETTERS============================================================
       fetchUser: builder.query({
+        providesTags: ["User"],
         query: (userID: string) => {
           console.log();
           return {
@@ -107,6 +108,16 @@ const mainApi = createApi({
           };
         },
       }),
+      updateUserSettings: builder.mutation({
+        invalidatesTags: ["User"],
+        query: (data:{updatedSettings: ISettings, userID: string}) => {
+          return {
+            url: `/users/${data.userID}/settings`,
+            method: "PATCH",
+            body: data.updatedSettings,
+          };
+        },
+      }),
       updateWordDetails: builder.mutation({
         invalidatesTags: ["Words", "Folders"],
         query: (data:{updatedWord: INewWord, userID: string}) => {
@@ -164,5 +175,6 @@ export const {
   useCreateUserMutation,
   useUpdateWordDetailsMutation,
   useRemoveFolderMutation,
+  useUpdateUserSettingsMutation
 } = mainApi;
 export { mainApi };
