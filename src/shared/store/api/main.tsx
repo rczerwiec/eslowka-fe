@@ -70,7 +70,7 @@ const mainApi = createApi({
           return {
             url: `/users/${data.userID}/word`,
             method: "PATCH",
-            body: data.newWord.word,
+            body: {newWord: data.newWord.word, folderId: data.newWord.folderID},
           };
         },
       }),
@@ -114,6 +114,16 @@ const mainApi = createApi({
           };
         },
       }),
+      removeFolder: builder.mutation({
+        invalidatesTags: ["Words", "Folders"],
+        query: (data:{folderToRemove: IFolder, userID: string}) => {
+          return {
+            url: `/users/${data.userID}/folder`,
+            method: "DELETE",
+            body: data.folderToRemove,
+          };
+        },
+      }),
       createFolder: builder.mutation({
         invalidatesTags: ["Folders"],
         query: (data:{newFolder: IFolder, userID: string}) => {
@@ -140,5 +150,6 @@ export const {
   useFetchRandomWordsArrayQuery,
   useCreateUserMutation,
   useUpdateWordDetailsMutation,
+  useRemoveFolderMutation,
 } = mainApi;
 export { mainApi };

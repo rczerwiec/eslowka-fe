@@ -47,7 +47,7 @@ const TrainingPage = () => {
               className="flex flex-col pl-4 mb-2 items-left
                 text-black text-3xl font-medium"
             >
-              <div className="flex flex-col w-3/4 justify-center">
+              <div className="flex flex-col  gap-4 w-3/4 justify-center">
                 <div className="flex items-center justify-between p-2 bg-fourth rounded-lg shadow-lg  hover:bg-secondarylight hover:cursor-pointer">
                   <button
                     onClick={() => {
@@ -57,6 +57,18 @@ const TrainingPage = () => {
                   >
                     <FaPlayCircle className="bg-main text-white rounded-md" />
                     <div className="text-xl">Słówko - Tłumaczenie</div>
+                  </button>
+                  <div className="flex gap-4 mr-4"></div>
+                </div>
+                <div className="flex items-center justify-between p-2 bg-fourth rounded-lg shadow-lg  hover:bg-secondarylight hover:cursor-pointer">
+                  <button
+                    onClick={() => {
+                      navigate("/app/folders/training/playReversed");
+                    }}
+                    className="flex items-center w-full gap-4 hover:cursor-pointer"
+                  >
+                    <FaPlayCircle className="bg-main text-white rounded-md" />
+                    <div className="text-xl">Słówko - Tłumaczenie (Odwrotne)</div>
                   </button>
                   <div className="flex gap-4 mr-4"></div>
                 </div>

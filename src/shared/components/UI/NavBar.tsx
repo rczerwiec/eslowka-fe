@@ -14,8 +14,11 @@ import { RootState, useFetchUserQuery } from "../../store";
 import { toast } from "react-toastify";
 
 interface IhandleClick{
-  dropDownClick: () => void;
+  signOut: () => void;
   userName: string;
+  hoverOn: () => void;
+  hoverOff: () => void;
+  display: boolean;
 }
 
 const NavBar:FC<{}> = (props):JSX.Element => {
@@ -24,6 +27,16 @@ const NavBar:FC<{}> = (props):JSX.Element => {
   
   const [dropDown, setDropDown] = useState(false);
   const navigate = useNavigate();
+
+  const [display, setDisplay] = useState(false);
+
+  const hoverOn = () => {
+      setDisplay(true)
+  }
+
+  const hoverOff = () => {
+      setDisplay(false)
+  }
 
   const handleLogout = () => {               
     signOut(auth).then(() => {
@@ -76,12 +89,10 @@ const NavBar:FC<{}> = (props):JSX.Element => {
                       w-min:54 gap-2 rounded-tl-xl rounded-bl-xl"
           >
             <Streak />
-          <UserMenu dropDownClick={handleClick} userName={userName} />   
-          <DropDown dropDownClass={dropDownClass} signOut={handleLogout}/>
+          <UserMenu signOut={handleLogout} userName={userName} hoverOn={hoverOn} hoverOff={hoverOff} display={display}/>   
           </div>
         </div>
       </div>
-
     </div>
   );
 };
@@ -97,44 +108,7 @@ const Streak = () => {
   );
 };
 
-const DropDown:FC<{dropDownClass: string, signOut: () => void}> = (props) => {
-  return(
-    <div className={props.dropDownClass}>
-    <div className="flex pl-4 gap-2 h-12 items-center text-main hover:bg-secondarylight hover:cursor-pointer font-inter">
-      <IoMdSettings className="text-xl"/>
-      <div className="text-lg">Ustawienia</div>
-    </div>
-
-    <div className="flex pl-4 gap-2 h-12 items-center text-main hover:bg-secondarylight hover:cursor-pointer font-inter">
-      <FaDollarSign className="text-xl"/>
-      <div className="text-lg">Płatności</div>
-    </div>
-
-    <div className="flex pl-4 gap-2 h-12 items-center text-main hover:bg-secondarylight hover:cursor-pointer font-inter">
-      <FaDatabase className="text-xl"/>
-      <div className="text-lg">Import/Export</div>
-    </div>
-
-    <div className="flex pl-4 gap-2 h-12 items-center text-main hover:bg-secondarylight hover:cursor-pointer font-inter">
-      <MdOutlineImportContacts className="text-xl"/>
-      <div className="text-lg">Kontakt</div>
-    </div>
-
-    <div className="flex pl-4 gap-2 h-12 items-center text-main hover:bg-secondarylight hover:cursor-pointer font-inter">
-      <FaInfoCircle className="text-xl"/>
-      <div className="text-lg">Regulamin</div>
-    </div>
-
-    <div onClick={()=>props.signOut()} className="flex pl-4 gap-2 h-12 items-center text-main hover:bg-secondarylight hover:cursor-pointer font-inter">
-      <RiLogoutBoxFill className="text-xl"/>
-      <div className="text-lg">Wyloguj</div>
-    </div>
-
-  </div>
-  )
-}
-
-const UserMenu = ({dropDownClick, userName}:IhandleClick) => {
+const UserMenu = ({signOut, userName, hoverOn, hoverOff, display}:IhandleClick) => {
   let shortUserName
   if(userName!=undefined){
     //shortUserName = userName.split('@')[0];
@@ -153,8 +127,10 @@ const UserMenu = ({dropDownClick, userName}:IhandleClick) => {
         <FaUser className="text-2xl" />
       </div>
       <div>
-        <FaChevronDown onClick={dropDownClick} className="text-lg mr-2 hover:text-xl hover:cursor-pointer" />
+        <FaChevronDown onMouseEnter={hoverOn} className="text-lg mr-2 hover:text-xl hover:cursor-pointer" />
+        {display ? <DropDown signOut={signOut} hoverOff={hoverOff} hoverOn={hoverOn}/> : <></>}
       </div>
+
     </div>
   );
 };
@@ -170,14 +146,38 @@ const Logo = () => {
 };
 
 const PremiumButton = () => {
+  const navigate = useNavigate();
+
     return (
-        <div
+        <div onClick={()=>{navigate('/app/premium')}}
         className="flex w-28  mr-5 h-2/3 justify-center items-center
-                            bg-gold rounded-xl font-bold font-inter hover:cursor-pointer"
+                            bg-gold rounded-xl font-bold font-inter hover:cursor-pointer hover:bg-slate-200"
       >
         Premium
       </div>
     )
 }
+
+const DropDown:FC<{signOut:()=>void, hoverOn:() => void, hoverOff:() => void}> = (props) => {
+  const navigate = useNavigate();
+
+  return(
+    <div onMouseEnter={props.hoverOn} onMouseLeave={props.hoverOff} className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
+    <div className="py-1" role="none">
+    <a onClick={()=>{navigate('/app/settings')}} className="flex gap-2 block px-4 py-2 text-sm text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><IoMdSettings className="text-xl"/>Ustawienia</a>
+    <a onClick={()=>{navigate('/app/importexport')}}  className="flex gap-2 block px-4 py-2 text-sm text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><FaDatabase className="text-xl"/>Import/Export</a>
+    </div>
+    <div className="py-1" role="none">
+    <a onClick={()=>{navigate('/app/contact')}} className="flex gap-2 block px-4 py-2 text-sm text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><MdOutlineImportContacts className="text-xl"/>Kontakt/Pomoc</a>
+    <a onClick={()=>{navigate('/app/rules')}} className="flex gap-2 block px-4 py-2 text-sm text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><FaInfoCircle className="text-xl"/>Regulamin</a>
+    <a onClick={()=>{navigate('/app/payments')}} className="flex gap-2 block px-4 py-2 text-sm text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><FaDollarSign className="text-xl"/>Płatności</a>
+    </div>
+    <div className="py-1" role="none">
+    <a onClick={() => {props.signOut()}} className="flex gap-2 block px-4 py-2 text-sm text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><RiLogoutBoxFill className="text-xl"/>Wyloguj</a>
+    </div>
+  </div>
+  )
+}
+
 
 export default NavBar;

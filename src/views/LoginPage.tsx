@@ -19,7 +19,7 @@ const LoginPage = () => {
         toast.success("Pomyślnie zalogowano! Zostaniesz przekierowany!");
         setTimeout(() => {
           navigate("/app");
-        }, 5000);
+        }, 2500);
       }).catch((err)=>{
         console.log(err);
         toast.error("Błedny login lub hasło!");
@@ -80,7 +80,7 @@ const LoginPage = () => {
     </div>
     <ToastContainer
         position="bottom-center"
-        autoClose={5000}
+        autoClose={2500}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

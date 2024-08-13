@@ -13,7 +13,7 @@ import { RootState, useFetchRandomWordsArrayQuery, useUpdateWordStatusMutation }
 import { IWord } from "../../../shared/store/slices/FolderSlice";
 import { useFormik } from "formik";
 
-const WordTranslationTraining = () => {
+const TranslationWordTraining = () => {
   const user = useSelector((state: RootState) => state.userProfile);
 
   //FORMIK HOOK
@@ -91,7 +91,7 @@ const WordTranslationTraining = () => {
     }
     console.log(formik.values.translation);
     //IF IT'S CORRECT
-    if (formik.values.translation.toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\u0142/g, "l") === wordsState[wordsState.length - 1].translation.toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").replace(/\u0142/g, "l")){
+    if (formik.values.translation.toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\u0142/g, "l") === wordsState[wordsState.length - 1].word.toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").replace(/\u0142/g, "l")){
 
       if (currentWord.known === 0 && currentWord.streak === 2){
         known = 1;
@@ -164,7 +164,7 @@ const WordTranslationTraining = () => {
     console.log()
     console.log()
 
-    if (formik.values.translation.toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\u0142/g, "l") === wordsState[wordsState.length - 1].translation.toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").replace(/\u0142/g, "l")) {
+    if (formik.values.translation.toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\u0142/g, "l") === wordsState[wordsState.length - 1].word.toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").replace(/\u0142/g, "l")) {
       setButtonsState(["text-lg text-white hidden", "text-lg text-white h-14 bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight","font-bold text-green-600 text-5xl", "Dobrze!", "Błędne tłumaczenie!", "bg-fifth_light h-14 rounded-md w-96 p-3 font-thin text-base bg-green-200"]);
       setIsDisabled(true);
       buttonRef.current.focus();
@@ -339,7 +339,7 @@ let ButtonInput = (
             className="flex pl-4 h-20 w-3/4 items-center justify-between
                             text-black text-3xl font-medium"
           >
-            <div>Słówko - Tłumaczenie</div>
+            <div>Słówko - Tłumaczenie (Odwrotne)</div>
             <div
               onClick={() => {
                 navigate("/app/folders/training");
@@ -356,10 +356,10 @@ let ButtonInput = (
           >
 
         <div className={ButtonsState[2]}>
-                {ButtonsState[3]} - {currentWord.translation}
+                {ButtonsState[3]} - {currentWord.word}
               </div>
               <div className="flex flex-col gap-2 items-center justify-center">
-            <div className="flex items-center justify-center gap-2 font-thin text-5xl">            {currentWord.word}{streakIcon}
+            <div className="flex items-center justify-center gap-2 font-thin text-5xl">            {currentWord.translation}{streakIcon}
               </div>
               <div className="text-sm font-inter font-thin text-fifth">{currentWord.note}</div>
             </div>
@@ -387,4 +387,4 @@ let ButtonInput = (
     );
 };
 
-export default WordTranslationTraining;
+export default TranslationWordTraining;

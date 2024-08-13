@@ -33,8 +33,8 @@ const WordsInFolderPage = () => {
   let renderedWords;
   let availablePages=0;
   useEffect(() => {
-    console.log(response.data);
-    console.log(folder.words);
+    console.log("RESPONSE.DATA",response.data);
+    console.log("FOLDER.WORDS",folder.words);
       if(folder.words === undefined){
         console.log("nawiguje do strony z folderami")
         navigate("/app/folders");
@@ -56,11 +56,12 @@ const WordsInFolderPage = () => {
     } 
     availablePages = responseDataLength/12;
     availablePages = ~~availablePages+1;
-    console.log(availablePages);
+    
     let wordsData;
     wordsData = response.data.slice(12*(page-1),((12*page)-1));
     /////////////////////////////
-
+    console.log("ID FOLDER:",folder.id)
+    console.log("wordsData:",wordsData);
 
     renderedWords = <WordRenderer setCurrentWord={setCurrentWord} data={wordsData} folder={folder} setNewID={setNewID} openUpdateModal={updateModal.toggleModal}/>
   }

@@ -14,6 +14,14 @@ import { getCurrentUser } from "./shared/store/slices/UserSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "@reduxjs/toolkit/query";
 import App from "./App";
+import TranslationWordTraining from "./views/Folders/TrainingsPageview/TranslationWordTrainingPage";
+import WordsCollectionsPage from "./views/Folders/WordsCollectionPageView/WordsCollectionsPage";
+import RulesPage from "./views/RulesPage";
+import ContactPage from "./views/ContactPage";
+import SettingsPage from "./views/SettingsPage";
+import ImportExportPage from "./views/ImportExportPage";
+import PaymentsPage from "./views/PaymentsPage";
+import PremiumPage from "./views/PremiumPage";
 
 const MainApp = () => {
   console.log()
@@ -53,6 +61,62 @@ const MainApp = () => {
       ),
     },
     {
+      path: "/app/collections",
+      element: (
+       <App>
+        <WordsCollectionsPage/>
+       </App>
+      ),
+    },
+    {
+      path: "/app/rules",
+      element: (
+       <App>
+        <RulesPage/>
+       </App>
+      ),
+    },
+    {
+      path: "/app/contact",
+      element: (
+       <App>
+        <ContactPage/>
+       </App>
+      ),
+    },
+    {
+      path: "/app/settings",
+      element: (
+       <App>
+        <SettingsPage/>
+       </App>
+      ),
+    },
+    {
+      path: "/app/importexport",
+      element: (
+       <App>
+        <ImportExportPage/>
+       </App>
+      ),
+    },
+    {
+      path: "/app/payments",
+      element: (
+       <App>
+        <PaymentsPage/>
+       </App>
+      ),
+    },
+    {
+      path: "/app/premium",
+      element: (
+       <App>
+        <PremiumPage/>
+       </App>
+      ),
+    },
+    {
       path: "/app/folders/words",
       element: (
         <App>
@@ -73,6 +137,14 @@ const MainApp = () => {
       element: (
         <App>
         <WordTranslationTraining/>
+       </App>
+      ),
+    },
+    {
+      path: "/app/folders/training/playReversed",
+      element: (
+        <App>
+        <TranslationWordTraining/>
        </App>
       ),
     },
