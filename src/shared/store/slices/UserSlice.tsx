@@ -11,6 +11,13 @@ export interface IUser{
     userName: string,
     email: string,
     folders: [],
+    settings: ISettings;
+}
+
+export interface ISettings {
+  language: string;
+  darkmode: boolean;
+  wordsPerTraining: number;
 }
 
 export interface IUserId{

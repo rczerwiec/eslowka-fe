@@ -26,7 +26,8 @@ const RemoveConfirmModal: FC<{isVisible: boolean, closeModal: () => void, folder
                   removeFolder({folderToRemove: folderToRemove, userID: props.userID});
                   props.closeModal();
               }} className="bg-secondary p-4 px-6 text-xl font-bold font-inter rounded-xl">TAK</button>
-              <button className="bg-secondary p-4 px-6 text-xl font-bold font-inter rounded-xl">NIE</button>
+              <button
+              onClick={props.closeModal} className="bg-secondary p-4 px-6 text-xl font-bold font-inter rounded-xl">NIE</button>
               </div>
 
             </form>

@@ -28,6 +28,11 @@ const SignUpPage = () => {
           userName: userName,
           email: email,
           folders: [],
+          settings: {
+            language: "polish",
+            darkmode: false,
+            wordsPerTraining: 5,
+          }
         };
         createUser(newUser).then(() => {
           setTimeout(() => {
