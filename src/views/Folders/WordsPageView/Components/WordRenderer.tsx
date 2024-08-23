@@ -12,12 +12,12 @@ export const WordsTable: FC<{ renderedWords: JSX.Element | undefined}> = (
   props
 ): JSX.Element => {
   return (
-    <table>
-      <tr className="bg-secondary h-14 text-white ">
-        <th className="border-r-4 border-white">Słowo</th>
+    <table className="font-inter text-xl">
+      <tr className="bg-secondary h-10 text-white ">
+        <th className="rounded-tl-xl border-r-4 border-white">Słowo</th>
         <th className="border-r-4 border-white">Tłumaczenie</th>
         <th className="border-r-4 border-white">Status</th>
-        <th className="rounded-tr-xl">Opcje</th>
+        <th className="rounded-tr-xl w-14">Opcje</th>
       </tr>
       {props.renderedWords}
     </table>

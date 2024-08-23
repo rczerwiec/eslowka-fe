@@ -1,7 +1,5 @@
 import {auth} from "./firebase/firebas";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { useCreateUserMutation } from "./shared/store";
-import { IUser } from "./shared/store/slices/UserSlice";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export const doSignInWithEmailAndPassword = async (email: string, password: string)=>{
     return signInWithEmailAndPassword(auth, email, password);

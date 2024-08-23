@@ -3,10 +3,7 @@ import { HiPlus } from "react-icons/hi";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import character1 from "../../../shared/img/character1.svg";
 
-import {
-  RootState,
-  useFetchSpecificWordsQuery,
-} from "../../../shared/store";
+import { RootState, useFetchSpecificWordsQuery } from "../../../shared/store";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../../../shared/components/Modal";
@@ -22,25 +19,27 @@ import { IWord } from "../../../shared/store/slices/FolderSlice";
 const WordsInFolderPage = () => {
   const { isVisible, toggleModal, closeModal } = useModal();
   const updateModal = useModal();
-  const [newID, setNewID] = useState(0)
+  const [newID, setNewID] = useState(0);
   const navigate = useNavigate();
   const folder = useSelector((state: RootState) => state.folderProfile);
   const [currentWord, setCurrentWord] = useState<IWord>();
   const [page, setPage] = useState(1);
   const user = useSelector((state: RootState) => state.userProfile);
-  const response = useFetchSpecificWordsQuery({folderID:folder.id, userID:user.value});
+  const response = useFetchSpecificWordsQuery({
+    folderID: folder.id,
+    userID: user.value,
+  });
 
   let renderedWords;
-  let availablePages=0;
+  let availablePages = 0;
   useEffect(() => {
-    console.log("RESPONSE.DATA",response.data);
-    console.log("FOLDER.WORDS",folder.words);
-      if(folder.words === undefined){
-        console.log("nawiguje do strony z folderami")
-        navigate("/app/folders");
-      }
-
-  }, [])
+    console.log("RESPONSE.DATA", response.data);
+    console.log("FOLDER.WORDS", folder.words);
+    if (folder.words === undefined) {
+      console.log("nawiguje do strony z folderami");
+      navigate("/app/folders");
+    }
+  }, []);
   //LOADING THE TABLE
   if (response.isLoading) {
     renderedWords = <div>Ładowanie...</div>;
@@ -50,47 +49,61 @@ const WordsInFolderPage = () => {
   } else if (response.isSuccess) {
     //CALCULATE DATA PER PAGE
     let responseDataLength = 0;
-    if(response !== undefined){
-      console.log("DŁUGOSC RESPONSE",response.data.length);
+    if (response !== undefined) {
+      console.log("DŁUGOSC RESPONSE", response.data.length);
       responseDataLength = response.data.length;
-    } 
-    availablePages = responseDataLength/12;
-    availablePages = ~~availablePages+1;
-    
-    let wordsData;
-    wordsData = response.data.slice(12*(page-1),((12*page)-1));
-    /////////////////////////////
-    console.log("ID FOLDER:",folder.id)
-    console.log("wordsData:",wordsData);
+    }
+    availablePages = responseDataLength / 12;
+    availablePages = ~~availablePages + 1;
 
-    renderedWords = <WordRenderer setCurrentWord={setCurrentWord} data={wordsData} folder={folder} setNewID={setNewID} openUpdateModal={updateModal.toggleModal}/>
+    let wordsData;
+    wordsData = response.data.slice(12 * (page - 1), 12 * page - 1);
+    /////////////////////////////
+    console.log("ID FOLDER:", folder.id);
+    console.log("wordsData:", wordsData);
+
+    renderedWords = (
+      <WordRenderer
+        setCurrentWord={setCurrentWord}
+        data={wordsData}
+        folder={folder}
+        setNewID={setNewID}
+        openUpdateModal={updateModal.toggleModal}
+      />
+    );
   }
 
-
-  let pageArrows = <></>
-  if(availablePages>1){
+  let pageArrows = <></>;
+  if (availablePages > 1) {
     pageArrows = (
       <>
-      <div className="flex justify-center items-center text-base text-fifth">Strona {page}</div>
-      <div onClick={() => {
-        if(page>1){
-          setPage(page-1);
-        }
-        }} className="flex items-center bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight">
-        <FaAngleLeft />
-      </div>
-      <div              onClick={() => {
-        if(page<availablePages)
-          setPage(page+1);
-        }} className="flex items-center bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight">
-        <FaAngleRight />
-      </div></>
-      
-    )
+        <div className="flex justify-center items-center text-base text-fifth">
+          Strona {page}
+        </div>
+        <div
+          onClick={() => {
+            if (page > 1) {
+              setPage(page - 1);
+            }
+          }}
+          className="flex items-center bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight"
+        >
+          <FaAngleLeft />
+        </div>
+        <div
+          onClick={() => {
+            if (page < availablePages) setPage(page + 1);
+          }}
+          className="flex items-center bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight"
+        >
+          <FaAngleRight />
+        </div>
+      </>
+    );
   }
   console.log("FOLDEr:", folder);
   let folderLength = 1;
-  if(folder.words !== undefined){
+  if (folder.words !== undefined) {
     folderLength = folder.words.length;
   }
   const wordAmount = folderLength;
@@ -108,9 +121,9 @@ const WordsInFolderPage = () => {
                             text-black text-3xl font-medium"
         >
           <div className="flex justify-center items-center gap-2">
-          <div>{folder.folderName}
+            <div>{folder.folderName}</div>
+            <div className="text-xs text-fifth">({wordAmount} słówek)</div>
           </div>
-          <div className="text-xs text-fifth">({wordAmount} słówek)</div></div>
           <div className="flex gap-4">
             {pageArrows}
             <div
@@ -137,7 +150,7 @@ const WordsInFolderPage = () => {
           className="flex pl-4 items-left
                             text-black text-3xl font-medium"
         >
-          <div className="flex flex-col w-3/4 shadow-lg justify-center">
+          <div className="flex flex-col h-auto w-3/4 shadow-lg justify-start">
             <WordsTable renderedWords={renderedWords} />
           </div>
           <StatusBox />
@@ -163,7 +176,13 @@ const WordsInFolderPage = () => {
         folder={folder}
         newID={newID}
       />
-      <UpdateWordsModal currentWord={currentWord} isVisible={updateModal.isVisible} closeModal={updateModal.closeModal} folder={folder} newID={0}/>
+      <UpdateWordsModal
+        currentWord={currentWord}
+        isVisible={updateModal.isVisible}
+        closeModal={updateModal.closeModal}
+        folder={folder}
+        newID={0}
+      />
     </>
   );
 };

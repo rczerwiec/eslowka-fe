@@ -22,6 +22,7 @@ import SettingsPage from "./views/SettingsPage";
 import ImportExportPage from "./views/ImportExportPage";
 import PaymentsPage from "./views/PaymentsPage";
 import PremiumPage from "./views/PremiumPage";
+import FrontPage from "./views/FrontPage";
 
 const MainApp = () => {
   console.log()
@@ -98,6 +99,12 @@ const MainApp = () => {
        <App>
         <ImportExportPage/>
        </App>
+      ),
+    },
+    {
+      path: "/hello",
+      element: (
+        <FrontPage/>
       ),
     },
     {
