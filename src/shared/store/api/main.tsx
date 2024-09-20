@@ -10,7 +10,7 @@ import { RootState } from "../../store"
 const mainApi = createApi({
   reducerPath: "main",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3000",
+    baseUrl: "http://94.72.141.213:3000/",
     prepareHeaders: async (headers, {getState}) => {
       const user = await getCurrentUser();
       console.log(user);
