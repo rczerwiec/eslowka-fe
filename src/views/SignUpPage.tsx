@@ -62,10 +62,20 @@ const SignUpPage = () => {
 
   return (
     <>
-      <div className="flex flex-col h-screen items-center justify-center bg-gradient-to-r from-gradient_from to-gradient_to">
-        <section className="flex relative rounded-3xl min-h-[42rem] min-w-[80rem] bg-white shadow-lg">
-          <div className="flex flex-col gap-5 p-4 w-1/2 h-full justify-center items-center rounded-tl-3xl rounded-bl-3xl z-20">
-            <div className="font-inter font-bold text-[54px]">
+      <div className="flex flex-col h-screen
+       items-center justify-center 
+       bg-gradient-to-r from-gradient_from to-gradient_to">
+        <section className="flex relative max-md:flex-col
+        rounded-3xl 
+        md:min-h-[42rem] md:min-w-[80rem] max-md:w-full max-md:h-full 
+        bg-white shadow-lg">
+          <div className="flex flex-col
+           gap-5 p-4 
+           w-1/2 h-full max-md:w-full 
+           justify-center items-center 
+           rounded-tl-3xl rounded-bl-3xl z-20">
+            <div className="font-inter font-bold
+                            text-[54px] max-lg:text-[42px]">
               Utwórz konto!
             </div>
             <form
@@ -114,8 +124,13 @@ const SignUpPage = () => {
               </div>
             </form>
           </div>
-          <div className="flex flex-col z-0 gap-5 p-4 w-1/2 justify-center items-center bg-secondary rounded-tr-3xl rounded-br-3xl rounded-tl-login_screen rounded-bl-login_screen">
-            <div className="font-inter font-bold z-20 text-[54px] text-white">
+          <div className="flex flex-col
+           z-0 gap-5 p-4 
+           lg:w-1/2 max-lg:w-full 
+           justify-center items-center 
+           bg-secondary 
+           max-lg:rounded-3xl lg:rounded-tr-3xl lg:rounded-br-3xl lg:rounded-tl-login_screen lg:rounded-bl-login_screen">
+            <div className="font-inter font-bold z-20 text-[54px] text-white max-lg:text-[32px]">
               Masz już konto?
             </div>
             <button
@@ -130,7 +145,7 @@ const SignUpPage = () => {
           </div>
           <Character
             alt="LoginPage character"
-            className="absolute z-10 bottom-0 left-1/3 h-[30rem] select-none"
+            className="absolute z-10 bottom-0 left-1/3 h-[30rem] select-none max-lg:hidden"
             character={loginPageSvg}
           />
         </section>

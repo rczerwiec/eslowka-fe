@@ -30,10 +30,19 @@ const LoginPage = () => {
 
   return (
     <>
-    <div className="flex flex-col h-screen items-center justify-center bg-gradient-to-r from-gradient_from to-gradient_to">
-      <section className="flex relative rounded-3xl min-h-[42rem] min-w-[80rem] bg-white shadow-lg">
-        <div className="flex flex-col gap-5 p-4 w-1/2 h-full justify-center items-center rounded-tl-3xl rounded-bl-3xl z-20">
-          <div className="font-inter font-bold text-[54px]">Zaloguj się!</div>
+    <div className="flex flex-col h-screen
+       items-center justify-center 
+       bg-gradient-to-r from-gradient_from to-gradient_to">
+      <section className="flex relative max-lg:flex-col
+        rounded-3xl 
+        lg:min-h-[42rem] lg:min-w-[80rem] max-lg:w-full max-lg:h-full 
+        bg-white shadow-lg">
+          <div className="flex flex-col
+           gap-5 p-4 
+           w-1/2 h-full max-lg:w-full 
+           justify-center items-center 
+           rounded-tl-3xl rounded-bl-3xl z-20">
+          <div className="font-inter font-bold text-[54px] max-lg:text-[41px]">Zaloguj się!</div>
           <div className="flex flex-row gap-4 text-[42px] text-fifth">
             <div className="border border-black rounded-xl p-2"><HiMail/></div>
             <div className="border border-black rounded-xl p-2"><HiMail/></div>
@@ -68,14 +77,19 @@ const LoginPage = () => {
             </div>
           </form>
         </div>
-        <div className="flex flex-col z-0 gap-5 p-4 w-1/2 justify-center items-center bg-secondary rounded-tr-3xl rounded-br-3xl rounded-tl-login_screen rounded-bl-login_screen">
-          <div className="font-inter font-bold z-20 text-[54px] text-white">Witaj, przybyszu!</div>
-          <div className="flex justify-center z-20 items-center font-inter text-lg text-white font-medium">Chciałbyś nauczyć się nowych słówek, ale nie wiesz jak zacząć?</div>
+        <div className="flex flex-col
+           z-0 gap-5 p-4 
+           lg:w-1/2 max-lg:w-full 
+           justify-center items-center 
+           bg-secondary 
+           max-lg:rounded-3xl lg:rounded-tr-3xl lg:rounded-br-3xl lg:rounded-tl-login_screen lg:rounded-bl-login_screen">
+          <div className="font-inter font-bold z-20 text-[54px] text-white max-lg:text-[32px] max-lg:text-center">Witaj, przybyszu!</div>
+          <div className="flex justify-center z-20 items-center font-inter text-lg text-white font-medium max-lg:text-center">Chciałbyś nauczyć się nowych słówek, ale nie wiesz jak zacząć?</div>
           <button onClick={()=>{
             navigate('/signup')
           }} className="bg-secondary z-20 font-inter text-white font-bold text-xl w-fit mt-8 px-16 py-3 rounded-2xl  border-white border-x-[5px] border-y-[5px]" type="submit">Dołącz do nas!</button>
         </div>
-        <Character alt="LoginPage character" className="absolute z-10 bottom-0 left-1/3 h-[30rem] select-none" character={loginPageSvg}/>
+        <Character alt="LoginPage character" className="absolute z-10 bottom-0 left-1/3 h-[30rem] select-none max-lg:hidden" character={loginPageSvg}/>
       </section>
     </div>
     <ToastContainer
