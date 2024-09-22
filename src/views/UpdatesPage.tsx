@@ -14,6 +14,12 @@ const UpdatesPage = () => {
           Aktualizacje
         </div>
         <div className="relative inline-block text-left pl-4">
+        <div className="text-lg font-inter font-bold">1.0.2 alpha</div>
+          <div>
+            <ul className="pl-2 text-sm font-inter">
+              <li>Usunięte niezaimplementowane "puste strony", do czasu ich zaimplementowania</li>
+            </ul>
+          </div>
         <div className="text-lg font-inter font-bold">1.0.1 alpha</div>
           <div>
             <ul className="pl-2 text-sm font-inter">

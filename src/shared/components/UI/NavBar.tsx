@@ -178,7 +178,7 @@ const DropDown:FC<{signOut:()=>void, hoverOn:() => void, hoverOff:() => void}> =
     }} className="flex gap-2 block px-4 py-2 text-sm text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><IoMdSettings className="text-xl"/>Ustawienia</a>
     <a onClick={()=>{navigate('/app/importexport')
       props.hoverOff();
-    }}  className="flex gap-2 block px-4 py-2 text-sm text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><FaDatabase className="text-xl"/>Import/Export</a>
+    }}  className="hidden flex gap-2 block px-4 py-2 text-sm text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><FaDatabase className="text-xl"/>Import/Export</a>
     </div>
     <div className="py-1" role="none">
     <a onClick={()=>{navigate('/app/contact')
@@ -186,10 +186,10 @@ const DropDown:FC<{signOut:()=>void, hoverOn:() => void, hoverOff:() => void}> =
     }} className="flex gap-2 block px-4 py-2 text-sm text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><MdOutlineImportContacts className="text-xl"/>Kontakt/Pomoc</a>
     <a onClick={()=>{navigate('/app/rules')
       props.hoverOff();
-    }} className="flex gap-2 block px-4 py-2 text-sm text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><FaInfoCircle className="text-xl"/>Regulamin</a>
+    }} className="hidden flex gap-2 block px-4 py-2 text-sm text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><FaInfoCircle className="text-xl"/>Regulamin</a>
     <a onClick={()=>{navigate('/app/payments')
       props.hoverOff();
-    }} className="flex gap-2 block px-4 py-2 text-sm text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><FaDollarSign className="text-xl"/>Płatności</a>
+    }} className="hidden flex gap-2 block px-4 py-2 text-sm text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><FaDollarSign className="text-xl"/>Płatności</a>
     <a onClick={()=>{navigate('/app/updates')
       props.hoverOff();
     }} className="flex gap-2 block px-4 py-2 text-sm text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><MdOutlinePublishedWithChanges  className="text-xl"/>Aktualizacje</a>

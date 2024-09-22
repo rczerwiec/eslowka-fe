@@ -11,7 +11,7 @@ const SideBar = () => {
                 <div>
                         <div onClick={()=>{
                             navigate('/app/collections')
-                        }} className="flex h-12 items-center pl-4 gap-2 hover:bg-third hover:cursor-pointer">
+                        }} className="flex h-12 items-center pl-4 gap-2 hover:bg-third hover:cursor-pointer hidden">
                         <div>
                             <TbSquareRoundedLetterW className="text-2xl text-white"/>
                         </div>
@@ -32,7 +32,7 @@ const SideBar = () => {
                     </div>
                 </div>
                 <div className="text-white p-2 text-xs">
-                    1.0.1 alpha
+                    1.0.2 alpha
                 </div>
             </div>
 
