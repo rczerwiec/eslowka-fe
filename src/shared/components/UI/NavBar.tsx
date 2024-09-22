@@ -86,7 +86,7 @@ const NavBar:FC<{}> = (props):JSX.Element => {
           <div
             className="h-full flex items-center justify-between
                               bg-secondary 
-                      w-min:54 gap-2 rounded-tl-xl rounded-bl-xl"
+                      w-min:54 max-lg:w-screen gap-2 lg:rounded-tl-xl lg:rounded-bl-xl"
           >
             <Streak />
           <UserMenu signOut={handleLogout} userName={userName} hoverOn={hoverOn} hoverOff={hoverOff} display={display}/>   
@@ -138,7 +138,7 @@ const Logo = () => {
   return (
     <div
       className="text-secondary font-bold font-inter text-3xl
-        pl-4"
+        pl-4 max-lg:hidden"
     >
       ESłówka.pl
     </div>
@@ -151,7 +151,7 @@ const PremiumButton = () => {
     return (
         <div onClick={()=>{navigate('/app/premium')}}
         className="flex w-28  mr-5 h-2/3 justify-center items-center
-                            bg-gold rounded-xl font-bold font-inter hover:cursor-pointer hover:bg-slate-200"
+                            bg-gold rounded-xl font-bold font-inter hover:cursor-pointer hover:bg-slate-200 max-lg:hidden"
       >
         Premium
       </div>

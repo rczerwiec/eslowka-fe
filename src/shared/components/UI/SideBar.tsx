@@ -6,7 +6,7 @@ const SideBar = () => {
     const navigate = useNavigate();
 
     return(
-        <div className="relative top-0 left-0 bg-main w-60 h-full">
+        <div className="relative top-0 left-0 bg-main w-60 h-full max-lg:hidden">
             <div onClick={()=>{
                     navigate('/app/collections')
                 }} className="flex h-12 items-center pl-4 gap-2 hover:bg-third hover:cursor-pointer">

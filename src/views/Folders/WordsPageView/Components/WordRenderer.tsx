@@ -16,7 +16,7 @@ export const WordsTable: FC<{ renderedWords: JSX.Element | undefined}> = (
       <tr className="bg-secondary h-10 text-white ">
         <th className="rounded-tl-xl border-r-4 border-white">Słowo</th>
         <th className="border-r-4 border-white">Tłumaczenie</th>
-        <th className="border-r-4 border-white">Status</th>
+        <th className="border-r-4 border-white max-lg:hidden">Status</th>
         <th className="rounded-tr-xl w-14">Opcje</th>
       </tr>
       {props.renderedWords}
@@ -59,7 +59,7 @@ const WordRenderer: FC<{
             {word.word}
           </th>
           <th className="border-r-4 border-white">{word.translation}</th>
-          <th className="border-r-4 border-white">
+          <th className="border-r-4 border-white max-lg:hidden">
             <WordStatusForm word={word} />
           </th>
           <th className="flex justify-start gap-3 items-center h-14 p-4">
@@ -101,7 +101,7 @@ const WordRenderer: FC<{
               {word.word}
             </th>
             <th className="border-r-4 border-white">{word.translation}</th>
-            <th className="border-r-4 border-white">
+            <th className="border-r-4 border-white max-lg:hidden">
               <WordStatusForm word={word} />
             </th>
             <th className="flex justify-start gap-3 items-center h-14 p-4">

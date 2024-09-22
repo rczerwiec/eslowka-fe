@@ -54,7 +54,7 @@ const FoldersPage = () => {
       );
 
       let progressPanel = (
-        <div className="flex items-center">
+        <div className="flex items-center max-lg:hidden">
           <div className="text-fifth font-inter font-medium text-base">
             Progress:
           </div>
@@ -65,7 +65,7 @@ const FoldersPage = () => {
       );
       if (percentage > 40 && percentage < 70) {
         progressPanel = (
-          <div className="flex items-center">
+          <div className="flex items-center max-lg:hidden">
             <div className="text-fifth font-inter font-medium text-base">
               Progress:
             </div>
@@ -76,7 +76,7 @@ const FoldersPage = () => {
         );
       } else if (percentage >= 70) {
         progressPanel = (
-          <div className="flex items-center">
+          <div className="flex items-center max-lg:hidden">
             <div className="text-fifth font-inter font-medium text-base">
               Progress:
             </div>
@@ -90,21 +90,21 @@ const FoldersPage = () => {
       return (
         <div key={folder.id}
           className="flex flex-col pl-4 mb-2 items-left
-                text-black text-3xl font-medium"
+                text-black text-3xl font-medium max-lg:pr-4"
         >
-          <div className="flex flex-col w-3/4 justify-center">
+          <div className="flex flex-col w-3/4 max-lg:w-full justify-center">
             <div className="flex items-center justify-between bg-fourth rounded-lg shadow-lg  hover:bg-secondarylight">
               <button
                 onClick={() => {
                   dispatch(change(folder));
                   navigate("/app/folders/words");
                 }}
-                className="flex items-center gap-4 p-2 hover:cursor-pointer w-full h-full"
+                className="flex items-center gap-4 p-2 hover:cursor-pointer h-full"
               >
                 <TbFolderFilled className="bg-main text-white rounded-md" />
-                <div className="text-xl">{folder.id}</div>
+                <div className="text-xl hidden">{folder.id}</div>
                 <div className="text-xl">{folder.folderName}</div>
-                <div className="text-xs text-fifth">(Słówka:{wordAmount})</div>
+                <div className="text-xs text-fifth max-lg:hidden">(Słówka:{wordAmount})</div>
               </button>
               <div className="flex gap-4 mr-4">
                 {progressPanel}
@@ -166,7 +166,7 @@ const FoldersPage = () => {
         </div>
         <div
           className="flex pl-4 h-20 items-center
-                            text-black text-3xl font-medium"
+                            text-black text-3xl font-medium "
         >
           Twoje Foldery
         </div>
@@ -182,7 +182,7 @@ const FoldersPage = () => {
       </div>
       <Character
         alt="character1"
-        className="absolute z-0 w-1/5 bottom-0 right-0"
+        className="absolute z-0 w-1/5 bottom-0 right-0 max-lg:hidden"
         character={character1}
       />
       <FoldersPageModal

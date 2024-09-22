@@ -117,10 +117,10 @@ const WordsInFolderPage = () => {
           Foldery - {folder.folderName}
         </div>
         <div
-          className="flex pl-4 h-20 w-3/4 items-center justify-between
+          className="flex pl-4 h-20 w-3/4 max-lg:w-full items-center justify-between max-lg:justify-center
                             text-black text-3xl font-medium"
         >
-          <div className="flex justify-center items-center gap-2">
+          <div className="flex justify-center items-center gap-2 max-lg:hidden">
             <div>{folder.folderName}</div>
             <div className="text-xs text-fifth">({wordAmount} słówek)</div>
           </div>
@@ -147,10 +147,10 @@ const WordsInFolderPage = () => {
           </div>
         </div>
         <div
-          className="flex pl-4 items-left
+          className="flex pl-4 max-lg:pr-4 items-left
                             text-black text-3xl font-medium"
         >
-          <div className="flex flex-col h-auto w-3/4 shadow-lg justify-start">
+          <div className="flex flex-col h-auto w-3/4 max-lg:w-full shadow-lg justify-start">
             <WordsTable renderedWords={renderedWords} />
           </div>
           <StatusBox />
@@ -167,7 +167,7 @@ const WordsInFolderPage = () => {
       </div>
       <Character
         alt="character1"
-        className="absolute z-0 w-1/5 bottom-0 right-0"
+        className="absolute z-0 w-1/5 bottom-0 right-0 max-lg:hidden"
         character={character1}
       />
       <AddWordsModal
