@@ -23,6 +23,7 @@ import ImportExportPage from "./views/ImportExportPage";
 import PaymentsPage from "./views/PaymentsPage";
 import PremiumPage from "./views/PremiumPage";
 import FrontPage from "./views/FrontPage";
+import UpdatesPage from "./views/UpdatesPage";
 
 const MainApp = () => {
   console.log()
@@ -120,6 +121,14 @@ const MainApp = () => {
       element: (
        <App>
         <PremiumPage/>
+       </App>
+      ),
+    },
+    {
+      path: "/app/updates",
+      element: (
+       <App>
+        <UpdatesPage/>
        </App>
       ),
     },

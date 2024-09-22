@@ -3,7 +3,7 @@ import { FaFire } from "react-icons/fa6";
 import { FaUser, FaChevronDown, FaDatabase, FaInfoCircle, FaDollarSign } from "react-icons/fa";
 import { IoMdSettings } from "react-icons/io";
 import { RiLogoutBoxFill } from "react-icons/ri";
-import { MdOutlineImportContacts } from "react-icons/md";
+import { MdOutlineImportContacts, MdOutlinePublishedWithChanges } from "react-icons/md";
 
 import {FC, useState } from "react";
 import { signOut } from "firebase/auth";
@@ -171,6 +171,7 @@ const DropDown:FC<{signOut:()=>void, hoverOn:() => void, hoverOff:() => void}> =
     <a onClick={()=>{navigate('/app/contact')}} className="flex gap-2 block px-4 py-2 text-sm text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><MdOutlineImportContacts className="text-xl"/>Kontakt/Pomoc</a>
     <a onClick={()=>{navigate('/app/rules')}} className="flex gap-2 block px-4 py-2 text-sm text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><FaInfoCircle className="text-xl"/>Regulamin</a>
     <a onClick={()=>{navigate('/app/payments')}} className="flex gap-2 block px-4 py-2 text-sm text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><FaDollarSign className="text-xl"/>Płatności</a>
+    <a onClick={()=>{navigate('/app/updates')}} className="flex gap-2 block px-4 py-2 text-sm text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><MdOutlinePublishedWithChanges  className="text-xl"/>Aktualizacje</a>
     </div>
     <div className="py-1" role="none">
     <a onClick={() => {props.signOut()}} className="flex gap-2 block px-4 py-2 text-sm text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><RiLogoutBoxFill className="text-xl"/>Wyloguj</a>
