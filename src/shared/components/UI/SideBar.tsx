@@ -32,7 +32,7 @@ const SideBar = () => {
                     </div>
                 </div>
                 <div className="text-white p-2 text-xs">
-                    1.0.0 alpha
+                    1.0.1 alpha
                 </div>
             </div>
 

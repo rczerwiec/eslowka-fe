@@ -14,6 +14,16 @@ const UpdatesPage = () => {
           Aktualizacje
         </div>
         <div className="relative inline-block text-left pl-4">
+        <div className="text-lg font-inter font-bold">1.0.1 alpha</div>
+          <div>
+            <ul className="pl-2 text-sm font-inter">
+              <li>"Twoje Foldery" i "Kolekcje Słowek" dodane do menu w responsywnej wersji aplikacji</li>
+              <li>Menu rozwijane zamyka się po wybraniu danej opcji</li>
+              <li>Dodana możliwość resetu hasła</li>
+              <li>Dodana możliwość weryfikacji adresu email</li>
+              <li>Dodana możliwość rejestracji z pomocą konta Google</li>
+            </ul>
+          </div>
           <div className="text-lg font-inter font-bold">1.0.0 alpha</div>
           <div>
             <ul className="pl-2 text-sm font-inter">

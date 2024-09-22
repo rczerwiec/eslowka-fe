@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { useCreateUserMutation } from "../shared/store";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, GoogleAuthProvider, sendEmailVerification, signInWithPopup } from "firebase/auth";
 import { IUser } from "../shared/store/slices/UserSlice";
 import { auth } from "../firebase/firebas";
 import { HiMail } from "react-icons/hi";
@@ -12,7 +12,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const SignUpPage = () => {
   const [createUser] = useCreateUserMutation();
-
   const doCreateUserWithEmailAndPassword = async (
     email: string,
     userName: string,
@@ -20,6 +19,7 @@ const SignUpPage = () => {
   ) => {
     return createUserWithEmailAndPassword(auth, email, password)
       .then((user) => {
+        sendEmailVerification(user.user);
         toast.success("Pomyślnie utworzono konto! Zostaniesz przekierowany!");
         console.log(password);
         let newUser = {

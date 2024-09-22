@@ -6,20 +6,69 @@ import loginPageSvg from "../shared/img/loginPage.svg"
 import Character from "../shared/components/Character";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { GoogleAuthProvider, sendPasswordResetEmail, signInWithPopup, signOut } from "firebase/auth";
+import { auth } from "../firebase/firebas";
+import { useCreateUserMutation } from "../shared/store";
+import { FaGoogle } from "react-icons/fa6";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const [createUser] = useCreateUserMutation();
+
+  const googleSignIn = () =>{
+    const googleAuthProvider = new GoogleAuthProvider();
+    return signInWithPopup(auth, googleAuthProvider);
+  }
+
+  const handleGoogleSignIn = async (e:any) => {
+    e.preventDefault();
+    try {
+      await googleSignIn().then((obj)=>{
+        let newUser = {
+          id: obj.user.uid,
+          uid: obj.user.uid,
+          userName: obj.user.displayName,
+          email: obj.user.email,
+          folders: [],
+          settings: {
+            language: "polish",
+            darkmode: false,
+            wordsPerTraining: 5,
+          }
+        };
+        createUser(newUser).then(() => {
+          setTimeout(() => {
+            toast.success("Pomyślnie zalogowano! Zostaniesz przekierowany!");
+            navigate("/app");
+          }, 5000);
+        }).catch((err) => {
+          toast.error("Wystąpił błąd podczas rejestracji z użyciem Google!");
+        }
+      );
+      })
+    } catch (error) {
+      toast.error("Błąd podczas rejestracji z użyciem Google!");
+    }
+  };
+
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
     onSubmit: (values) => {
-      doSignInWithEmailAndPassword(values.email, values.password).then(()=>{
-        toast.success("Pomyślnie zalogowano! Zostaniesz przekierowany!");
-        setTimeout(() => {
-          navigate("/app");
-        }, 2500);
+      doSignInWithEmailAndPassword(values.email, values.password).then((obj)=>{
+        if(obj.user.emailVerified){
+          toast.success("Pomyślnie zalogowano! Zostaniesz przekierowany!");
+          setTimeout(() => {
+            navigate("/app");
+          }, 2500);
+        }
+        else{
+          toast.error("Wygląda na to, że Twój adres email nie jest zweryfikowany. Sprawdź pocztę!");
+          signOut(auth)
+        }
+
       }).catch((err)=>{
         console.log(err);
         toast.error("Błedny login lub hasło!");
@@ -44,7 +93,7 @@ const LoginPage = () => {
            rounded-tl-3xl rounded-bl-3xl z-20">
           <div className="font-inter font-bold text-[54px] max-lg:text-[41px]">Zaloguj się!</div>
           <div className="flex flex-row gap-4 text-[42px] text-fifth">
-            <div className="border border-black rounded-xl p-2"><HiMail/></div>
+            <div onClick={handleGoogleSignIn} className="border border-black rounded-xl p-2"><FaGoogle/></div>
             <div className="border border-black rounded-xl p-2"><HiMail/></div>
             <div className="border border-black rounded-xl p-2"><HiMail/></div>
             <div className="border border-black rounded-xl p-2"><HiMail/></div>
@@ -71,7 +120,14 @@ const LoginPage = () => {
               value={formik.values.password}
             />
             </div>
-            <div className="flex justify-center items-center font-inter text-fifth font-bold underline">Nie pamiętasz hasła?</div>
+            <div onClick={()=> {
+              sendPasswordResetEmail(auth, formik.values.email).then(()=>{
+                toast.info("Link resetujący hasło został wysłany na podany przez Ciebie adres email!");
+              }).catch((err)=>{
+                console.log(err);
+                toast.error("Wprowadź swój adres email powyżej (bez hasła)!");
+              })
+            }} className="flex justify-center items-center font-inter text-fifth font-bold underline cursor-pointer">Nie pamiętasz hasła?</div>
             <div className="flex justify-center items-center">
               <button className="bg-secondary font-inter text-white font-bold text-xl w-fit px-16 py-2 rounded-xl" type="submit">Zaloguj</button>
             </div>

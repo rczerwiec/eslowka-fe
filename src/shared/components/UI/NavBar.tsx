@@ -12,6 +12,7 @@ import { auth } from "../../../firebase/firebas";
 import { useSelector } from "react-redux";
 import { RootState, useFetchUserQuery } from "../../store";
 import { toast } from "react-toastify";
+import { TbFolderFilled, TbSquareRoundedLetterW } from "react-icons/tb";
 
 interface IhandleClick{
   signOut: () => void;
@@ -163,15 +164,35 @@ const DropDown:FC<{signOut:()=>void, hoverOn:() => void, hoverOff:() => void}> =
 
   return(
     <div onMouseEnter={props.hoverOn} onMouseLeave={props.hoverOff} className="absolute z-20 right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
+      <div className="py-1 lg:hidden" role="none">
+     <a onClick={()=>{navigate('/app/collections')
+      props.hoverOff();
+     }} className="flex gap-2 block px-4 py-2 text-sm   text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><TbSquareRoundedLetterW className="text-xl"/>Kolekcje Słowek</a>
+     <a onClick={()=>{navigate('/app/folders')
+      props.hoverOff();
+     }} className="flex gap-2 block px-4 py-2 text-sm text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><TbFolderFilled className="text-xl"/>Twoje Słówka</a>
+     </div>
     <div className="py-1" role="none">
-    <a onClick={()=>{navigate('/app/settings')}} className="flex gap-2 block px-4 py-2 text-sm text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><IoMdSettings className="text-xl"/>Ustawienia</a>
-    <a onClick={()=>{navigate('/app/importexport')}}  className="flex gap-2 block px-4 py-2 text-sm text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><FaDatabase className="text-xl"/>Import/Export</a>
+    <a onClick={()=>{navigate('/app/settings')
+      props.hoverOff();
+    }} className="flex gap-2 block px-4 py-2 text-sm text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><IoMdSettings className="text-xl"/>Ustawienia</a>
+    <a onClick={()=>{navigate('/app/importexport')
+      props.hoverOff();
+    }}  className="flex gap-2 block px-4 py-2 text-sm text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><FaDatabase className="text-xl"/>Import/Export</a>
     </div>
     <div className="py-1" role="none">
-    <a onClick={()=>{navigate('/app/contact')}} className="flex gap-2 block px-4 py-2 text-sm text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><MdOutlineImportContacts className="text-xl"/>Kontakt/Pomoc</a>
-    <a onClick={()=>{navigate('/app/rules')}} className="flex gap-2 block px-4 py-2 text-sm text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><FaInfoCircle className="text-xl"/>Regulamin</a>
-    <a onClick={()=>{navigate('/app/payments')}} className="flex gap-2 block px-4 py-2 text-sm text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><FaDollarSign className="text-xl"/>Płatności</a>
-    <a onClick={()=>{navigate('/app/updates')}} className="flex gap-2 block px-4 py-2 text-sm text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><MdOutlinePublishedWithChanges  className="text-xl"/>Aktualizacje</a>
+    <a onClick={()=>{navigate('/app/contact')
+      props.hoverOff();
+    }} className="flex gap-2 block px-4 py-2 text-sm text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><MdOutlineImportContacts className="text-xl"/>Kontakt/Pomoc</a>
+    <a onClick={()=>{navigate('/app/rules')
+      props.hoverOff();
+    }} className="flex gap-2 block px-4 py-2 text-sm text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><FaInfoCircle className="text-xl"/>Regulamin</a>
+    <a onClick={()=>{navigate('/app/payments')
+      props.hoverOff();
+    }} className="flex gap-2 block px-4 py-2 text-sm text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><FaDollarSign className="text-xl"/>Płatności</a>
+    <a onClick={()=>{navigate('/app/updates')
+      props.hoverOff();
+    }} className="flex gap-2 block px-4 py-2 text-sm text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><MdOutlinePublishedWithChanges  className="text-xl"/>Aktualizacje</a>
     </div>
     <div className="py-1" role="none">
     <a onClick={() => {props.signOut()}} className="flex gap-2 block px-4 py-2 text-sm text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><RiLogoutBoxFill className="text-xl"/>Wyloguj</a>
