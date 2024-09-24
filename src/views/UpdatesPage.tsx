@@ -18,6 +18,8 @@ const UpdatesPage = () => {
           <div>
             <ul className="pl-2 text-sm font-inter">
               <li>Usunięte niezaimplementowane "puste strony", do czasu ich zaimplementowania</li>
+              <li>Naprawiono błędy z tworzeniem słówek (błąd ID)</li>
+              <li>Naprawiono błąd z brakującymi słowami w folderach (wyświetlaniem ich)</li>
             </ul>
           </div>
         <div className="text-lg font-inter font-bold">1.0.1 alpha</div>

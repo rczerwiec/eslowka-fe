@@ -49,6 +49,7 @@ const WordsInFolderPage = () => {
   } else if (response.isSuccess) {
     //CALCULATE DATA PER PAGE
     let responseDataLength = 0;
+    let allWords = response.data;
     if (response !== undefined) {
       console.log("DŁUGOSC RESPONSE", response.data.length);
       responseDataLength = response.data.length;
@@ -57,15 +58,17 @@ const WordsInFolderPage = () => {
     availablePages = ~~availablePages + 1;
 
     let wordsData;
-    wordsData = response.data.slice(12 * (page - 1), 12 * page - 1);
+    wordsData = response.data.slice(12 * (page - 1), 12 * page - 1+1);
     /////////////////////////////
     console.log("ID FOLDER:", folder.id);
     console.log("wordsData:", wordsData);
+    console.log(12 * (page - 1), 12 * page - 1);
 
     renderedWords = (
       <WordRenderer
         setCurrentWord={setCurrentWord}
         data={wordsData}
+        allWords={allWords}
         folder={folder}
         setNewID={setNewID}
         openUpdateModal={updateModal.toggleModal}

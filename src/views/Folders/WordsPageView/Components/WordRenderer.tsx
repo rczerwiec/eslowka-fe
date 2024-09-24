@@ -12,8 +12,9 @@ export const WordsTable: FC<{ renderedWords: JSX.Element | undefined}> = (
   props
 ): JSX.Element => {
   return (
-    <table className="font-inter text-xl">
-      <tr className="bg-secondary h-10 text-white ">
+    <table className="font-inter text-xl max-lg:text-sm max-lg:px-0">
+      <tr className="bg-secondary h-10 text-white max-lg:h-7">
+        <th className="rounded-tl-xl border-r-4 border-white hidden">id</th>
         <th className="rounded-tl-xl border-r-4 border-white">Słowo</th>
         <th className="border-r-4 border-white">Tłumaczenie</th>
         <th className="border-r-4 border-white max-lg:hidden">Status</th>
@@ -26,6 +27,7 @@ export const WordsTable: FC<{ renderedWords: JSX.Element | undefined}> = (
 
 const WordRenderer: FC<{
   data: IWord[];
+  allWords: IWord[];
   folder: IFolder;
   setNewID: (newID: number) => void;
   openUpdateModal: () => void;
@@ -40,19 +42,20 @@ const WordRenderer: FC<{
     tr = props.data.map((word: IWord, index: number) => {
       let streakIcon;
       if (word.streak >= 5 && word.streak < 15) {
-        streakIcon = <FaFire className=" text-2xl text-orange-600" />;
+        streakIcon = <FaFire className=" text-2xl text-orange-600 max-lg:text-base" />;
       } else if (word.streak >= 15 && word.streak < 35) {
-        streakIcon = <FaFire className=" text-2xl text-zinc-400" />;
+        streakIcon = <FaFire className=" text-2xl text-zinc-400 max-lg:text-base" />;
       } else if (word.streak >= 35) {
-        streakIcon = <FaFire className=" text-2xl text-gold" />;
+        streakIcon = <FaFire className=" text-2xl text-gold max-lg:text-base" />;
       } else if (word.reverseStreak >= 5) {
-        streakIcon = <FaSkull className=" text-2xl text-red-600" />;
+        streakIcon = <FaSkull className=" text-2xl text-red-600 max-lg:text-base" />;
       } else {
-        streakIcon = <FaFire className=" text-2xl text-transparent" />;
+        streakIcon = <FaFire className=" text-2xl text-transparent max-lg:text-base" />;
       }
 
       tr = (
-        <tr className="h-14 font-inter font-medium text-xl" key={word.id}>
+        <tr className="h-14 font-inter font-medium text-xl max-lg:text-sm " key={word.id}>
+          <th className="border-r-4 border-white hidden">{word.id}</th>
           <th className="flex justify-center items-center gap-2 border-r-4 border-white">
             {" "}
             {streakIcon}
@@ -92,9 +95,10 @@ const WordRenderer: FC<{
       if (index % 2 === 0) {
         tr = (
           <tr
-            className="h-14 bg-fourth font-inter font-medium text-xl"
+            className="h-14 bg-fourth font-inter font-medium text-xl max-lg:text-sm "
             key={word.id}
           >
+            <th className="border-r-4 border-white hidden">{word.id}</th>
             <th className="flex justify-center items-center gap-2 border-r-4 border-white">
               {" "}
               {streakIcon}
@@ -106,7 +110,7 @@ const WordRenderer: FC<{
             </th>
             <th className="flex justify-start gap-3 items-center h-14 p-4">
             <FaTrashAlt
-                className="hover:cursor-pointer hover:text-secondary"
+                className="hover:cursor-pointer hover:text-secondary "
                 onClick={() => {
                   removeWord({
                     wordToRemove: { word: word, folderID: props.folder.id },
@@ -129,7 +133,7 @@ const WordRenderer: FC<{
       }
       return <>{tr}</>;
     });
-    props.setNewID(props.data[props.data.length - 1].id + 1);
+    props.setNewID(props.allWords[props.allWords.length - 1].id + 1);
   }
   return tr;
 };
