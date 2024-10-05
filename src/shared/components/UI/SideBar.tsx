@@ -1,5 +1,6 @@
 import { TbSquareRoundedLetterW } from "react-icons/tb";
 import { TbFolderFilled } from "react-icons/tb";
+import { PiRankingFill } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
 
 const SideBar = () => {
@@ -30,9 +31,20 @@ const SideBar = () => {
                             Moje Foldery
                         </div>
                     </div>
+                    
+                    <div onClick={()=>{
+                            navigate('/app/ranking')
+                        }} className="flex h-12 items-center pl-4 gap-2 hover:bg-third hover:cursor-pointer">
+                        <div>
+                            <PiRankingFill className="text-2xl text-white"/>
+                        </div>
+                        <div  className="text-white font-inter font-bold text-base">
+                            Ranking
+                        </div>
+                    </div>
                 </div>
                 <div className="text-white p-2 text-xs">
-                    1.0.2 alpha
+                    1.0.3 alpha
                 </div>
             </div>
 

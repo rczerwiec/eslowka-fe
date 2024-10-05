@@ -1,10 +1,9 @@
 import { createBrowserRouter, RouterProvider, useNavigate } from "react-router-dom";
-import WordTranslationTraining from "./views/Folders/TrainingsPageview/WordTranslationTrainingPage";
 import TrainingPage from "./views/Folders/TrainingsPageview/TrainingPage";
 import WordsInFolderPage from "./views/Folders/WordsPageView/WordsInFolderPage";
 import FoldersPage from "./views/Folders/FoldersPageView/FoldersPage";
 import SideBar from "./shared/components/UI/SideBar";
-import NavBar from "./shared/components/UI/NavBar";
+import NavBar from "./shared/components/UI/NavBar/NavBar";
 import SignUpPage from "./views/SignUpPage";
 import LoginPage from "./views/LoginPage";
 import { onAuthStateChanged, signOut } from "firebase/auth";
@@ -14,7 +13,7 @@ import { getCurrentUser } from "./shared/store/slices/UserSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "@reduxjs/toolkit/query";
 import App from "./App";
-import TranslationWordTraining from "./views/Folders/TrainingsPageview/TranslationWordTrainingPage";
+import TranslationWordTraining from "./views/Folders/TrainingsPageview/TranslationTrainingPage";
 import WordsCollectionsPage from "./views/Folders/WordsCollectionPageView/WordsCollectionsPage";
 import RulesPage from "./views/RulesPage";
 import ContactPage from "./views/ContactPage";
@@ -24,6 +23,8 @@ import PaymentsPage from "./views/PaymentsPage";
 import PremiumPage from "./views/PremiumPage";
 import FrontPage from "./views/FrontPage";
 import UpdatesPage from "./views/UpdatesPage";
+import RankingPage from "./views/RankingPage";
+import RevTranslationTraining from "./views/Folders/TrainingsPageview/RevTranslationTrainingPage";
 
 const MainApp = () => {
   console.log()
@@ -133,6 +134,14 @@ const MainApp = () => {
       ),
     },
     {
+      path: "/app/ranking",
+      element: (
+       <App>
+        <RankingPage/>
+       </App>
+      ),
+    },
+    {
       path: "/app/folders/words",
       element: (
         <App>
@@ -152,7 +161,7 @@ const MainApp = () => {
       path: "/app/folders/training/play",
       element: (
         <App>
-        <WordTranslationTraining/>
+        <TranslationWordTraining/>
        </App>
       ),
     },
@@ -160,7 +169,7 @@ const MainApp = () => {
       path: "/app/folders/training/playReversed",
       element: (
         <App>
-        <TranslationWordTraining/>
+        <RevTranslationTraining/>
        </App>
       ),
     },

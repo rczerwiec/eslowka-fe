@@ -32,7 +32,10 @@ const SignUpPage = () => {
             language: "polish",
             darkmode: false,
             wordsPerTraining: 5,
-          }
+          },
+          experience: 0,
+          level: 0,
+          streak: 0,
         };
         createUser(newUser).then(() => {
           setTimeout(() => {

@@ -9,7 +9,7 @@ import { RootState, useCreateFolderMutation } from "../../../../shared/store";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-const FoldersPageModal: FC<{renderedFoldersLength: Number, isVisible: boolean, closeModal: () => void}> = (props): JSX.Element => {
+const FoldersPageModal: FC<{renderedFoldersLength: Number | undefined, isVisible: boolean, closeModal: () => void}> = (props): JSX.Element => {
 
     const [newFolder, setNewFolder] = useState("");
 

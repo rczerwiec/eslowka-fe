@@ -9,9 +9,10 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import Character from "../../../shared/components/Character";
 import { useSelector } from "react-redux";
-import { RootState, useFetchRandomWordsArrayQuery, useUpdateWordStatusMutation } from "../../../shared/store";
+import { RootState, useFetchRandomWordsArrayQuery, useFetchUserQuery, useUpdateUserStatsMutation, useUpdateWordStatusMutation } from "../../../shared/store";
 import { IWord } from "../../../shared/store/slices/FolderSlice";
 import { useFormik } from "formik";
+import CheckTranslationUtil from "./Utils/CheckTranslationUtil";
 
 const TranslationWordTraining = () => {
   const user = useSelector((state: RootState) => state.userProfile);
@@ -22,7 +23,6 @@ const TranslationWordTraining = () => {
       translation: '',
     },
     onSubmit: values => {
-      
     },
   });
 
@@ -33,6 +33,8 @@ const TranslationWordTraining = () => {
   const navigate = useNavigate();
   const {isLoading, isSuccess, error, data} = useFetchRandomWordsArrayQuery({folderID:folder.id, userID: user.value});
   const [updateStatus] = useUpdateWordStatusMutation();
+  const [updateStats] = useUpdateUserStatsMutation();
+  const response = useFetchUserQuery(user.value);
   const inputRef = useRef<any>(null);
   const buttonRef = useRef<any>(null);
   const [currentWord, setCurrentWord] = useState<IWord>({word: "Ładowanie...", id: -1, translation: "Ładowanie...", note: "", repeated: 0, known: 0, folderId: -1, streak:0, reverseStreak: 0});
@@ -68,103 +70,42 @@ const TranslationWordTraining = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess])
 
-  //UPDATE WORD IN DB
-  const updateWord = async (updatedWord: IWord) => {
-    await updateStatus({updatedWord:{
-      word: updatedWord,
-      folderID: updatedWord.folderId,
-    }, userID: user.value});
-    console.log("Zaaktualizowano!", updatedWord.word);
+  let userName = "Ładowanie...";
+  let streak = 0;
+  let level = 0;
+  let reversed = true;
+  let experience = 0;
+  if (response.isSuccess) {
+    streak = response.data.streak;
+    level = response.data.level;
+    experience = response.data.experience;
+    userName = response.data.userName;
   }
+    //UPDATE WORD IN DB
+    const updateWord = async (updatedWord: IWord) => {
+      await updateStatus({updatedWord:{
+        word: updatedWord,
+        folderID: updatedWord.folderId,
+      }, userID: user.value});
+      console.log("Zaaktualizowano!", updatedWord.word);
+    }
+
+    const updateUserStats = async (value:number) => {
+      const newExperience = experience+value;
+      console.log("NEWEXP:", newExperience);
+      await updateStats({experience: newExperience, userID: user.value});
+    }
 
   //CHANGE STATUS
   const changeStatus = async (changeTo: number) => {
     setStatus(changeTo);
   }
 
-  //CONFIRM TRANSLATION - ON_BUTTON_CLICK AFTER CHECK
-  const checkTranslation = () => {
-    
-    let known = currentWord.known;
-    if(status!== -1){
-      known = status;
-    }
-    console.log(formik.values.translation);
-    //IF IT'S CORRECT
-    if (formik.values.translation.toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\u0142/g, "l") === wordsState[wordsState.length - 1].word.toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").replace(/\u0142/g, "l")){
-
-      if (currentWord.known === 0 && currentWord.streak === 2){
-        known = 1;
-      }
-      if (currentWord.known === 1 && currentWord.streak === 5){
-        known = 2;
-      }
-
-      const wordUpdated = {
-        id: currentWord.id,
-        word: currentWord.word,
-        translation: currentWord.translation,
-        note: currentWord.note,
-        repeated: currentWord.repeated + 1,
-        known: known,
-        folderId: currentWord.folderId,
-        streak: currentWord.streak +1,
-        reverseStreak: 0,
-      };
-      updateWord(wordUpdated);
-
-      const newState = [...wordsState].splice(0, wordsState.length - 1);
-      if (newState.length >= 1) {
-        formik.values.translation = "";
-        setIsDisabled(false);
-        setWordsState(newState);
-        setStatus(newState[newState.length - 1].known)
-        setCurrentWord(newState[newState.length - 1]);
-        setButtonsState(["text-lg text-white h-14 bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight", "text-lg text-white hidden", "font-bold text-green-600 text-5xl hidden", "Dobrze!", "wpisz tłumaczenie!", "bg-fifth_light h-14 rounded-md w-96 p-3 font-thin text-base"])
-      } else {
-        navigate("/app/folders");
-      }
-      //IF NOT CORRECT
-    } else {
-      const wordUpdated = {
-        id: currentWord.id,
-        word: currentWord.word,
-        translation: currentWord.translation,
-        note: currentWord.note,
-        repeated: currentWord.repeated + 1,
-        known: known,
-        folderId: currentWord.folderId,
-        streak: 0,
-        reverseStreak: currentWord.reverseStreak + 1,
-      };
-      updateWord(wordUpdated);
-      let lastWord = currentWord;
-      if(lastWord.reverseStreak >= 2 && known === 1){
-        known = 0;
-      }
-      if(lastWord.reverseStreak >= 4 && known === 2){
-        known = 1;
-      }
-      console.log(lastWord.reverseStreak);
-      console.log(known);
-      lastWord = { ...lastWord, repeated: lastWord.repeated + 1, reverseStreak: lastWord.reverseStreak + 1, streak: 0, known: known};
-      let newState = [...wordsState].splice(0, wordsState.length - 1);
-      newState = [lastWord].concat(newState);
-      setIsDisabled(false);
-      formik.values.translation = "";
-      setWordsState(newState);
-      setStatus(newState[newState.length - 1].known)
-      setCurrentWord(newState[newState.length - 1]);
-      setButtonsState(["text-lg text-white h-14 bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight", "text-lg text-white hidden", "font-bold text-green-600 text-5xl hidden", "Dobrze!", "wpisz tłumaczenie!", "bg-fifth_light h-14 rounded-md w-96 p-3 font-thin text-base"])
-    }
-  };
 
   //CHECK TRANSLATION - ON_BUTTON_CLICK BEFORE CHECK
   const setStatusBar = () => {
-    console.log()
-    console.log()
 
-    if (formik.values.translation.toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\u0142/g, "l") === wordsState[wordsState.length - 1].word.toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").replace(/\u0142/g, "l")) {
+    if (formik.values.translation.toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\u0142/g, "l") === wordsState[wordsState.length - 1].translation.toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").replace(/\u0142/g, "l")) {
       setButtonsState(["text-lg text-white hidden", "text-lg text-white h-14 bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight","font-bold text-green-600 text-5xl", "Dobrze!", "Błędne tłumaczenie!", "bg-fifth_light h-14 rounded-md w-96 p-3 font-thin text-base bg-green-200"]);
       setIsDisabled(true);
       buttonRef.current.focus();
@@ -322,7 +263,9 @@ let ButtonInput = (
     className="relative left-0 flex items-center"
   >
     <button onClick={setStatusBar} className={ButtonsState[0]} >Sprawdź </button>
-    <button onClick={checkTranslation} className={ButtonsState[1]} ref={buttonRef}>Dalej </button>
+    <button onClick={()=> {
+      CheckTranslationUtil(updateWord, updateUserStats ,currentWord, status, formik, wordsState, navigate, setWordsState,setIsDisabled, setStatus, setCurrentWord, setButtonsState, reversed);
+    }} className={ButtonsState[1]} ref={buttonRef}>Dalej </button>
   </div>
 </div>)
 
@@ -339,7 +282,7 @@ let ButtonInput = (
             className="flex pl-4 h-20 w-3/4 items-center justify-between
                             text-black text-3xl font-medium"
           >
-            <div>Słówko - Tłumaczenie (Odwrotne)</div>
+            <div>Słówko - Tłumaczenie</div>
             <div
               onClick={() => {
                 navigate("/app/folders/training");
@@ -356,10 +299,10 @@ let ButtonInput = (
           >
 
         <div className={ButtonsState[2]}>
-                {ButtonsState[3]} - {currentWord.word}
+                {ButtonsState[3]} - {currentWord.translation}
               </div>
               <div className="flex flex-col gap-2 items-center justify-center">
-            <div className="flex items-center justify-center gap-2 font-thin text-5xl">            {currentWord.translation}{streakIcon}
+            <div className="flex items-center justify-center gap-2 font-thin text-5xl">            {currentWord.word}{streakIcon}
               </div>
               <div className="text-sm font-inter font-thin text-fifth">{currentWord.note}</div>
             </div>

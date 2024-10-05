@@ -12,6 +12,9 @@ export interface IUser{
     email: string,
     folders: [],
     settings: ISettings;
+    experience: number;
+    level: number;
+    streak: number;
 }
 
 export interface ISettings {
@@ -19,6 +22,7 @@ export interface ISettings {
   darkmode: boolean;
   wordsPerTraining: number;
 }
+
 
 export interface IUserId{
     value: string,

@@ -1,6 +1,6 @@
 import { ReactNode, useEffect } from "react"
 import SideBar from "./shared/components/UI/SideBar"
-import NavBar from "./shared/components/UI/NavBar"
+import NavBar from "./shared/components/UI/NavBar/NavBar"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState, useAppDispatch } from "./shared/store"
 import { getCurrentUser } from "./shared/store/slices/UserSlice"

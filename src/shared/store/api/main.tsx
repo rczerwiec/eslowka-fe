@@ -10,13 +10,12 @@ import { RootState } from "../../store"
 const mainApi = createApi({
   reducerPath: "main",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://94.72.141.213:3000/",
+    baseUrl: "http://localhost:3000/",
     prepareHeaders: async (headers, {getState}) => {
       const user = await getCurrentUser();
-      console.log(user);
       const store  = await getState() as RootState;
-      console.log("myTOKEN",store.userProfile.token);
-      console.log("UID",store.userProfile.value);
+      // console.log("myTOKEN",store.userProfile.token);
+      // console.log("UID",store.userProfile.value);
       if (store) {
         headers.set('Authorization', `${store.userProfile.token}`)
       }
@@ -44,6 +43,15 @@ const mainApi = createApi({
           console.log();
           return {
             url: `/users/${userID}`,
+            method: "GET",
+          };
+        },
+      }),
+      fetchUsers: builder.query({
+        providesTags: ["User"],
+        query: () => {
+          return {
+            url: `/users/`,
             method: "GET",
           };
         },
@@ -118,6 +126,17 @@ const mainApi = createApi({
           };
         },
       }),
+      updateUserStats: builder.mutation({
+        invalidatesTags: ["User"],
+        query: (data:{experience: number, userID: string}) => {
+          console.log("W API:", data.experience)
+          return {
+            url: `/users/${data.userID}/userStatsUpdate`,
+            method: "PATCH",
+            body: {experience: data.experience},
+          };
+        },
+      }),
       updateWordDetails: builder.mutation({
         invalidatesTags: ["Words", "Folders"],
         query: (data:{updatedWord: INewWord, userID: string}) => {
@@ -175,6 +194,8 @@ export const {
   useCreateUserMutation,
   useUpdateWordDetailsMutation,
   useRemoveFolderMutation,
-  useUpdateUserSettingsMutation
+  useUpdateUserSettingsMutation,
+  useUpdateUserStatsMutation,
+  useFetchUsersQuery
 } = mainApi;
 export { mainApi };
