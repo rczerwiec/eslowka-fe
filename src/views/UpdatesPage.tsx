@@ -21,6 +21,7 @@ const UpdatesPage = () => {
               <li>Dodana możliwość eksportu folderu słówek do pliku CSV</li>
               <li>Dodana możliwość importu folderu słówek z pliku CSV</li>
               <li>Poprawiona możliwość kliknięcia w folder</li>
+              <li>Dodana pierwsza wersja Chatu z AI</li>
             </ul>
           </div>
         <div className="text-lg font-inter font-bold">1.0.3 alpha</div>

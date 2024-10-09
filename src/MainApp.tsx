@@ -25,6 +25,7 @@ import FrontPage from "./views/FrontPage";
 import UpdatesPage from "./views/UpdatesPage";
 import RankingPage from "./views/RankingPage";
 import RevTranslationTraining from "./views/Folders/TrainingsPageview/RevTranslationTrainingPage";
+import AIChatPage from "./views/AIChat/AIChatPage";
 
 const MainApp = () => {
   const router = createBrowserRouter([
@@ -161,6 +162,14 @@ const MainApp = () => {
       element: (
         <App>
         <TranslationWordTraining/>
+       </App>
+      ),
+    },
+    {
+      path: "/app/ai",
+      element: (
+        <App>
+        <AIChatPage/>
        </App>
       ),
     },
