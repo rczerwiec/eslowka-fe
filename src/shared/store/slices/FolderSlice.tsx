@@ -43,7 +43,6 @@ export const folderSlice = createSlice({
     initialState: initialState,
     reducers: {
         change: (state, action: PayloadAction<{id: number; folderName: string; words:IWord[], currentProgress: number, maxProgress: number}>) => {
-            console.log(action.payload)
             state.id = action.payload.id;
             state.folderName = action.payload.folderName;
             state.words = action.payload.words;

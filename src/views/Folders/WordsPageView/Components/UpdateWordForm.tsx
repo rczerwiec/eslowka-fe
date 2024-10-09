@@ -29,14 +29,12 @@ const UpdateWordForm: FC<{
   let currentWordTranslation = "tt";
   let currentWordNote = "";
   let currentWordID = 0;
-  console.log(props.currentWord);
   if(props.currentWord !== undefined){
       currentWordWord = props.currentWord.word;
       currentWordNote = props.currentWord.note;
       currentWordID = props.currentWord.id;
       currentWordTranslation = props.currentWord.translation
   }
-  console.log(currentWordWord);
   const formik = useFormik({
     initialValues: {
       word: currentWordWord,

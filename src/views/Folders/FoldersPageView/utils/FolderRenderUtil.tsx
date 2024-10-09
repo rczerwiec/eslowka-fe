@@ -45,13 +45,13 @@ const FolderRenderUtil = (
                         text-black text-3xl font-medium max-lg:pr-4"
         >
           <div className="flex flex-col w-3/4 max-lg:w-full justify-center">
-            <div className="flex items-center justify-between bg-fourth rounded-lg shadow-lg  hover:bg-secondarylight">
+            <div className="flex items-center w-full bg-fourth rounded-lg shadow-lg  hover:bg-secondarylight">
               <button
                 onClick={() => {
                   dispatch(change(folder));
                   navigate("/app/folders/words");
                 }}
-                className="flex items-center gap-4 p-2 hover:cursor-pointer h-full"
+                className="flex w-full items-center gap-4 p-2 hover:cursor-pointer h-full"
               >
                 <TbFolderFilled className="bg-main text-white rounded-md" />
                 <div className="text-xl hidden">{folder.id}</div>

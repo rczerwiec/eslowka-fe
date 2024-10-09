@@ -84,7 +84,6 @@ const WordRenderer: FC<{
             <FiEdit
               onClick={() => {
                 props.openUpdateModal();
-                console.log("setCurrentWord ->", word);
                 props.setCurrentWord(word);
               }}
               className="hover:cursor-pointer hover:text-secondary"
@@ -122,7 +121,6 @@ const WordRenderer: FC<{
                       <FiEdit
                       onClick={() => {
                         props.openUpdateModal();
-                        console.log("setCurrentWord ->", word);
                         props.setCurrentWord(word);
                       }}
                 className="hover:cursor-pointer hover:text-secondary"

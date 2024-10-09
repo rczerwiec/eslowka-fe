@@ -73,7 +73,6 @@ const LoginPage = () => {
         }
 
       }).catch((err)=>{
-        console.log(err);
         toast.error("Błedny login lub hasło!");
       });
       //CREATE USER IN MONGODB
@@ -127,7 +126,6 @@ const LoginPage = () => {
               sendPasswordResetEmail(auth, formik.values.email).then(()=>{
                 toast.info("Link resetujący hasło został wysłany na podany przez Ciebie adres email!");
               }).catch((err)=>{
-                console.log(err);
                 toast.error("Wprowadź swój adres email powyżej (bez hasła)!");
               })
             }} className="flex justify-center items-center font-inter text-fifth font-bold underline cursor-pointer">Nie pamiętasz hasła?</div>

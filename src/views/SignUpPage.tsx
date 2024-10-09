@@ -1,10 +1,8 @@
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { useCreateUserMutation } from "../shared/store";
-import { createUserWithEmailAndPassword, GoogleAuthProvider, sendEmailVerification, signInWithPopup } from "firebase/auth";
-import { IUser } from "../shared/store/slices/UserSlice";
+import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { auth } from "../firebase/firebas";
-import { HiMail } from "react-icons/hi";
 import loginPageSvg from "../shared/img/loginPage.svg"
 import Character from "../shared/components/Character";
 import { toast, ToastContainer } from 'react-toastify';
@@ -21,7 +19,6 @@ const SignUpPage = () => {
       .then((user) => {
         sendEmailVerification(user.user);
         toast.success("Pomyślnie utworzono konto! Zostaniesz przekierowany!");
-        console.log(password);
         let newUser = {
           id: user.user.uid,
           uid: user.user.uid,

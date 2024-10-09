@@ -25,13 +25,15 @@ function UserMenuComponent({signOut, userName, hoverOn, hoverOff, display}: User
   
     return (
       <div className="flex items-center mr-4">
-        <div className="font-bold font-inter text-xl text-white mr-2">{shortUserName}</div>
+        <div className="font-bold font-inter text-xl text-white mr-2">{shortUserName.slice(0,12)}</div>
+        <div onMouseEnter={hoverOn} className="flex pl-2 hover:cursor-pointer justify-center items-center">
         <div>
-          <FaUser className="text-2xl" />
+          <FaUser className="text-3xl" />
         </div>
         <div>
-          <FaChevronDown onMouseEnter={hoverOn} className="text-lg mr-2 hover:text-xl hover:cursor-pointer" />
+          <FaChevronDown className="text-xl mr-2 " />
           {display ? <DropDownComponent signOut={signOut} hoverOff={hoverOff} hoverOn={hoverOn}/> : <></>}
+        </div>
         </div>
   
       </div>

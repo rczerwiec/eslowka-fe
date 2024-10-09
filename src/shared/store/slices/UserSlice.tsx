@@ -1,8 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../../firebase/firebas";
-import { useSelector } from "react-redux";
-import { RootState } from "..";
 
 
 export interface IUser{
@@ -57,9 +55,7 @@ export const getCurrentUser = () => (dispatch: any) => {
         dispatch(setCurrentUser(user.uid));
       })
       
-      console.log("User dispatched", );
     } else {
-      console.log("Unable to get current user");
     }
   });
 };

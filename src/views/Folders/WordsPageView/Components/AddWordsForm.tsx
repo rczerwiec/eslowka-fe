@@ -168,10 +168,8 @@ const AddWordsForm: FC<{
     return await createWord({newWord:newWord, userID: user.value})
       .unwrap()
       .then((res) => {
-        console.log("res from api:", res);
       })
       .catch((err) => {
-        console.log("Error:", err);
       });
   };
 
@@ -182,10 +180,8 @@ const AddWordsForm: FC<{
     return await createWords({newWords:newWords, userID: user.value})
       .unwrap()
       .then((res) => {
-        console.log("res from api:", res);
       })
       .catch((err) => {
-        console.log("Error:", err);
       });
   };
 

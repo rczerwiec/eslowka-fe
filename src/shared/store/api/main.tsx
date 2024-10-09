@@ -1,9 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { IFolder, INewWord, INewWords, IWord } from "../slices/FolderSlice";
-import { AnyARecord } from "dns";
-import { getCurrentUser, ISettings, IUser } from "../slices/UserSlice";
-import { isUpsertQuery } from "@reduxjs/toolkit/dist/query/core/buildInitiate";
-import { useSelector } from "react-redux";
+import { IFolder, INewWord, INewWords } from "../slices/FolderSlice";
+import { ISettings } from "../slices/UserSlice";
 import { RootState } from "../../store"
 
 //http://localhost:3000/users/669787b41e2ea369890f4f67/folders/0/words
@@ -12,7 +9,6 @@ const mainApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:3000/",
     prepareHeaders: async (headers, {getState}) => {
-      const user = await getCurrentUser();
       const store  = await getState() as RootState;
       // console.log("myTOKEN",store.userProfile.token);
       // console.log("UID",store.userProfile.value);
@@ -40,7 +36,6 @@ const mainApi = createApi({
       fetchUser: builder.query({
         providesTags: ["User"],
         query: (userID: string) => {
-          console.log();
           return {
             url: `/users/${userID}`,
             method: "GET",
@@ -59,7 +54,6 @@ const mainApi = createApi({
       fetchSpecificWords: builder.query({
         providesTags: ["Words"],
         query: (data:{folderID: string, userID: string}) => {
-          console.log();
           return {
             url: `/users/${data.userID}/folders/${data.folderID}/words`,
             method: "GET",
@@ -78,7 +72,6 @@ const mainApi = createApi({
       fetchFolders: builder.query({
         providesTags: ["Folders"],
         query: (userID) => {
-          console.log("fetching folders...");
           return {
             url: `/users/${userID}/folders/`,
             method: "GET",
@@ -129,7 +122,6 @@ const mainApi = createApi({
       updateUserStats: builder.mutation({
         invalidatesTags: ["User"],
         query: (data:{experience: number, userID: string}) => {
-          console.log("W API:", data.experience)
           return {
             url: `/users/${data.userID}/userStatsUpdate`,
             method: "PATCH",

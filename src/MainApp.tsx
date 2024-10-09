@@ -27,7 +27,6 @@ import RankingPage from "./views/RankingPage";
 import RevTranslationTraining from "./views/Folders/TrainingsPageview/RevTranslationTrainingPage";
 
 const MainApp = () => {
-  console.log()
   const router = createBrowserRouter([
     {
       path: "/",

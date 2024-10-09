@@ -27,13 +27,13 @@ function StatsComponent({streak, experience, level}:StatsComponentInterface){
 
     return (
       <div className="flex items-center ml-6 ">
-        <div className="flex flex-col justify-center items-center font-bold font-inter text-[10px] mr-3">
+        <div className="font-bold font-inter text-2xl">{streak}</div>
+        <div className="mr-3">
+          <FaFire className="text-xl" />
+        </div>
+        <div className="flex flex-col border-fourth rounded-lg p-1 border-2 border-solid justify-center items-center font-bold font-inter text-[10px] mr-3">
           <div className="text-base">{level} LVL</div>
           <div>{experience_spring}</div>
-          </div>
-        <div className="font-bold font-inter text-2xl">{streak}</div>
-        <div>
-          <FaFire className="text-xl" />
         </div>
       </div>
     );

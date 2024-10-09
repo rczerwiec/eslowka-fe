@@ -45,7 +45,6 @@ const RevTranslationTraining = () => {
   else if(buttonRef.current !==null) {buttonRef.current.focus();}
 
   useEffect(() => {
-    console.log(folder.id);
     if(folder.id===undefined){
       navigate("/app/folders");
     }
@@ -53,7 +52,6 @@ const RevTranslationTraining = () => {
       navigate("/app/folders");
     }
     else if (isLoading) {
-      console.log("Ładowanie słów");
     } else if (error) {
       navigate("/app/folders");
     } else{
@@ -87,12 +85,10 @@ const RevTranslationTraining = () => {
         word: updatedWord,
         folderID: updatedWord.folderId,
       }, userID: user.value});
-      console.log("Zaaktualizowano!", updatedWord.word);
     }
 
     const updateUserStats = async (value:number) => {
       const newExperience = experience+value;
-      console.log("NEWEXP:", newExperience);
       await updateStats({experience: newExperience, userID: user.value});
     }
 

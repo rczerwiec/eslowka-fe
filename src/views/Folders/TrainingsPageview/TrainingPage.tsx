@@ -13,7 +13,6 @@ const TrainingPage = () => {
   const navigate = useNavigate();
   const folder = useSelector((state: RootState) => state.folderProfile);
   useEffect(()=>{
-    console.log(folder.id);
     if(folder.id===undefined){
       navigate("/app/folders");
     }

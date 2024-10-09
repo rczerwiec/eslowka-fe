@@ -1,10 +1,9 @@
 import { ReactNode, useEffect } from "react"
 import SideBar from "./shared/components/UI/SideBar"
 import NavBar from "./shared/components/UI/NavBar/NavBar"
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import { RootState, useAppDispatch } from "./shared/store"
 import { getCurrentUser } from "./shared/store/slices/UserSlice"
-import { useNavigate } from "react-router-dom"
 
 //toast imports
 import { ToastContainer } from "react-toastify"
@@ -16,7 +15,6 @@ type Props = {
   
   const App = ({children} : Props) => {
     const dispatch = useAppDispatch();
-    const navigate = useNavigate();
     const user = useSelector((state: RootState) => state.userProfile);
 
 
@@ -25,9 +23,8 @@ type Props = {
         dispatch(getCurrentUser());
     }, [dispatch])
 
-    console.log("TOKEN:",user.token)
+    //console.log("TOKEN:",user.token)
     if(user.value === "b"){
-        console.log("Nawiguje do strony z logowaniem")
         //navigate('/login')
     }
 
