@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import ChatHistory from "./ChatHistory";
+import AIWordModal from "./AIWordModal";
 
 function AIChatPage() {
   const [userInput, setUserInput] = useState("");
@@ -105,6 +106,7 @@ function AIChatPage() {
           </button>
         </div>
       </div>
+      
     </div>
   );
 }

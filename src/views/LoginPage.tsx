@@ -8,18 +8,21 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { GoogleAuthProvider, sendPasswordResetEmail, signInWithPopup, signOut } from "firebase/auth";
 import { auth } from "../firebase/firebas";
-import { useCreateUserMutation } from "../shared/store";
+import { useCreateUserMutation, useUpdateUserDatesMutation } from "../shared/store";
 import { FaGoogle } from "react-icons/fa6";
+import { userInfo } from "os";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const [createUser] = useCreateUserMutation();
+  const [updateDates] = useUpdateUserDatesMutation();
 
   const googleSignIn = () =>{
     const googleAuthProvider = new GoogleAuthProvider();
     return signInWithPopup(auth, googleAuthProvider);
   }
 
+  //Register with Google Auth
   const handleGoogleSignIn = async (e:any) => {
     e.preventDefault();
     try {
@@ -41,6 +44,10 @@ const LoginPage = () => {
         };
         createUser(newUser).then(() => {
           setTimeout(() => {
+            updateDates({datesToUpdate: {  
+              practiceDate: new Date(),
+              onLogin: true,
+              currentStreak: 0,}, userID: obj.user.uid});
             toast.success("Pomyślnie zalogowano! Zostaniesz przekierowany!");
             navigate("/app");
           }, 5000);
@@ -59,8 +66,14 @@ const LoginPage = () => {
       email: "",
       password: "",
     },
+    //Sign in with login and password
     onSubmit: (values) => {
       doSignInWithEmailAndPassword(values.email, values.password).then((obj)=>{
+        console.log(obj.user.uid)
+        updateDates({datesToUpdate: {  
+          practiceDate: new Date(),
+          onLogin: true,
+          currentStreak: 0,}, userID: obj.user.uid});
         if(obj.user.emailVerified){
           toast.success("Pomyślnie zalogowano! Zostaniesz przekierowany!");
           setTimeout(() => {

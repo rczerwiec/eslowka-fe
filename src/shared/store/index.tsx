@@ -40,5 +40,7 @@ export {
   useUpdateWordStatusMutation,
   useFetchRandomWordsArrayQuery,
   useUpdateUserStatsMutation,
-  useFetchUsersQuery
+  useFetchUsersQuery,
+  useUpdateUserDatesMutation,
+  useUpdateUserInfoMutation
 } from "./api/main";

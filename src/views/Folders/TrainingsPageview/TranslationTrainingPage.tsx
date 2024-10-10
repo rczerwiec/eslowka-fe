@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import Character from "../../../shared/components/Character";
 import { useSelector } from "react-redux";
-import { RootState, useFetchRandomWordsArrayQuery, useFetchUserQuery, useUpdateUserStatsMutation, useUpdateWordStatusMutation } from "../../../shared/store";
+import { RootState, useFetchRandomWordsArrayQuery, useFetchUserQuery, useUpdateUserDatesMutation, useUpdateUserStatsMutation, useUpdateWordStatusMutation } from "../../../shared/store";
 import { IWord } from "../../../shared/store/slices/FolderSlice";
 import { useFormik } from "formik";
 import CheckTranslationUtil from "./Utils/CheckTranslationUtil";
@@ -34,6 +34,7 @@ const TranslationWordTraining = () => {
   const {isLoading, isSuccess, error, data} = useFetchRandomWordsArrayQuery({folderID:folder.id, userID: user.value});
   const [updateStatus] = useUpdateWordStatusMutation();
   const [updateStats] = useUpdateUserStatsMutation();
+  const [updateDates] = useUpdateUserDatesMutation();
   const response = useFetchUserQuery(user.value);
   const inputRef = useRef<any>(null);
   const buttonRef = useRef<any>(null);
@@ -73,14 +74,24 @@ const TranslationWordTraining = () => {
   let level = 0;
   let reversed = true;
   let experience = 0;
+  let practiceDate = new Date();
+  let lastLoginDate = new Date();
   if (response.isSuccess) {
     streak = response.data.streak;
     level = response.data.level;
     experience = response.data.experience;
     userName = response.data.userName;
+    lastLoginDate = response.data.lastLogin;
+    practiceDate = response.data.practiceDate;
   }
+
     //UPDATE WORD IN DB
     const updateWord = async (updatedWord: IWord) => {
+      await updateDates({datesToUpdate: {  
+        practiceDate: practiceDate,
+        onLogin: false,
+        currentStreak: streak,}, userID: user.value});
+
       await updateStatus({updatedWord:{
         word: updatedWord,
         folderID: updatedWord.folderId,

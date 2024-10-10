@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IFolder, INewWord, INewWords } from "../slices/FolderSlice";
-import { ISettings } from "../slices/UserSlice";
+import { IDates, ISettings } from "../slices/UserSlice";
 import { RootState } from "../../store"
 
 //http://localhost:3000/users/669787b41e2ea369890f4f67/folders/0/words
@@ -119,6 +119,16 @@ const mainApi = createApi({
           };
         },
       }),
+      updateUserDates: builder.mutation({
+        invalidatesTags: ["User"],
+        query: (data:{datesToUpdate: IDates, userID: string}) => {
+          return {
+            url: `/users/${data.userID}/dates`,
+            method: "PATCH",
+            body: data.datesToUpdate,
+          };
+        },
+      }),
       updateUserStats: builder.mutation({
         invalidatesTags: ["User"],
         query: (data:{experience: number, userID: string}) => {
@@ -126,6 +136,16 @@ const mainApi = createApi({
             url: `/users/${data.userID}/userStatsUpdate`,
             method: "PATCH",
             body: {experience: data.experience},
+          };
+        },
+      }),
+      updateUserInfo: builder.mutation({
+        invalidatesTags: ["User"],
+        query: (data:{userName: string, userID: string}) => {
+          return {
+            url: `/users/${data.userID}/userInfo`,
+            method: "PATCH",
+            body: {userName: data.userName},
           };
         },
       }),
@@ -188,6 +208,8 @@ export const {
   useRemoveFolderMutation,
   useUpdateUserSettingsMutation,
   useUpdateUserStatsMutation,
-  useFetchUsersQuery
+  useFetchUsersQuery,
+  useUpdateUserDatesMutation,
+  useUpdateUserInfoMutation,
 } = mainApi;
 export { mainApi };

@@ -13,6 +13,9 @@ export interface IUser{
     experience: number;
     level: number;
     streak: number;
+    joined: Date;
+    lastLogin: Date;
+    practiceDate: Date;
 }
 
 export interface ISettings {
@@ -21,6 +24,11 @@ export interface ISettings {
   wordsPerTraining: number;
 }
 
+export interface IDates {
+  practiceDate: Date;
+  onLogin: boolean;
+  currentStreak: number;
+}
 
 export interface IUserId{
     value: string,

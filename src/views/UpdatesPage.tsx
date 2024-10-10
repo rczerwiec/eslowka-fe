@@ -17,6 +17,9 @@ const UpdatesPage = () => {
         <div className="text-lg font-inter font-bold">1.0.4 alpha</div>
           <div>
             <ul className="pl-2 text-sm font-inter">
+              <li>Dodana możliwość zmiany nazwy użytkownika</li>
+              <li>Dodano więcej informacji do ustawień</li>
+              <li>Dodana funkcjonalność streaku dni</li>
               <li>Zmiana wizualna informacji o poziomie i XP</li>
               <li>Dodana możliwość eksportu folderu słówek do pliku CSV</li>
               <li>Dodana możliwość importu folderu słówek z pliku CSV</li>
