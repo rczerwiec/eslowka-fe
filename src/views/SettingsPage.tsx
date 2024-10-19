@@ -3,6 +3,8 @@ import { RootState, useFetchUserQuery, useUpdateUserInfoMutation, useUpdateUserS
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ISettings } from "../shared/store/slices/UserSlice";
+import FirstTitle from "../shared/components/FirstTitle";
+import MainTitle from "../shared/components/MainTitle";
 
 const SettingsPage = () => {
     const user = useSelector((state: RootState) => state.userProfile);
@@ -29,20 +31,10 @@ const SettingsPage = () => {
 
     return (
       <div className="flex flex-col w-full h-full">
-        <div
-          className="flex pl-4 bg-fourth h-8  items-center
-                                    text-fifth text-sm font-medium"
-        >
-          Ustawienia
-        </div>
-        <div
-          className="flex pl-4 h-20 items-center
-                                    text-black text-3xl font-medium"
-        >
-          Edytuj Ustawienia
-        </div>
+      <FirstTitle>Ustawienia</FirstTitle>
+      <MainTitle>Edycja Ustawień</MainTitle>
         <div className="relative inline-block text-left">
-          <div className="flex flex-col pl-4">
+          <div className="flex flex-col pl-4 w-fit justify text-lg font-inter gap-2">
           <label>Nazwa użytkownika:</label>
             <input
               type="text"

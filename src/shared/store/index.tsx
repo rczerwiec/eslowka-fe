@@ -42,5 +42,6 @@ export {
   useUpdateUserStatsMutation,
   useFetchUsersQuery,
   useUpdateUserDatesMutation,
-  useUpdateUserInfoMutation
+  useUpdateUserInfoMutation,
+  useFetchFolderQuery,
 } from "./api/main";

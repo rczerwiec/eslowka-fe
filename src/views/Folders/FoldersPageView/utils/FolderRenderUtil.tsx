@@ -60,7 +60,7 @@ const FolderRenderUtil = (
                   (Słówka:{wordAmount})
                 </div>
               </button>
-              <div className="flex gap-4 mr-4">
+              <div className="flex justify-center items-center gap-4 mr-4">
                 {progressPanel}
                 <button
                   onClick={() => {

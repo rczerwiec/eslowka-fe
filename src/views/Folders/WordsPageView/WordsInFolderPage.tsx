@@ -18,6 +18,8 @@ import { IWord } from "../../../shared/store/slices/FolderSlice";
 import { CSVLink } from "react-csv";
 import CsvFileInput from "../../../shared/components/CsvFileInput";
 import ImportWordsModal from "./Components/ImportWordsModal";
+import FirstTitle from "../../../shared/components/FirstTitle";
+import MainTitle from "../../../shared/components/MainTitle";
 
 const WordsInFolderPage = () => {
   const { isVisible, toggleModal, closeModal } = useModal();
@@ -121,14 +123,9 @@ const WordsInFolderPage = () => {
   return (
     <>
       <div className="flex flex-col size-full">
+      <FirstTitle>Foldery - {folder.folderName}</FirstTitle>
         <div
-          className="flex pl-4 bg-fourth h-8  items-center
-                            text-fifth text-sm font-medium"
-        >
-          Foldery - {folder.folderName}
-        </div>
-        <div
-          className="flex pl-4 gap-4 h-20 max-lg:w-full items-center max-lg:justify-center
+          className="flex px-4 gap-4 h-20 max-lg:w-full items-center max-lg:justify-center
                             text-black text-3xl font-medium"
         >
           <div className="flex justify-center items-center gap-2 max-lg:hidden">
@@ -152,7 +149,7 @@ const WordsInFolderPage = () => {
               }}
               className="flex items-center bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight"
             >
-              <IoMdArrowRoundBack />
+              <IoMdArrowRoundBack className="max-lg:hidden" />
               <div className="text-lg">Powrót </div>
             </div>
           </div>
@@ -164,7 +161,7 @@ const WordsInFolderPage = () => {
           <div className="flex flex-col h-auto w-3/4 max-lg:w-full shadow-lg justify-start">
             <WordsTable renderedWords={renderedWords} />
           </div>
-          <div className="flex flex-col w-1/3">
+          <div className="flex flex-col w-1/3 max-lg:hidden">
             <StatusBox />
             <CSVLink
               className="flex text-xl items-center text-center justify-center bg-secondary rounded-xl p-2 m-4 z-20 shadow-lg hover:cursor-pointer hover:bg-secondarylight"

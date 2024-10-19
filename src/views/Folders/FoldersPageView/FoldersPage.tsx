@@ -1,10 +1,7 @@
 //ICONS & SVG
 import character1 from "../../../shared/img/character1.svg";
 import { HiPlus } from "react-icons/hi";
-import {
-  RootState,
-  useFetchFoldersQuery,
-} from "../../../shared/store";
+import { RootState, useFetchFoldersQuery } from "../../../shared/store";
 import { IFolder } from "../../../shared/store/slices/FolderSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { change } from "../../../shared/store/slices/FolderSlice";
@@ -15,6 +12,8 @@ import FoldersPageModal from "./Components/FoldersPageModal";
 import RemoveConfirmModal from "./Components/RemoveConfirmModal";
 import { useState } from "react";
 import FolderRenderUtil from "./utils/FolderRenderUtil";
+import FirstTitle from "../../../shared/components/FirstTitle";
+import MainTitle from "../../../shared/components/MainTitle";
 
 const FoldersPage = () => {
   const user = useSelector((state: RootState) => state.userProfile);
@@ -41,16 +40,8 @@ const FoldersPage = () => {
   return (
     <>
       <div className="flex flex-col w-full h-full">
-        <div
-          className="flex pl-4 bg-fourth h-8  items-center
-                            text-fifth text-sm font-medium">
-          Foldery
-        </div>
-        <div
-          className="flex pl-4 h-20 items-center
-                            text-black text-3xl font-medium ">
-          Twoje Foldery
-        </div>
+        <FirstTitle>Foldery</FirstTitle>
+        <MainTitle>Twoje Foldery</MainTitle>
         <form>{folderRender?.renderedFolders}</form>
         <div
           onClick={() => {

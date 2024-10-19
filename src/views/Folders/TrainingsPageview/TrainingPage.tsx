@@ -8,6 +8,8 @@ import Character from "../../../shared/components/Character";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../shared/store";
 import { useEffect } from "react";
+import FirstTitle from "../../../shared/components/FirstTitle";
+import MainTitle from "../../../shared/components/MainTitle";
 
 const TrainingPage = () => {
   const navigate = useNavigate();
@@ -21,14 +23,12 @@ const TrainingPage = () => {
   return (
     <>
       <div className="flex flex-col w-full h-full">
-        <div
-          className="flex pl-4 bg-fourth h-8  items-center
-                            text-fifth text-sm font-medium"
+        <FirstTitle
         >
           Tryby
-        </div>
+        </FirstTitle>
         <div
-          className="flex pl-4 h-20 w-3/4 items-center justify-between
+          className="flex px-4 h-20 w-3/4 max-lg:w-full items-center justify-between
                             text-black text-3xl font-medium"
         >
           <div>Wybierz Tryb</div>
@@ -43,10 +43,10 @@ const TrainingPage = () => {
           </div>
           </div>
           <div
-              className="flex flex-col pl-4 mb-2 items-left
+              className="flex flex-col px-4 mb-2 items-left
                 text-black text-3xl font-medium"
             >
-              <div className="flex flex-col  gap-4 w-3/4 justify-center">
+              <div className="flex flex-col  gap-4 w-3/4 max-lg:w-full justify-center">
                 <div className="flex items-center justify-between p-2 bg-fourth rounded-lg shadow-lg  hover:bg-secondarylight hover:cursor-pointer">
                   <button
                     onClick={() => {
@@ -74,7 +74,7 @@ const TrainingPage = () => {
               </div>
             </div>
       </div>
-      <Character alt="character1" className="absolute z-0 w-1/5 bottom-0 right-0" character={character1}/>
+      <Character alt="character1" className="absolute z-0 w-1/5 bottom-0 right-0 max-lg:hidden" character={character1}/>
     </>
   );
 };

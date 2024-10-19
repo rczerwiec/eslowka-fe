@@ -56,12 +56,18 @@ const WordRenderer: FC<{
       tr = (
         <tr className="h-14 font-inter font-medium text-xl max-lg:text-sm " key={word.id}>
           <th className="border-r-4 border-white hidden">{word.id}</th>
-          <th className="flex justify-center items-center gap-2 border-r-4 border-white">
+          <th onClick={() => {
+          props.openUpdateModal();
+          props.setCurrentWord(word);
+        }} className="flex justify-center items-center gap-2 border-r-4 border-white">
             {" "}
             {streakIcon}
-            {word.word}
+            {word.word.slice(0,13)}
           </th>
-          <th className="border-r-4 border-white">{word.translation}</th>
+          <th onClick={() => {
+          props.openUpdateModal();
+          props.setCurrentWord(word);
+        }} className="border-r-4 border-white">{word.translation.slice(0,13)}</th>
           <th className="border-r-4 border-white max-lg:hidden">
             <WordStatusForm word={word} />
           </th>
@@ -86,7 +92,7 @@ const WordRenderer: FC<{
                 props.openUpdateModal();
                 props.setCurrentWord(word);
               }}
-              className="hover:cursor-pointer hover:text-secondary"
+              className="hover:cursor-pointer hover:text-secondary max-lg:hidden"
             />
           </th>
         </tr>
@@ -97,13 +103,19 @@ const WordRenderer: FC<{
             className="h-14 bg-fourth font-inter font-medium text-xl max-lg:text-sm "
             key={word.id}
           >
-            <th className="border-r-4 border-white hidden">{word.id}</th>
-            <th className="flex justify-center items-center gap-2 border-r-4 border-white">
+            <th  className="border-r-4 border-white hidden">{word.id}</th>
+            <th onClick={() => {
+          props.openUpdateModal();
+          props.setCurrentWord(word);
+        }} className="flex justify-center items-center gap-2 border-r-4 border-white">
               {" "}
               {streakIcon}
-              {word.word}
+              {word.word.slice(0,13)}
             </th>
-            <th className="border-r-4 border-white">{word.translation}</th>
+            <th onClick={() => {
+          props.openUpdateModal();
+          props.setCurrentWord(word);
+        }} className="border-r-4 border-white">{word.translation.slice(0,13)}</th>
             <th className="border-r-4 border-white max-lg:hidden">
               <WordStatusForm word={word} />
             </th>
@@ -123,7 +135,7 @@ const WordRenderer: FC<{
                         props.openUpdateModal();
                         props.setCurrentWord(word);
                       }}
-                className="hover:cursor-pointer hover:text-secondary"
+                className="hover:cursor-pointer hover:text-secondary max-lg:hidden"
               />
             </th>
           </tr>

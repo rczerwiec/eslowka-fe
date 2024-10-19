@@ -13,6 +13,7 @@ import { RootState, useFetchRandomWordsArrayQuery, useFetchUserQuery, useUpdateU
 import { IWord } from "../../../shared/store/slices/FolderSlice";
 import { useFormik } from "formik";
 import CheckTranslationUtil from "./Utils/CheckTranslationUtil";
+import FirstTitle from "../../../shared/components/FirstTitle";
 
 const RevTranslationTraining = () => {
   const user = useSelector((state: RootState) => state.userProfile);
@@ -27,7 +28,7 @@ const RevTranslationTraining = () => {
   });
 
   const [isDisabled, setIsDisabled] = useState(false);
-  const [ButtonsState, setButtonsState] = useState(["text-lg text-white h-14 bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight", "text-lg text-white hidden", "font-bold text-green-600 text-5xl hidden", "Dobrze!", "wpisz tłumaczenie!", "bg-fifth_light h-14 rounded-md w-96 p-3 font-thin text-base"]);
+  const [ButtonsState, setButtonsState] = useState(["text-lg text-white h-14 bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight", "text-lg text-white hidden", "font-bold text-green-600 text-5xl hidden", "Dobrze!", "wpisz tłumaczenie!", "bg-fifth_light h-14 rounded-md w-96 p-3 font-thin text-base  max-lg:w-60"]);
   const [wordsState, setWordsState] = useState<IWord[]>([{word: "Ładowanie...", id: -1, translation: "Ładowanie...",note: "", repeated: 0, known: 0, folderId: -1, streak:0, reverseStreak: 0,}]);
   const folder = useSelector((state: RootState) => state.folderProfile);
   const navigate = useNavigate();
@@ -276,17 +277,12 @@ let ButtonInput = (
     return (
       <>
         <div className="flex flex-col w-full h-full">
+        <FirstTitle>Ćwicz Słówka</FirstTitle>
           <div
-            className="flex pl-4 bg-fourth h-8  items-center
-                            text-fifth text-sm font-medium"
-          >
-            Ćwicz
-          </div>
-          <div
-            className="flex pl-4 h-20 w-3/4 items-center justify-between
+            className="flex px-4 h-20 w-3/4 max-lg:w-full items-center justify-between
                             text-black text-3xl font-medium"
           >
-            <div>Słówko - Tłumaczenie (Odwrotne)</div>
+            <div className="max-lg:text-2xl">Słówko - Tłumaczenie (Odwrotne)</div>
             <div
               onClick={() => {
                 navigate("/app/folders/training");
@@ -298,7 +294,7 @@ let ButtonInput = (
             </div>
           </div>
           <div
-            className="flex flex-col pl-4 mb-2 w-3/4 items-center gap-8
+            className="flex flex-col px-4 mb-2 w-3/4 max-lg:w-full items-center gap-8
                 text-black text-3xl font-medium"
           >
 
@@ -327,7 +323,7 @@ let ButtonInput = (
         </div>
         <Character
           alt="character1"
-          className="absolute z-0 w-1/5 bottom-0 right-0"
+          className="absolute z-0 w-1/5 bottom-0 right-0 max-lg:hidden"
           character={character1}
         />
       </>

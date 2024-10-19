@@ -1,4 +1,6 @@
 import { useFormik } from "formik";
+import FirstTitle from "../shared/components/FirstTitle";
+import MainTitle from "../shared/components/MainTitle";
 
 const ContactPage = () => {
   const formik = useFormik({
@@ -11,18 +13,8 @@ const ContactPage = () => {
 
   return (
     <div className="flex flex-col w-full h-full">
-      <div
-        className="flex pl-4 bg-fourth h-8  items-center
-                                    text-fifth text-sm font-medium"
-      >
-        Kontakt
-      </div>
-      <div
-        className="flex pl-4 h-20 items-center
-                                    text-black text-3xl font-medium"
-      >
-        Kontakt
-      </div>
+      <FirstTitle>Kontakt</FirstTitle>
+      <MainTitle>Kontakt</MainTitle>
       <div className="relative flex flex-col justify-center items-center gap-4 pl-4">
         <div className="font-inter text-lg">Email: media.wspolpraca@gmail.com</div>
         <div className="font-inter">Zgłoś nam błąd lub zadaj pytanie:</div>

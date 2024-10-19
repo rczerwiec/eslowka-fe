@@ -4,40 +4,69 @@ import { useModal } from "../../shared/components/Modal";
 import AIWordModal from "./AIWordModal";
 import { useState } from "react";
 
+interface IChatHistory{
+    role: string;
+    parts: IParts[];
+}
+
+interface IParts{
+    text: string;
+}
+
+interface IProps{
+    chatHistory: IChatHistory[];
+}
 
 
-const ChatHistory = ({chatHistory}:any) => {
+const ChatHistory = ({chatHistory}:IProps) => {
     let userType:string;
     const AIModal = useModal();
     let arraysOfWords: string[] = [];
+    let arraysOfSentences: string[] = [];
     let renderedWords: any;
     const [selectedWord, setSelectedWord] = useState("");
     let currentChatHistory = chatHistory.map((message: any, index: number) => {
-        let formattedMessage: string = message.message.toString();
-        if(message.type === "user"){
+        let formattedMessage: string = message.parts[0].text.toString();
+        if(message.role === "user"){
             userType = "Ty:";
         } else {
             userType = "Bot Czarek:";
-              arraysOfWords = formattedMessage.replaceAll('*',' ').replaceAll('\n','').split(' ');
-              console.log(arraysOfWords);
-              renderedWords =arraysOfWords.map((word)=>{
-                if(word!=""){
-                    return <div onClick={()=>{
-                        AIModal.toggleModal();
-                        setSelectedWord(word)
-                    }} className="hover:bg-secondary hover:p-2 py-2 cursor-pointer rounded-xl flex-none"><ReactMarkdown>{word}</ReactMarkdown></div>
-                }
+              arraysOfSentences = formattedMessage.split('\n');
+              arraysOfSentences = formattedMessage.split(/(?<!\*)\*(?!\*)/);
+              console.log("Sentences:", arraysOfSentences);
+              renderedWords = arraysOfSentences.map((sentence)=>{
+                arraysOfWords = sentence.replaceAll('*',' ').replaceAll('\n','').split(' ');
 
-            })
+                const renderedSentence = arraysOfWords.map((word)=>{
+                    if(word!=""){
+                        return <span onClick={()=>{
+                            AIModal.toggleModal();
+                            setSelectedWord(word)
+                        }} className="hover:bg-secondary hover:p-1 py-1 cursor-pointer rounded-xl flex-none">{word}</span>
+                    }
+    
+                })
+                console.log(sentence)
+                return <p className="flex flex-wrap gap-1">{renderedSentence}</p>
+              })
+
+              
+     
         }
-        return(
-        <div className="mt-4" key={index}>
-            <div className="">
-                <div className="font-bold text-lg">-{userType}</div>
-                <div className="p-2 text-base w-fit">
-                {message.type === 'bot' ? (<div className="w-20 flex gap-1">{renderedWords}</div>) : (<ReactMarkdown>
-                    {message.message}</ReactMarkdown>)} 
+        let color:string = ""
+        let position="justify-end items-right"
+        if(userType === "Ty:"){
+            color = "bg-secondary"
+            position = ""
+        }
 
+        return(
+        <div className={"flex m-4 "+position} key={index}>
+            <div className={color+"  shadow-xl p-3 w-fit rounded-xl "}>
+                <div className="font-bold text-lg">{userType}</div>
+                <div className="p-1 text-base">
+                {message.role === 'model' ? (<span className="flex flex-wrap flex-col gap-1">{renderedWords}</span>) : (<p><ReactMarkdown>
+                    {message.parts[0].text}</ReactMarkdown></p>)} 
                 </div>
 
             </div>
@@ -45,9 +74,10 @@ const ChatHistory = ({chatHistory}:any) => {
     )})
     return (
         <>
-        <div className="flex flex-col overflow-y-scroll h-[550px] max-w-700 my-4">
+        {currentChatHistory.length>0 ?         <div className="flex flex-col overflow-y-scroll max-h-[550px] max-lg:max-h-[450px] max-w-[1300px] border border-solid border-fifth rounded-xl p-4">
             {currentChatHistory}
-        </div>
+        </div>:<div></div>}
+
         <AIWordModal isVisible={AIModal.isVisible} onClose={AIModal.closeModal} word={selectedWord}/>
         </>
     );

@@ -42,6 +42,15 @@ const mainApi = createApi({
           };
         },
       }),
+      fetchFolder: builder.query({
+        providesTags: ["Folders"],
+        query: (data:{folderName: string, userID: string}) => {
+          return {
+            url: `/users/${data.userID}/${data.folderName}`,
+            method: "GET",
+          };
+        },
+      }),
       fetchUsers: builder.query({
         providesTags: ["User"],
         query: () => {
@@ -195,6 +204,7 @@ const mainApi = createApi({
 
 export const {
   useFetchFoldersQuery,
+  useFetchFolderQuery,
   useFetchUserQuery,
   useFetchSpecificWordsQuery,
   useCreateWordMutation,

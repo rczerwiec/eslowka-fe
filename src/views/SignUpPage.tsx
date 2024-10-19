@@ -62,20 +62,35 @@ const SignUpPage = () => {
 
   return (
     <>
-      <div className="flex flex-col h-screen
+      <div
+        className="flex flex-col h-screen
        items-center justify-center 
-       bg-gradient-to-r from-gradient_from to-gradient_to">
-        <section className="flex relative max-md:flex-col
+       bg-gradient-to-r from-gradient_from to-gradient_to"
+      >
+        <div className="fixed top-28 z-20 flex flex-col justify-center items-center max-w-[400px] font-inter p-2 max-lg:hidden">
+          <div className="text-2xl text-main font-bold">WAŻNE!</div>
+          <div className="text-xs font-semibold text-center text-red-600">Aplikacja jest w bardzo wczesnej wersji - alpha. W tej wersji, aplikacja jest darmowa. Jednocześnie ostrzegamy iż Twoje dane mogą zostać utracone w wyniku
+            częstych resetów bazy danych. Pamiętaj o regularnym eksportowaniu swoich folderów słówek!
+          </div>
+        </div>
+
+        <section
+          className="flex relative max-md:flex-col
         rounded-3xl 
         md:min-h-[42rem] md:min-w-[80rem] max-md:w-full max-md:h-full 
-        bg-white shadow-lg">
-          <div className="flex flex-col
+        bg-white shadow-lg"
+        >
+          <div
+            className="flex flex-col
            gap-5 p-4 
            w-1/2 h-full max-md:w-full 
            justify-center items-center 
-           rounded-tl-3xl rounded-bl-3xl z-20">
-            <div className="font-inter font-bold
-                            text-[54px] max-lg:text-[42px]">
+           rounded-tl-3xl rounded-bl-3xl z-20"
+          >
+            <div
+              className="font-inter font-bold
+                            text-[54px] max-lg:text-[42px]"
+            >
               Utwórz konto!
             </div>
             <form
@@ -124,12 +139,14 @@ const SignUpPage = () => {
               </div>
             </form>
           </div>
-          <div className="flex flex-col
+          <div
+            className="flex flex-col
            z-0 gap-5 p-4 
            lg:w-1/2 max-lg:w-full 
            justify-center items-center 
            bg-secondary 
-           max-lg:rounded-3xl lg:rounded-tr-3xl lg:rounded-br-3xl lg:rounded-tl-login_screen lg:rounded-bl-login_screen">
+           max-lg:rounded-3xl lg:rounded-tr-3xl lg:rounded-br-3xl lg:rounded-tl-login_screen lg:rounded-bl-login_screen"
+          >
             <div className="font-inter font-bold z-20 text-[54px] text-white max-lg:text-[32px]">
               Masz już konto?
             </div>

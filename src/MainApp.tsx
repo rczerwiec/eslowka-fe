@@ -18,11 +18,10 @@ import WordsCollectionsPage from "./views/Folders/WordsCollectionPageView/WordsC
 import RulesPage from "./views/RulesPage";
 import ContactPage from "./views/ContactPage";
 import SettingsPage from "./views/SettingsPage";
-import ImportExportPage from "./views/ImportExportPage";
 import PaymentsPage from "./views/PaymentsPage";
 import PremiumPage from "./views/PremiumPage";
 import FrontPage from "./views/FrontPage";
-import UpdatesPage from "./views/UpdatesPage";
+import UpdatesPage from "./views/UpdatesPage/UpdatesPage";
 import RankingPage from "./views/RankingPage";
 import RevTranslationTraining from "./views/Folders/TrainingsPageview/RevTranslationTrainingPage";
 import AIChatPage from "./views/AIChat/AIChatPage";
@@ -92,14 +91,6 @@ const MainApp = () => {
       element: (
        <App>
         <SettingsPage/>
-       </App>
-      ),
-    },
-    {
-      path: "/app/importexport",
-      element: (
-       <App>
-        <ImportExportPage/>
        </App>
       ),
     },
