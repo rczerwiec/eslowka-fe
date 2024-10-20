@@ -1,6 +1,8 @@
 import { useFormik } from "formik";
 import FirstTitle from "../shared/components/FirstTitle";
 import MainTitle from "../shared/components/MainTitle";
+import Button from "../shared/components/Button";
+import { Colors } from "../shared/Enums/Stylings";
 
 const ContactPage = () => {
   const formik = useFormik({
@@ -39,9 +41,9 @@ const ContactPage = () => {
             value={formik.values.note}
             onChange={formik.handleChange}
           ></input>
-           <div
-          className="flex  m-8 p-4 bg-secondary hover:bg-third hover:cursor-pointer rounded-lg shadow-md items-center justify-center"
-        >Zgłoś</div>
+           <Button bgColor={Colors.SECONDARY}
+          className="flex  m-8 p-4 hover:bg-third hover:cursor-pointer rounded-lg shadow-md items-center justify-center"
+        >Zgłoś</Button>
         </form>
       </div>
     </div>

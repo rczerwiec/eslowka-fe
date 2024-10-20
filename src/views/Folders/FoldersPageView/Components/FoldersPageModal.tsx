@@ -17,6 +17,15 @@ const FoldersPageModal: FC<{renderedFoldersLength: Number | undefined, isVisible
     const user = useSelector((state: RootState) => state.userProfile);
 
     const onCreateFolder = async (newFolder: IFolder) => {
+      if(newFolder.folderName===""){
+        toast.error("Nazwa folderu nie może być pusta!");
+        return;
+      }
+      if(newFolder.folderName.length>20){
+        toast.error("Nazwa folderu nie może być dłuższa niż 20 znaków!");
+        return;
+      }
+
       return await createFolder({newFolder: newFolder,userID:user.value})
         .unwrap()
         .then(() => {

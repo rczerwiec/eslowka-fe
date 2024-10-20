@@ -10,6 +10,7 @@ import { RootState } from "../../../shared/store";
 import { useEffect } from "react";
 import FirstTitle from "../../../shared/components/FirstTitle";
 import MainTitle from "../../../shared/components/MainTitle";
+import { toast } from "react-toastify";
 
 const TrainingPage = () => {
   const navigate = useNavigate();
@@ -50,7 +51,12 @@ const TrainingPage = () => {
                 <div className="flex items-center justify-between p-2 bg-fourth rounded-lg shadow-lg  hover:bg-secondarylight hover:cursor-pointer">
                   <button
                     onClick={() => {
-                      navigate("/app/folders/training/play");
+                      if(folder.words.length === 0 ){
+                        toast.error("Folder musi mieć dodane jakieś słówka!");
+                      }
+                      else{
+                        navigate("/app/folders/training/play");
+                      }
                     }}
                     className="flex items-center w-full gap-4 hover:cursor-pointer"
                   >
@@ -62,7 +68,12 @@ const TrainingPage = () => {
                 <div className="flex items-center justify-between p-2 bg-fourth rounded-lg shadow-lg  hover:bg-secondarylight hover:cursor-pointer">
                   <button
                     onClick={() => {
-                      navigate("/app/folders/training/playReversed");
+                      if(folder.words.length === 0 ){
+                        toast.error("Folder musi mieć dodane jakieś słówka!");
+                      }
+                      else{
+                        navigate("/app/folders/training/playReversed");
+                      }
                     }}
                     className="flex items-center w-full gap-4 hover:cursor-pointer"
                   >

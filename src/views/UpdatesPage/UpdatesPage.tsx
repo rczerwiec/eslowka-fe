@@ -8,6 +8,12 @@ const UpdatesPage = () => {
       <FirstTitle>Aktualizacje</FirstTitle>
       <MainTitle>Aktualizacje</MainTitle>
       <div className="relative inline-block text-left pl-4 overflow-y-scroll max-h-[660px]">
+      <VersionList version="1.0.6 alpha">
+          <li>Poprawki wydajnościowe</li>
+          <li>Liczne zabezpieczenia</li>
+          <li>Chat AI - od teraz zapamiętuje historię rozmowy, do czasu wylogowania</li>
+          <li>Chat AI - więcej operacji na wybranym słowie</li>
+      </VersionList>
       <VersionList version="1.0.5 alpha">
           <li>Dodana możliwość edycji słówek poprzez kliknięcie na nie</li>
           <li>Poprawiona responsywność strony</li>

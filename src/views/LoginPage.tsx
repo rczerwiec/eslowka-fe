@@ -11,6 +11,8 @@ import { auth } from "../firebase/firebas";
 import { useCreateUserMutation, useUpdateUserDatesMutation } from "../shared/store";
 import { FaGoogle } from "react-icons/fa6";
 import { userInfo } from "os";
+import Button from "../shared/components/Button";
+import { Colors, Sizes } from "../shared/Enums/Stylings";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -143,7 +145,7 @@ const LoginPage = () => {
               })
             }} className="flex justify-center items-center font-inter text-fifth font-bold underline cursor-pointer">Nie pamiętasz hasła?</div>
             <div className="flex justify-center items-center">
-              <button className="bg-secondary font-inter text-white font-bold text-xl w-fit px-16 py-2 rounded-xl" type="submit">Zaloguj</button>
+              <Button className="" size={Sizes.XL} textColor={Colors.WHITE} bgColor={Colors.SECONDARY}>Zaloguj</Button>
             </div>
           </form>
         </div>
@@ -155,9 +157,9 @@ const LoginPage = () => {
            max-lg:rounded-3xl lg:rounded-tr-3xl lg:rounded-br-3xl lg:rounded-tl-login_screen lg:rounded-bl-login_screen">
           <div className="font-inter font-bold z-20 text-[54px] text-white max-lg:text-[32px] max-lg:text-center">Witaj, przybyszu!</div>
           <div className="flex justify-center z-20 items-center font-inter text-lg text-white font-medium max-lg:text-center">Chciałbyś nauczyć się nowych słówek, ale nie wiesz jak zacząć?</div>
-          <button onClick={()=>{
+          <Button bgColor={Colors.SECONDARY} textColor={Colors.WHITE} size={Sizes.XL} onClick={()=>{
             navigate('/signup')
-          }} className="bg-secondary z-20 font-inter text-white font-bold text-xl w-fit mt-8 px-16 py-3 rounded-2xl  border-white border-x-[5px] border-y-[5px]" type="submit">Dołącz do nas!</button>
+          }} className="z-20 font-inter font-bold w-fit mt-8 px-16 py-3 rounded-2xl  border-white border-x-[5px] border-y-[5px]" type="submit">Dołącz do nas!</Button>
         </div>
         <Character alt="LoginPage character" className="absolute z-10 bottom-0 left-1/3 h-[30rem] select-none max-lg:hidden" character={loginPageSvg}/>
       </section>

@@ -1,9 +1,6 @@
 //ICONS & SVG
 import { IoMdArrowRoundBack } from "react-icons/io";
 import character1 from "../../../shared/img/character1.svg";
-import { FaCheckCircle, FaFrownOpen } from "react-icons/fa";
-import { FaFire, FaSkull } from "react-icons/fa6";
-import { GrInProgress } from "react-icons/gr";
 
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
@@ -14,6 +11,9 @@ import { IWord } from "../../../shared/store/slices/FolderSlice";
 import { useFormik } from "formik";
 import CheckTranslationUtil from "./Utils/CheckTranslationUtil";
 import FirstTitle from "../../../shared/components/FirstTitle";
+import Button from "../../../shared/components/Button";
+import RenderStatus from "./Components/RenderStatus";
+import IconStreak from "./Components/IconStreak";
 
 const TranslationWordTraining = () => {
   const user = useSelector((state: RootState) => state.userProfile);
@@ -70,19 +70,13 @@ const TranslationWordTraining = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess])
 
-  let userName = "Ładowanie...";
   let streak = 0;
-  let level = 0;
   let reversed = true;
   let experience = 0;
   let practiceDate = new Date();
-  let lastLoginDate = new Date();
   if (response.isSuccess) {
     streak = response.data.streak;
-    level = response.data.level;
     experience = response.data.experience;
-    userName = response.data.userName;
-    lastLoginDate = response.data.lastLogin;
     practiceDate = response.data.practiceDate;
   }
 
@@ -125,131 +119,10 @@ const TranslationWordTraining = () => {
   }
 
 
-let renderStatus;
-if (status === 0) {
-  renderStatus = (
-    <div className="flex gap-16">
-    <div className="flex flex-col items-center" onClick={() => {
-      changeStatus(0);
-    }}>
-      <div className="flex items-center justify-center text-red-600 text-3xl size-12 hover:size-14 hover:text-4xl hover:cursor-pointer border border-main border-x-2 border-y-2 rounded-xl">
-        <FaFrownOpen />
-      </div>
-      <div className="font-thin text-base w-14 text-center">
-        Jest dla mnie kłopotliwe
-      </div>
-    </div>
-    <div className="flex flex-col items-center" onClick={() => {
-      changeStatus(1);
-    }}>
-      <div className="flex items-center justify-center text-orange-400 text-3xl size-12 hover:size-14 hover:text-4xl hover:cursor-pointer border  rounded-xl">
-        <GrInProgress />
-      </div>
-      <div className="font-thin text-base w-14 text-center">
-        Wciąż się uczę
-      </div>
-    </div>
-    <div className="flex flex-col items-center" onClick={() => {
-      changeStatus(2);
-    }}>
-      <div className="flex items-center justify-center text-green-600 text-3xl size-12 hover:size-14 hover:text-4xl hover:cursor-pointer border border-mainrounded-xl">
-        <FaCheckCircle />
-      </div>
-      <div className="font-thin text-base w-14 text-center">
-        Znam
-      </div>
-    </div>
-  </div>
-  );
-} else if (status === 1) {
-  renderStatus = (
-    <div className="flex gap-16">
-    <div className="flex flex-col items-center" onClick={() => {
-      changeStatus(0);
-    }}>
-      <div className="flex items-center justify-center text-red-600 text-3xl size-12 hover:size-14 hover:text-4xl hover:cursor-pointer border rounded-xl">
-        <FaFrownOpen />
-      </div>
-      <div className="font-thin text-base w-14 text-center">
-        Jest dla mnie kłopotliwe
-      </div>
-    </div>
-    <div className="flex flex-col items-center" onClick={() => {
-      changeStatus(1);
-    }}>
-      <div className="flex items-center justify-center text-orange-400 text-3xl size-12 hover:size-14 hover:text-4xl hover:cursor-pointer border border-main border-x-2 border-y-2  rounded-xl">
-        <GrInProgress />
-      </div>
-      <div className="font-thin text-base w-14 text-center">
-        Wciąż się uczę
-      </div>
-    </div>
-    <div className="flex flex-col items-center" onClick={() => {
-      changeStatus(2);
-    }}>
-      <div className="flex items-center justify-center text-green-600 text-3xl size-12 hover:size-14 hover:text-4xl hover:cursor-pointer border rounded-xl">
-        <FaCheckCircle />
-      </div>
-      <div className="font-thin text-base w-14 text-center">
-        Znam
-      </div>
-    </div>
-  </div>
-  );
-} else if (status===2){
-  renderStatus = (
-    <div className="flex gap-16">
-    <div className="flex flex-col items-center" onClick={() => {
-      changeStatus(0);
-    }}>
-      <div className="flex items-center justify-center text-red-600 text-3xl size-12 hover:size-14 hover:text-4xl hover:cursor-pointer border  rounded-xl">
-        <FaFrownOpen />
-      </div>
-      <div className="font-thin text-base w-14 text-center">
-        Jest dla mnie kłopotliwe
-      </div>
-    </div>
-    <div className="flex flex-col items-center" onClick={() => {
-      changeStatus(1);
-    }}>
-      <div className="flex items-center justify-center text-orange-400 text-3xl size-12 hover:size-14 hover:text-4xl hover:cursor-pointer border  rounded-xl">
-        <GrInProgress />
-      </div>
-      <div className="font-thin text-base w-14 text-center">
-        Wciąż się uczę
-      </div>
-    </div>
-    <div className="flex flex-col items-center">
-      <div className="flex items-center justify-center text-green-600 text-3xl size-12 hover:size-14 hover:text-4xl hover:cursor-pointer border border-main border-x-2 border-y-2 rounded-xl">
-        <FaCheckCircle />
-      </div>
-      <div className="font-thin text-base w-14 text-center">
-        Znam
-      </div>
-    </div>
-  </div>
-  );
-}
-else{
-  renderStatus = (<div>Błąd ładowania statusu!</div>)
-}
+  let renderStatus = <RenderStatus changeStatus={changeStatus} status={status}/>
 
-let streakIcon;
-if (currentWord.streak>=5 && currentWord.streak < 15){
-  streakIcon = <div className="flex flex-col justify-center items-center pt-3"><FaFire className=" text-2xl text-orange-600"/><div className="text-sm font-bold text-fifth">{currentWord.streak}</div></div>
-}
-else if (currentWord.streak>=15  && currentWord.streak<35){
-  streakIcon = <div className="flex flex-col justify-center items-center pt-3"><FaFire className=" text-2xl text-zinc-400"/><div className="text-sm font-bold text-fifth">{currentWord.streak}</div></div>
-}
-else if (currentWord.streak>=35){
-  streakIcon = <div className="flex flex-col justify-center items-center pt-3"><FaFire className=" text-2xl text-gold"/><div className="text-sm font-bold text-fifth">{currentWord.streak}</div></div>
-}
-else if(currentWord.reverseStreak>=5){
-  streakIcon = <div className="flex flex-col justify-center items-center pt-3"><FaSkull className=" text-2xl text-red-600"/><div className="text-sm font-bold text-fifth">-{currentWord.reverseStreak}</div></div>
-}
-else{
-  streakIcon = <></>
-}
+  let streakIcon=<IconStreak streak={currentWord.streak} reverseStreak={currentWord.reverseStreak}/>
+  
 
 
 //BUTTON AND TRANSLATION INPUTS
@@ -270,7 +143,7 @@ let ButtonInput = (
     onClick={() => {}}
     className="relative left-0 flex items-center"
   >
-    <button onClick={setStatusBar} className={ButtonsState[0]} >Sprawdź </button>
+    <Button onClick={setStatusBar} className={ButtonsState[0]} >Sprawdź </Button>
     <button onClick={()=> {
       CheckTranslationUtil(updateWord, updateUserStats ,currentWord, status, formik, wordsState, navigate, setWordsState,setIsDisabled, setStatus, setCurrentWord, setButtonsState, reversed);
     }} className={ButtonsState[1]} ref={buttonRef}>Dalej </button>

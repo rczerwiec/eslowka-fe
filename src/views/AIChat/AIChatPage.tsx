@@ -3,18 +3,18 @@ import { GoogleGenerativeAI} from "@google/generative-ai";
 import ChatHistory from "./ChatHistory";
 import FirstTitle from "../../shared/components/FirstTitle";
 import MainTitle from "../../shared/components/MainTitle";
-
-interface IParts{
-  text: string;
-}
+import { IChatHistoryPart, IParts } from "../../shared/store/slices/ChatHistorySlice";
+import { useDispatch, useSelector } from "react-redux";
+import {change} from "../../shared/store/slices/ChatHistorySlice";
+import { RootState } from "../../shared/store";
 
 function AIChatPage() {
   const [userInput, setUserInput] = useState("");
-  const [chatHistory, setChatHistory] = useState<
-    Array<{ role: any; parts: IParts[]}>
-  >([]);
+  const chatHistoryGlobal = useSelector((state: RootState) => state.chatProfile);
+  const dispatch = useDispatch();
+  const [chatHistory, setChatHistory] = useState<IChatHistoryPart[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-
+  console.log(chatHistoryGlobal);
   const handleUserInput = (e: any) => {
     setUserInput(e.target.value);
   };
@@ -30,7 +30,7 @@ function AIChatPage() {
   const model = genAI?.getGenerativeModel({
     model: "gemini-1.5-flash-8b",
     systemInstruction:
-      `Jesteś Czarek, jesteś robotem który wspomoże użytkowników portalu esłówka.pl w nauce języków. Esłówka to platforma do nauki języków obcy kładząca nacisk na naukę słówek. Na początku zawsze zapytaj rozmówcę jakiego języka chciałby się z Twoją pomocą uczyć. Doradzaj, poprawiaj błędy gdy Twój rozmówca pisze w innym języku niż polski oraz generuj przydatne listy słówek do nauki.`,
+      `Jesteś Czarek, jesteś robotem który wspomoże użytkowników portalu esłówka.pl w nauce języków. Zawsze staraj się brnąć do sytuacji, w której wygenerujesz liste pojedynczych słówek z danego języka, pytaj jakiego języka rozmówca chce się uczyć. Doradzaj, poprawiaj błędy gdy Twój rozmówca pisze w innym języku niż polski oraz generuj przydatne listy słówek do nauki.`,
   });
 
   const sendMessage = async () => {
@@ -57,6 +57,7 @@ function AIChatPage() {
       setChatHistory([
         ...chatHistory,
       ]);
+      dispatch(change({chatHistory}))
     } catch(e) {
       console.log("Error!",e);
     } finally {
@@ -67,13 +68,14 @@ function AIChatPage() {
 
   const clearChat = () => {
     setChatHistory([]);
+    dispatch(change({chatHistory}))
   };
 
   return (
     <div className="flex flex-col w-full h-full">
       <FirstTitle
       >
-        ESłówka - Chat AI 1.0.1
+        ESłówka - Chat AI 1.0.2
       </FirstTitle>
       <MainTitle
       >
@@ -81,7 +83,7 @@ function AIChatPage() {
       </MainTitle>
       <div className="relative inline-block text-left font-inter">
         <div className="flex flex-col justify-center items-center container mx-auto px-4 py-8">
-        <ChatHistory chatHistory={chatHistory} />
+        <ChatHistory chatHistory={chatHistoryGlobal.object} />
  
           {isLoading && (
             <>

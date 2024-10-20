@@ -16,6 +16,8 @@ import { FC } from "react";
 import { FaCheckCircle } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { toast} from 'react-toastify';
+import Button from "../../../../shared/components/Button";
+import { Colors, Sizes } from "../../../../shared/Enums/Stylings";
 
 const UpdateWordForm: FC<{
   folder: IFolder;
@@ -102,10 +104,10 @@ const UpdateWordForm: FC<{
         ></input>
       </div>
       <input></input>
-      <button type="submit" className="absolute bottom-0 right-0 pr-8 pb-6 text-3xl text-secondary">
-              <FaCheckCircle className="hover:text-4xl hover:cursor-pointer"
+      <Button type="submit" size={Sizes.XL3} className="absolute bottom-0 right-0 pr-8 pb-6">
+              <FaCheckCircle className="hover:text-4xl text-secondary hover:cursor-pointer"
               />
-            </button>
+            </Button>
     </form>
   );
 };

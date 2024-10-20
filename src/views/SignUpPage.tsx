@@ -7,6 +7,8 @@ import loginPageSvg from "../shared/img/loginPage.svg"
 import Character from "../shared/components/Character";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Button from "../shared/components/Button";
+import { Colors, Sizes } from "../shared/Enums/Stylings";
 
 const SignUpPage = () => {
   const [createUser] = useCreateUserMutation();
@@ -52,6 +54,14 @@ const SignUpPage = () => {
       password: "",
     },
     onSubmit: (values) => {
+      if(values.password.length < 8){
+        toast.error("Hasło musi mieć przynajmniej 8 znaków!");
+        return;
+      }
+      if(values.userName.length < 4){
+        toast.error("Login musi mieć przynajmniej 4 znaków!");
+        return;
+      }
       doCreateUserWithEmailAndPassword(
         values.email,
         values.userName,
@@ -130,12 +140,12 @@ const SignUpPage = () => {
                 />
               </div>
               <div className="flex justify-center items-center">
-                <button
-                  className="bg-secondary font-inter text-white font-bold text-xl w-fit px-16 py-2 rounded-xl"
+                <Button bgColor={Colors.SECONDARY} textColor={Colors.WHITE} size={Sizes.XL}
+                  className="font-inter font-bold w-fit px-16 py-2 rounded-xl"
                   type="submit"
                 >
                   Rejestruj!
-                </button>
+                </Button>
               </div>
             </form>
           </div>
@@ -150,15 +160,15 @@ const SignUpPage = () => {
             <div className="font-inter font-bold z-20 text-[54px] text-white max-lg:text-[32px]">
               Masz już konto?
             </div>
-            <button
+            <Button bgColor={Colors.SECONDARY} textColor={Colors.WHITE} size={Sizes.XL}
               onClick={() => {
                 navigate("/login");
               }}
-              className="bg-secondary z-20 font-inter text-white font-bold text-xl w-fit mt-2 px-16 py-3 rounded-2xl  border-white border-x-[5px] border-y-[5px]"
+              className="z-20 font-inter font-bold w-fit mt-2 px-16 py-3 rounded-2xl  border-white border-x-[5px] border-y-[5px]"
               type="submit"
             >
               Logowanie!
-            </button>
+            </Button>
           </div>
           <Character
             alt="LoginPage character"

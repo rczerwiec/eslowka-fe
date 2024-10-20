@@ -5,6 +5,8 @@ import { RootState, useCreateWordsMutation } from "../../../../shared/store";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import Button from "../../../../shared/components/Button";
+import { Colors } from "../../../../shared/Enums/Stylings";
 
 
 const ImportWordsModal: FC<{isVisible: boolean, closeModal: () => void, folder: IWord[], data: any}> = (props): JSX.Element => {
@@ -79,15 +81,16 @@ const ImportWordsModal: FC<{isVisible: boolean, closeModal: () => void, folder: 
 
 return (
     <Modal isVisible={props.isVisible} onClose={props.closeModal}>
-    <div className="absolute bg-whiteMain mt-20 z-20 h-3/4 w-full top-0 bg-white rounded xl:w-1/3 xl:left-0 xl:right-0 xl:mr-auto xl:ml-auto">
-      <div>Znaleziono {props.data.length} słówek</div>
-      <div className="absolute flex flex-col p-8 shrink h-full w-full overflow-y-auto  scrollbar-hide z-10">
-            <form>
-                <button onClick={(e)=>{
+    <div className="absolute bg-whiteMain mt-20 z-20 h-1/4 w-full top-0 bg-white rounded xl:w-1/3 xl:left-0 xl:right-0 xl:mr-auto xl:ml-auto">
+      <div className="font-inter p-8 text-center">Znaleziono {props.data.length} słówek, gotowych do zaimporotwania</div>
+      <div className="font-inter p-4 text-center font-bold">Chcesz je teraz zaimportować?</div>
+      <div className="absolute flex flex-col p-8 shrink h-full w-full overflow-y-auto scrollbar-hide z-10">
+            <form className="flex gap-2 justify-between">
+                <Button bgColor={Colors.SECONDARY} onClick={(e)=>{
                     e.preventDefault();
                     ImportWords();
-                }}>TAK</button>
-                <button onClick={()=>{props.closeModal()}}>NIE</button>
+                }}>TAK</Button>
+                <Button bgColor={Colors.SECONDARY} onClick={()=>{props.closeModal()}}>NIE</Button>
             </form>
       </div>
     </div>

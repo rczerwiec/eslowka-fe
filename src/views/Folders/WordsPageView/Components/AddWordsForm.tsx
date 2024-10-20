@@ -138,6 +138,15 @@ const AddWordsForm: FC<{
         });
         props.closeModal();
       } else {
+        if(values.word==="" || values.word===undefined || values.word===null){
+          toast.error("Uzupełnij wszystkie pola!");
+          return;
+        }
+        if(values.translation==="" || values.translation===undefined || values.translation===null){
+          toast.error("Uzupełnij wszystkie pola!");
+          return;
+        }
+
         onWordCreate({
           word: {
             id: props.newID,

@@ -1,20 +1,11 @@
 import ReactMarkdown from "react-markdown";
-import markdownToTxt from 'markdown-to-txt';
 import { useModal } from "../../shared/components/Modal";
 import AIWordModal from "./AIWordModal";
 import { useState } from "react";
-
-interface IChatHistory{
-    role: string;
-    parts: IParts[];
-}
-
-interface IParts{
-    text: string;
-}
+import { IChatHistoryPart } from "../../shared/store/slices/ChatHistorySlice";
 
 interface IProps{
-    chatHistory: IChatHistory[];
+    chatHistory: IChatHistoryPart[];
 }
 
 
@@ -25,6 +16,9 @@ const ChatHistory = ({chatHistory}:IProps) => {
     let arraysOfSentences: string[] = [];
     let renderedWords: any;
     const [selectedWord, setSelectedWord] = useState("");
+    if(!chatHistory) {
+        return <div></div>
+    }
     let currentChatHistory = chatHistory.map((message: any, index: number) => {
         let formattedMessage: string = message.parts[0].text.toString();
         if(message.role === "user"){
@@ -40,8 +34,8 @@ const ChatHistory = ({chatHistory}:IProps) => {
                 const renderedSentence = arraysOfWords.map((word)=>{
                     if(word!=""){
                         return <span onClick={()=>{
-                            AIModal.toggleModal();
                             setSelectedWord(word)
+                            AIModal.toggleModal();
                         }} className="hover:bg-secondary hover:p-1 py-1 cursor-pointer rounded-xl flex-none">{word}</span>
                     }
     
