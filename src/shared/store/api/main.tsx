@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IFolder, INewWord, INewWords } from "../slices/FolderSlice";
-import { IDates, ISettings } from "../slices/UserSlice";
+import { IDates, ISettings, IStory } from "../slices/UserSlice";
 import { RootState } from "../../store"
 
 //http://localhost:3000/users/669787b41e2ea369890f4f67/folders/0/words
@@ -18,7 +18,7 @@ const mainApi = createApi({
       return headers;
   }
   }),
-  tagTypes: ["Words", "Folders", "User"],
+  tagTypes: ["Words", "Folders", "User", "Stories"],
   endpoints(builder) {
     return {
       //CREATE USER============================================================
@@ -38,6 +38,15 @@ const mainApi = createApi({
         query: (userID: string) => {
           return {
             url: `/users/${userID}`,
+            method: "GET",
+          };
+        },
+      }),
+      fetchUserStories: builder.query({
+        providesTags: ["Stories"],
+        query: (userID: string) => {
+          return {
+            url: `/users/${userID}/stories`,
             method: "GET",
           };
         },
@@ -198,6 +207,16 @@ const mainApi = createApi({
           };
         },
       }),
+      createStory: builder.mutation({
+        invalidatesTags: ["Stories"],
+        query: (data:{newStory: IStory, userID: string}) => {
+          return {
+            url: `/users/${data.userID}/story`,
+            method: "PATCH",
+            body: data.newStory,
+          };
+        },
+      }),
     };
   },
 });
@@ -221,5 +240,7 @@ export const {
   useFetchUsersQuery,
   useUpdateUserDatesMutation,
   useUpdateUserInfoMutation,
+  useFetchUserStoriesQuery,
+  useCreateStoryMutation,
 } = mainApi;
 export { mainApi };

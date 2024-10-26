@@ -25,6 +25,7 @@ import UpdatesPage from "./views/UpdatesPage/UpdatesPage";
 import RankingPage from "./views/RankingPage";
 import RevTranslationTraining from "./views/Folders/TrainingsPageview/RevTranslationTrainingPage";
 import AIChatPage from "./views/AIChat/AIChatPage";
+import ReadingPage from "./views/Folders/ReadingPageView/ReadingPage";
 
 const MainApp = () => {
   const router = createBrowserRouter([
@@ -137,6 +138,14 @@ const MainApp = () => {
       element: (
         <App>
         <WordsInFolderPage/>
+       </App>
+      ),
+    },
+    {
+      path: "/app/read",
+      element: (
+        <App>
+        <ReadingPage/>
        </App>
       ),
     },

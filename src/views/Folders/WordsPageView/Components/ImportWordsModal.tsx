@@ -26,8 +26,12 @@ const ImportWordsModal: FC<{isVisible: boolean, closeModal: () => void, folder: 
           });
       };
 
-    const ImportWords = async () =>{
+    const ImportWords = async (e:Event) =>{
+        e.preventDefault();
         console.log(props.folder)
+        if(props.folder.length ===0){
+          toast.error("Błąd podczas importu! Przed importem, twój folder powinien mieć conajmniej jedno dodane słówko!");
+        }
         const folderWords = props.folder;
         const dataToAdd :IWord[]= props.data;
         if (
@@ -41,6 +45,7 @@ const ImportWordsModal: FC<{isVisible: boolean, closeModal: () => void, folder: 
         ) {
           if (folderWords !== undefined) {
             if (folderWords.length !== 0) {
+              //MAP ID LIST OF CURRENT FOLDER
               const currentWordsIDs = folderWords.map(
                 (word: IWord, index: number) => {
                   return word.id;
@@ -49,18 +54,22 @@ const ImportWordsModal: FC<{isVisible: boolean, closeModal: () => void, folder: 
               console.log(currentWordsIDs);
               console.log(currentWordsIDs[currentWordsIDs.length - 1]);
 
+              //SET NEW ID TO WORDS
               const dataToAddWithNewIDs = dataToAdd.map(
                 (word: IWord, index: number) => {
                   word.id =
                     currentWordsIDs[currentWordsIDs.length - 1] + (index + 1);
                   console.log("NEWID", word.id);
                   word.folderId = folderWords[0].folderId;
+                  if(word.note === null) word.note= "";
                   return word;
                 }
               );
               await onWordsCreate({
                 words: dataToAddWithNewIDs,
                 folderID: folderWords[0].folderId,
+              }).catch(() => {
+                toast.error("Błąd podczas importu! Przed importem, twój folder powinien mieć conajmniej jedno dodane słówko!");
               });
             }
           }
@@ -86,10 +95,7 @@ return (
       <div className="font-inter p-4 text-center font-bold">Chcesz je teraz zaimportować?</div>
       <div className="absolute flex flex-col p-8 shrink h-full w-full overflow-y-auto scrollbar-hide z-10">
             <form className="flex gap-2 justify-between">
-                <Button bgColor={Colors.SECONDARY} onClick={(e)=>{
-                    e.preventDefault();
-                    ImportWords();
-                }}>TAK</Button>
+                <Button bgColor={Colors.SECONDARY} onClick={ImportWords}>TAK</Button>
                 <Button bgColor={Colors.SECONDARY} onClick={()=>{props.closeModal()}}>NIE</Button>
             </form>
       </div>

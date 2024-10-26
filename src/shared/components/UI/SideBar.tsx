@@ -2,7 +2,7 @@ import { TbSquareRoundedLetterW } from "react-icons/tb";
 import { TbFolderFilled } from "react-icons/tb";
 import { PiRankingFill } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
-import { FaRobot } from "react-icons/fa6";
+import { FaBook, FaRobot } from "react-icons/fa6";
 
 const SideBar = () => {
     const navigate = useNavigate();
@@ -40,6 +40,16 @@ const SideBar = () => {
                         </div>
                         <div  className="text-white font-inter font-bold text-base">
                             Chat AI
+                        </div>
+                    </div>
+                    <div onClick={()=>{
+                            navigate('/app/read')
+                        }} className="flex h-12 items-center pl-4 gap-2 hover:bg-third hover:cursor-pointer">
+                        <div>
+                            <FaBook className="text-2xl text-white"/>
+                        </div>
+                        <div  className="text-white font-inter font-bold text-base">
+                            Ćwicz Czytanie
                         </div>
                     </div>
                     <div onClick={()=>{

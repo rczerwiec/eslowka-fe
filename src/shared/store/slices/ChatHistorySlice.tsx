@@ -18,7 +18,7 @@ const initialState: IChatHistory = {
 }
 
 export const chatHistorySlice = createSlice({
-    name: "folderProfile",
+    name: "chatHistory",
     initialState: initialState,
     reducers: {
         change: (state, action: PayloadAction<{chatHistory: IChatHistoryPart[]}>) => {

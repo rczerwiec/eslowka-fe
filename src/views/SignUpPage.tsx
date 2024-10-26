@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { useCreateUserMutation } from "../shared/store";
-import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendEmailVerification, UserCredential } from "firebase/auth";
 import { auth } from "../firebase/firebas";
 import loginPageSvg from "../shared/img/loginPage.svg"
 import Character from "../shared/components/Character";
@@ -9,18 +9,22 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Button from "../shared/components/Button";
 import { Colors, Sizes } from "../shared/Enums/Stylings";
+import { doCreateUserWithEmailAndPassword } from "../firebase/auth";
 
 const SignUpPage = () => {
   const [createUser] = useCreateUserMutation();
-  const doCreateUserWithEmailAndPassword = async (
+
+  //Register the user
+  const UserRegister = async (
     email: string,
     userName: string,
     password: string
   ) => {
-    return createUserWithEmailAndPassword(auth, email, password)
-      .then((user) => {
-        sendEmailVerification(user.user);
-        toast.success("Pomyślnie utworzono konto! Zostaniesz przekierowany!");
+    await doCreateUserWithEmailAndPassword(email,password).then(
+      (user) => {
+        //=====Create an user in database if firebase signup was successful
+        
+        //Create an user object
         let newUser = {
           id: user.user.uid,
           uid: user.user.uid,
@@ -34,35 +38,52 @@ const SignUpPage = () => {
           },
           experience: 0,
           level: 0,
-          streak: 0,
+          streak: 1,
         };
+
+        //Send user object to database
         createUser(newUser).then(() => {
+          toast.success("Pomyślnie utworzono konto! Zostaniesz przekierowany!");
           setTimeout(() => {
             navigate("/login");
           }, 5000);
         });
-      })
-      .catch(() => {
-        toast.error("Błąd podczas tworzenia konta!");
-      });
-  };
+      }
+    ).catch(()=> {
+      //If error during firebase user creation
+      toast.error("Błąd podczas tworzenia konta!");
+    })
+  }
+
+  //navigate hook
   const navigate = useNavigate();
+  //formik hook
   const formik = useFormik({
     initialValues: {
       email: "",
       userName: "",
       password: "",
+      repeatPassword: "",
     },
+    //when the form is submitted
     onSubmit: (values) => {
+      //check password length
       if(values.password.length < 8){
         toast.error("Hasło musi mieć przynajmniej 8 znaków!");
         return;
       }
+      //check username length
       if(values.userName.length < 4){
         toast.error("Login musi mieć przynajmniej 4 znaków!");
         return;
       }
-      doCreateUserWithEmailAndPassword(
+      //check if passwords are the same
+      if(values.password !== values.repeatPassword){
+        toast.error("Podane hasła nie są identyczne!");
+        return;
+      }
+      //register the user if above are correct
+      UserRegister(
         values.email,
         values.userName,
         values.password,
@@ -138,9 +159,18 @@ const SignUpPage = () => {
                   onChange={formik.handleChange}
                   value={formik.values.password}
                 />
+                <input
+                  className="bg-fifth_light h-10 rounded-md p-3"
+                  id="repeatPassword"
+                  name="repeatPassword"
+                  type="password"
+                  placeholder="powtórz hasło"
+                  onChange={formik.handleChange}
+                  value={formik.values.repeatPassword}
+                />
               </div>
               <div className="flex justify-center items-center">
-                <Button bgColor={Colors.SECONDARY} textColor={Colors.WHITE} size={Sizes.XL}
+                <Button animated bgColor={Colors.SECONDARY} textColor={Colors.WHITE} size={Sizes.XL}
                   className="font-inter font-bold w-fit px-16 py-2 rounded-xl"
                   type="submit"
                 >
@@ -160,7 +190,7 @@ const SignUpPage = () => {
             <div className="font-inter font-bold z-20 text-[54px] text-white max-lg:text-[32px]">
               Masz już konto?
             </div>
-            <Button bgColor={Colors.SECONDARY} textColor={Colors.WHITE} size={Sizes.XL}
+            <Button animated bgColor={Colors.SECONDARY} textColor={Colors.WHITE} size={Sizes.XL}
               onClick={() => {
                 navigate("/login");
               }}

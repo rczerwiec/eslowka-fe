@@ -148,6 +148,7 @@ const RevTranslationTraining = () => {
 
   //CHECK TRANSLATION - ON_BUTTON_CLICK BEFORE CHECK
   const setStatusBar = () => {
+    console.log(formik.values.translation.toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\u0142/g, "l"),wordsState[wordsState.length - 1].word.toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").replace(/\u0142/g, "l" ))
     if (
       formik.values.translation
         .toLocaleLowerCase()
@@ -159,6 +160,7 @@ const RevTranslationTraining = () => {
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "")
         .replace(/\u0142/g, "l")
+        .replaceAll('\n','')
     ) {
       setButtonsState([
         "text-lg text-white hidden",

@@ -19,7 +19,7 @@ import { CSVLink } from "react-csv";
 import CsvFileInput from "../../../shared/components/CsvFileInput";
 import ImportWordsModal from "./Components/ImportWordsModal";
 import FirstTitle from "../../../shared/components/FirstTitle";
-import MainTitle from "../../../shared/components/MainTitle";
+import { motion } from "framer-motion";
 
 const WordsInFolderPage = () => {
   const { isVisible, toggleModal, closeModal } = useModal();
@@ -174,14 +174,15 @@ const WordsInFolderPage = () => {
           </div>
         </div>
 
-        <div
+        <motion.div whileHover={{ scale: [null, 1.5, 1.4] }}
+      transition={{ duration: 0.3 }}
           onClick={() => {
             toggleModal();
           }}
           className="flex z-10 absolute bottom-0 right-0 m-8 h-16 w-16 bg-secondary hover:bg-third hover:cursor-pointer rounded-full shadow-md items-center justify-center"
         >
           <HiPlus className="text-2xl" />
-        </div>
+        </motion.div>
       </div>
       <Character
         alt="character1"

@@ -33,11 +33,25 @@ export interface IDates {
 export interface IUserId{
     value: string,
     token: string,
+    loading: boolean,
+    userLoggedIn: boolean,
+}
+
+export interface IStory {
+  id: number;
+  language: 'german' | 'english' | 'french';
+  level: 'a1' | 'a2' | 'b1' | 'b2' | 'c1';
+  title: string;
+  words: { word: string; known: boolean }[];
+  wordAmount: number;
+  wordKnownAmount: number;
 }
 
 const initialState: IUserId = {
   value: "b",
   token: "b",
+  loading: true,
+  userLoggedIn: false,
 };
 
 export const userSlice = createSlice({
@@ -49,11 +63,17 @@ export const userSlice = createSlice({
     },
     setCurrentToken: (state, action) => {
       state.token = action.payload;
+    },
+    setUserLoggedIn: (state, action) => {
+      state.userLoggedIn = action.payload;
+    },
+    setLoading: (state, action) => {
+      state.loading = action.payload;
     }
   },
 });
 
-export const { setCurrentUser, setCurrentToken } = userSlice.actions;
+export const { setCurrentUser, setCurrentToken, setUserLoggedIn, setLoading } = userSlice.actions;
 
 export const getCurrentUser = () => (dispatch: any) => {
   onAuthStateChanged(auth, async (user) => {
@@ -61,10 +81,13 @@ export const getCurrentUser = () => (dispatch: any) => {
       user.getIdToken().then((token) => {
         dispatch(setCurrentToken(token))
         dispatch(setCurrentUser(user.uid));
+        dispatch(setUserLoggedIn(true))
       })
-      
     } else {
+      dispatch(setUserLoggedIn(false))
+      dispatch(setCurrentUser("b"));
     }
+    setLoading(false);
   });
 };
 

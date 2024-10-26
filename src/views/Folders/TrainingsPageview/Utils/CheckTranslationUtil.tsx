@@ -23,24 +23,26 @@ function CheckTranslationUtil(
   .toLocaleLowerCase()
   .normalize("NFD")
   .replace(/[\u0300-\u036f]/g, "")
-  .replace(/\u0142/g, "l");
+  .replace(/\u0142/g, "l")
   let translation = wordsState[wordsState.length - 1].word
   .toLocaleLowerCase()
   .normalize("NFD")
   .replace(/[\u0300-\u036f]/g, "")
-  .replace(/\u0142/g, "l") 
+  .replace(/\u0142/g, "l")
+  .replaceAll('\n','');
   if (reversed){
     translation = wordsState[wordsState.length - 1].translation
     .toLocaleLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
-    .replace(/\u0142/g, "l") ;
+    .replace(/\u0142/g, "l").replaceAll('\n','');
   }
   //IF IT'S CORRECT
   if (
     word ===
     translation
   ) {
+    console.log(word+"-", translation)
     if (currentWord.known === 0 && currentWord.streak === 2) {
       known = 1;
     }

@@ -14,6 +14,7 @@ import { useState } from "react";
 import FolderRenderUtil from "./utils/FolderRenderUtil";
 import FirstTitle from "../../../shared/components/FirstTitle";
 import MainTitle from "../../../shared/components/MainTitle";
+import { motion } from "framer-motion";
 
 const FoldersPage = () => {
   const user = useSelector((state: RootState) => state.userProfile);
@@ -43,14 +44,15 @@ const FoldersPage = () => {
         <FirstTitle>Foldery</FirstTitle>
         <MainTitle>Twoje Foldery</MainTitle>
         <form>{folderRender?.renderedFolders}</form>
-        <div
+        <motion.div whileHover={{ scale: [null, 1.5, 1.4] }}
+      transition={{ duration: 0.3 }}
           onClick={() => {
             toggleModal();
           }}
-          className="flex z-10 absolute bottom-0 right-0 m-8 h-16 w-16 bg-secondary hover:bg-third hover:cursor-pointer rounded-full shadow-md items-center justify-center"
+          className="flex z-10 absolute bottom-0 right-0 m-8 h-16 w-16 bg-secondary hover:bg-secondarylight hover:cursor-pointer rounded-full shadow-md items-center justify-center"
         >
           <HiPlus className="text-2xl" />
-        </div>
+        </motion.div>
       </div>
       <Character
         alt="character1"

@@ -106,8 +106,8 @@ const TranslationWordTraining = () => {
 
   //CHECK TRANSLATION - ON_BUTTON_CLICK BEFORE CHECK
   const setStatusBar = () => {
-
-    if (formik.values.translation.toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\u0142/g, "l") === wordsState[wordsState.length - 1].translation.toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").replace(/\u0142/g, "l")) {
+    console.log(formik.values.translation.toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\u0142/g, "l"),wordsState[wordsState.length - 1].translation.toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").replace(/\u0142/g, "l" ))
+    if (formik.values.translation.toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\u0142/g, "l") === wordsState[wordsState.length - 1].translation.toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").replace(/\u0142/g, "l").replaceAll('\n','')) {
       setButtonsState(["text-lg text-white hidden", "text-lg text-white h-14 bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight","font-bold text-green-600 text-5xl", "Dobrze!", "Błędne tłumaczenie!", "bg-fifth_light h-14 rounded-md w-96 p-3 font-thin text-base bg-green-200"]);
       setIsDisabled(true);
       buttonRef.current.focus();

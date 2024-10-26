@@ -8,6 +8,7 @@ import { getCurrentUser } from "./shared/store/slices/UserSlice"
 //toast imports
 import { ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
+import { Navigate } from "react-router-dom"
 
 type Props = {
     children: string | JSX.Element | JSX.Element[] | ReactNode
@@ -17,8 +18,7 @@ type Props = {
     const dispatch = useAppDispatch();
     const user = useSelector((state: RootState) => state.userProfile);
 
-
-
+    console.log(user.userLoggedIn)
     useEffect(() => {
         dispatch(getCurrentUser());
     }, [dispatch])
@@ -30,6 +30,7 @@ type Props = {
 
     return (
       <>
+        {!user.userLoggedIn && (<Navigate to={'/login'} replace={true}/> )}
         <div className="flex flex-col h-screen">
         <NavBar></NavBar>
         <div className="flex h-full">

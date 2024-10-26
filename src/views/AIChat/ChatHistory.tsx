@@ -3,6 +3,7 @@ import { useModal } from "../../shared/components/Modal";
 import AIWordModal from "./AIWordModal";
 import { useState } from "react";
 import { IChatHistoryPart } from "../../shared/store/slices/ChatHistorySlice";
+import { motion } from "framer-motion"
 
 interface IProps{
     chatHistory: IChatHistoryPart[];
@@ -27,7 +28,6 @@ const ChatHistory = ({chatHistory}:IProps) => {
             userType = "Bot Czarek:";
               arraysOfSentences = formattedMessage.split('\n');
               arraysOfSentences = formattedMessage.split(/(?<!\*)\*(?!\*)/);
-              console.log("Sentences:", arraysOfSentences);
               renderedWords = arraysOfSentences.map((sentence)=>{
                 arraysOfWords = sentence.replaceAll('*',' ').replaceAll('\n','').split(' ');
 
@@ -40,7 +40,6 @@ const ChatHistory = ({chatHistory}:IProps) => {
                     }
     
                 })
-                console.log(sentence)
                 return <p className="flex flex-wrap gap-1">{renderedSentence}</p>
               })
 
@@ -48,29 +47,41 @@ const ChatHistory = ({chatHistory}:IProps) => {
      
         }
         let color:string = ""
-        let position="justify-end items-right"
+        let position="justify-end items-right pl-16"
         if(userType === "Ty:"){
             color = "bg-secondary"
-            position = ""
+            position = "pr-16"
         }
 
-        return(
-        <div className={"flex m-4 "+position} key={index}>
-            <div className={color+"  shadow-xl p-3 w-fit rounded-xl "}>
-                <div className="font-bold text-lg">{userType}</div>
-                <div className="p-1 text-base">
-                {message.role === 'model' ? (<span className="flex flex-wrap flex-col gap-1">{renderedWords}</span>) : (<p><ReactMarkdown>
-                    {message.parts[0].text}</ReactMarkdown></p>)} 
-                </div>
-
+        return (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className={"flex m-4 " + position}
+            key={index}
+          >
+            <div className={color + "  shadow-xl p-3 w-fit rounded-xl "}>
+              <div className="font-bold text-lg">{userType}</div>
+              <div className="p-1 text-base">
+                {message.role === "model" ? (
+                  <span className="flex flex-wrap flex-col gap-1">
+                    {renderedWords}
+                  </span>
+                ) : (
+                  <p>
+                    <ReactMarkdown>{message.parts[0].text}</ReactMarkdown>
+                  </p>
+                )}
+              </div>
             </div>
-        </div>
-    )})
+          </motion.div>
+        );})
     return (
         <>
-        {currentChatHistory.length>0 ?         <div className="flex flex-col overflow-y-scroll max-h-[550px] max-lg:max-h-[450px] max-w-[1300px] border border-solid border-fifth rounded-xl p-4">
+        {currentChatHistory.length>0 ?         <motion.div className="flex flex-col overflow-y-scroll max-h-[550px] max-lg:max-h-[450px] max-w-[1300px] border border-solid border-fifth rounded-xl p-4">
             {currentChatHistory}
-        </div>:<div></div>}
+        </motion.div>:<div></div>}
 
         <AIWordModal isVisible={AIModal.isVisible} onClose={AIModal.closeModal} word={selectedWord}/>
         </>

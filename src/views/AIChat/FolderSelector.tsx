@@ -33,7 +33,7 @@ const FolderSelector = (props:IProps) => {
     return(
         <div className="flex  gap-2">
             <label className="text-xl font-inter text-fifth">{props.text}</label>
-            <Select placeholder="Placeholder" options={props.options} onChange={changeValue}></Select>
+            <Select placeholder="Wybierz folder docelowy..." options={props.options} onChange={changeValue}></Select>
         </div>
     )
 }

@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { Modal } from "../../shared/components/Modal";
 import { RootState, useCreateWordMutation, useFetchFolderQuery, useFetchFoldersQuery } from "../../shared/store";
 import { IFolder, INewWord } from "../../shared/store/slices/FolderSlice";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { GoogleGenerativeAI} from "@google/generative-ai";
 import FolderSelector from "./FolderSelector";
 import { toast } from "react-toastify";
@@ -43,6 +43,7 @@ function AIWordModal({ isVisible, onClose, word}: IProps) {
   useEffect(()=>{
     setTranslationWord("");
     setFormatedWord(selectedWord);
+    setGeneratedWord(false);
 
   },[selectedWord])
 
@@ -79,14 +80,17 @@ function AIWordModal({ isVisible, onClose, word}: IProps) {
       newID = (folder.words[folder.words.length - 1].id + 1)
     }
     console.log("NOWE ID",newID);
-    
+
+    //to eliminate bug with /n in word
+    const wordTranslation = translationWord.toString().replaceAll('\n','')
+    const wordMain = formatedWord.toString().replaceAll('\n','')
     //create new word object
     const word:INewWord = {
       word: {
         id:newID,
         folderId: folder.id,
-        word: formatedWord,
-        translation: translationWord,
+        word: wordMain,
+        translation: wordTranslation,
         repeated: 0,
         known: 0,
         streak: 0,
@@ -103,6 +107,7 @@ function AIWordModal({ isVisible, onClose, word}: IProps) {
       toast.success("Pomyślnie dodano słówko do folderu!");
       setTranslationWord("");
       setFormatedWord(selectedWord);
+      setGeneratedWord(false);
       onClose();
     })
     .catch((err) => {
@@ -169,7 +174,9 @@ function AIWordModal({ isVisible, onClose, word}: IProps) {
                 Dodaj do wybranego folderu
               </Button></div>
             ) : (
-              <Button bgColor={Colors.SECONDARY} onClick={setTranslation}>
+              <Button bgColor={Colors.SECONDARY} onClick={()=>{
+                setTranslation(formatedWord);
+                }}>
                 Wygeneruj Tłumaczenie
               </Button>
             )}

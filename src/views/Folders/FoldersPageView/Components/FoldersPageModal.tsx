@@ -68,7 +68,7 @@ return(
     
     <Character alt="character2" className="absolute z-0 w-3/6 bottom-0 left-auto" character={character2}/>
     <div className="absolute z-20 top-0 right-0 pr-8 pt-6 text-3xl text-fifth"  >
-      <BiSolidExit onClick={props.closeModal}  className="hover:text-4xl hover:cursor-pointer"/>
+      <BiSolidExit onClick={props.closeModal}  className="hover:cursor-pointer"/>
     </div>
 
   </div>
