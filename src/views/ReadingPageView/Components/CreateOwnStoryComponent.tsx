@@ -1,21 +1,23 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import Button from "../../../../shared/components/Button"
-import { Colors } from "../../../../shared/Enums/Stylings"
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { RootState, useCreateStoryMutation } from "../../../../shared/store";
-import { IStory } from "../../../../shared/store/slices/UserSlice";
 import { useSelector } from "react-redux";
+import { RootState, useCreateStoryMutation } from "../../../shared/store";
+import { IStory } from "../../../shared/store/slices/UserSlice";
+import Button from "../../../shared/components/Button";
+import { Colors } from "../../../shared/Enums/Stylings";
 
 interface IProps{
     level: string,
     language: string,
+    allStories: IStory[],
 }
 
-function CreateOwnStoryComponent({level,language}:IProps){
+function CreateOwnStoryComponent({level,language,allStories}:IProps){
    const user = useSelector((state: RootState) => state.userProfile);
    const [createStory] = useCreateStoryMutation();
    const [generatedTitle, setGeneratedTitle] = useState<string>("");
+   const [generatedWords, setGeneratedWords] = useState<{id: 0, word: string, known: number}[]>([]);
    const [generatedStory, setGeneratedStory] = useState<string>();
    const [generatedDescription, setGeneratedDescription] = useState<string>("");
    const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -39,10 +41,13 @@ function CreateOwnStoryComponent({level,language}:IProps){
     if(model){
       setIsLoading(true)
       console.log("Czarek właśnie generuje dla Ciebie historie w języku "+language+" na poziomie "+ level + ":")
-      await model.generateContent("Stwórz pojedynczy tytuł prostej codziennej historyjki. Tytył musi być w języku "+language+". Historia ta będzie na poziomie "+level+ ".Tytuł musi być unikalny").then(
+      await model.generateContent("Generate a compelling and original story title list that captures the essence of a random genre. The title should be between 2-6 words, be memorable, evoke emotion or curiosity, and include at least one strong descriptive word. Consider using elements like alliteration, metaphor, or contrast to make it more engaging. Provide a brief explanation of why this title would appeal to readers of the chosen genre. Titles should be in "+level+" "+language+" language. Answer should contain only the titles seperated with comma").then(
         (response) =>{
           const responseTitle = response.response;
           title = responseTitle.text().toString();
+          let titles = title.split(",");
+          console.log(titles)
+          title = titles[Math.floor(Math.random() * titles.length)]
           console.log(title);
         }
       ).catch((err)=>{
@@ -51,10 +56,58 @@ function CreateOwnStoryComponent({level,language}:IProps){
       });
 
       if(error) return;
+      let arraysOfWords: any = [];;
       await model.generateContent("generate story in "+language+" language at "+level+" level. The story will be about "+title).then((response)=>{
         const responseStory = response.response;
         story = responseStory.text().toString();
-        console.log(story)
+
+        //generate story words
+        arraysOfWords = story.split(/ |\n/).map((word,index) => {
+          if(word!==""){
+            const formattedWord = word.replaceAll("\n","");
+
+            //Check if you already have a word in folder
+
+
+
+            return {
+              id:index,
+              word: formattedWord,
+              known: 0
+            }
+        }
+        }).filter((word)=>{
+          if (word){
+            return true;
+          }
+          else{
+            return false;
+          }
+        })
+
+        // Mapa do przechowywania pierwszego id dla każdego unikalnego tytułu
+        const titleToId:any = {};
+
+        // Przetwarzanie obiektów, aby ustawić id na takie samo jak pierwsze wystąpienie tytułu
+        arraysOfWords.forEach((object:{
+          id:number,
+          word: string,
+          known: number
+        }) => {
+            // Jeśli tytuł jeszcze nie ma przypisanego id, przypisz id z pierwszego wystąpienia
+            if (titleToId[object.word] === undefined) {
+              titleToId[object.word] = object.id;
+            } else {
+                // Ustaw id na wartość pierwszego wystąpienia
+                object.id = titleToId[object.word];
+            }
+        });
+
+
+        console.log(arraysOfWords);
+
+
+
       }).catch((err)=>{
         toast.error("Czarek jest obecnie przeciążony. Spróbuj ponownie za chwilę!");
         error=true;
@@ -73,6 +126,7 @@ function CreateOwnStoryComponent({level,language}:IProps){
       if(error) return;
       setGeneratedTitle(title);
       setGeneratedStory(story);
+      setGeneratedWords(arraysOfWords);
       setGeneratedDescription(description)
       setIsLoading(false);
     }
@@ -114,8 +168,18 @@ function CreateOwnStoryComponent({level,language}:IProps){
                   Wygeneruj ponownie
                 </Button>
                 <Button onClick={() => {
+                  let newID = 0;
+                  console.log(allStories)
+                  if(allStories.length > 0){
+                    newID = allStories[allStories.length - 1].id + 1
+                  }
 
-                  onCreateStory({id: 9, language: language, level: level, title: generatedTitle, words: [], wordsAmount: 0, wordKnownAmount:0 });
+
+
+                  onCreateStory({id: newID,description: generatedDescription, language: language, level: level, title: generatedTitle, words: generatedWords, wordAmount: 0, wordKnownAmount:0 });
+                  setGeneratedDescription("");
+                  setGeneratedStory("");
+                  setGeneratedTitle("");
                 }} bgColor={Colors.SECONDARY}>
                   Dodaj do kolekcji
                 </Button>

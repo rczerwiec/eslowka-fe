@@ -39,10 +39,11 @@ export interface IUserId{
 
 export interface IStory {
   id: number;
-  language: 'german' | 'english' | 'french';
-  level: 'a1' | 'a2' | 'b1' | 'b2' | 'c1';
+  language: string;
+  level: string;
   title: string;
-  words: { word: string; known: boolean }[];
+  description: string;
+  words: { id:number; word: string; known: number }[];
   wordAmount: number;
   wordKnownAmount: number;
 }

@@ -48,4 +48,5 @@ export {
   useFetchFolderQuery,
   useFetchUserStoriesQuery,
   useCreateStoryMutation,
+  useUpdateStoryWordMutation
 } from "./api/main";

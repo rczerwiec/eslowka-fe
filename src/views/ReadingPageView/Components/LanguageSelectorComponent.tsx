@@ -6,7 +6,9 @@ interface SelectOptionType { label: string, value: string }
 const languages = [
     { value: 'german', label: 'Niemiecki' },
     { value: 'english', label: 'Angielski' },
-    { value: 'french', label: 'Francuski' }
+    { value: 'french', label: 'Francuski' },
+    { value: 'russian', label: 'Rosyjski' },
+    { value: 'japan', label: 'Japoński' },
   ]
 
 const levels = [

@@ -25,7 +25,7 @@ import UpdatesPage from "./views/UpdatesPage/UpdatesPage";
 import RankingPage from "./views/RankingPage";
 import RevTranslationTraining from "./views/Folders/TrainingsPageview/RevTranslationTrainingPage";
 import AIChatPage from "./views/AIChat/AIChatPage";
-import ReadingPage from "./views/Folders/ReadingPageView/ReadingPage";
+import ReadingPage from "./views/ReadingPageView/ReadingPage";
 
 const MainApp = () => {
   const router = createBrowserRouter([

@@ -1,9 +1,12 @@
+import { IStory } from "../../../shared/store/slices/UserSlice";
+
 interface IProps{
   stories?: any;
+  onStorySelect: (story: IStory) => void;
 }
 
 
-function StoriesGridComponent({stories}:IProps) {
+function StoriesGridComponent({stories, onStorySelect}:IProps) {
   let renderedStories;
   if (stories) {
     if (stories.length > 0) {
@@ -26,13 +29,15 @@ function StoriesGridComponent({stories}:IProps) {
         //   }
         // });
         return (
-          <div className="shadow-lg min-h-60 hover:bg-fourth hover:cursor-pointer rounded-lg m-2">
+          <div onClick={()=>{
+            onStorySelect(story)
+          }} className="shadow-lg min-h-60 hover:bg-fourth hover:cursor-pointer rounded-lg m-2">
             <div className="bg-secondarylight text-main font-bold text-xl p-2 text-center rounded-t-lg">
               {story.title}
             </div>
             <div className="flex flex-col text-base p-2 text-left text-black font-thin">
               <span className="flex flex-wrap flex-col gap-1">
-                Tutaj będzie opis tej historii...
+                {story.description}
               </span>
               <span>
                 {story.language}

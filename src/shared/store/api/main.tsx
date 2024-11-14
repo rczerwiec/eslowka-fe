@@ -177,6 +177,16 @@ const mainApi = createApi({
           };
         },
       }),
+      updateStoryWord: builder.mutation({
+        invalidatesTags: ["Words", "Folders","Stories"],
+        query: (data:{storyID: number, storyWordID: number, userID: string, word: { id: number; word: string; known: number }}) => {
+          return {
+            url: `/users/${data.userID}/story/${data.storyID}/${data.storyWordID}`,
+            method: "PATCH",
+            body: data.word,
+          };
+        },
+      }),
       removeWord: builder.mutation({
         invalidatesTags: ["Words", "Folders"],
         query: (data:{wordToRemove: INewWord, userID: string}) => {
@@ -242,5 +252,6 @@ export const {
   useUpdateUserInfoMutation,
   useFetchUserStoriesQuery,
   useCreateStoryMutation,
+  useUpdateStoryWordMutation
 } = mainApi;
 export { mainApi };

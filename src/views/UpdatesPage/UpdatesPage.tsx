@@ -10,9 +10,9 @@ const UpdatesPage = () => {
       <div className="relative inline-block text-left pl-4 overflow-y-scroll max-h-[660px]">
       <VersionList version="1.0.6 alpha">
         <h1 className='text-xl font-bold'>Zmiany</h1>
+          <li>-Ćwicz Czytanie - dodana możliwość tworzenia własnych czytanek i uczenia się z nich</li>
           <li>-Dodane animacje do niektórych komponentów</li>
           <li>-Dodane potwierdzenie hasła podczas rejestracji</li>
-          <li>-Stories - </li>
           <li>-Liczne zabezpieczenia</li>
           <li>-Chat AI - od teraz zapamiętuje historię rozmowy, do czasu wylogowania</li>
           <li>-Chat AI - więcej operacji na wybranym słowie</li>
