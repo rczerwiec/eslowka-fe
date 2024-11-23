@@ -20,6 +20,8 @@ import CsvFileInput from "../../../shared/components/CsvFileInput";
 import ImportWordsModal from "./Components/ImportWordsModal";
 import FirstTitle from "../../../shared/components/FirstTitle";
 import { motion } from "framer-motion";
+import LanguageSelector from "../TrainingsPageview/Components/LanguageSelector";
+import { FaCopy } from "react-icons/fa";
 
 const WordsInFolderPage = () => {
   const { isVisible, toggleModal, closeModal } = useModal();
@@ -152,6 +154,16 @@ const WordsInFolderPage = () => {
               <IoMdArrowRoundBack className="max-lg:hidden" />
               <div className="text-lg">Powrót </div>
             </div>
+            <div
+              className="flex gap-2 items-center p-2 hover:cursor-pointer hover:bg-secondarylight text-fifth rounded-lg"
+            >
+              <div className="flex text-sm gap-1 justify-center items-center">
+                <label>Udostępnij </label>
+                <FaCopy className="max-lg:hidden text-base" />
+                <label>:</label>
+                </div>
+              <div className="text-sm">{folder.referenceID} </div>
+            </div>
           </div>
         </div>
         <div
@@ -161,7 +173,7 @@ const WordsInFolderPage = () => {
           <div className="flex flex-col h-auto w-3/4 max-lg:w-full shadow-lg justify-start">
             <WordsTable renderedWords={renderedWords} />
           </div>
-          <div className="flex flex-col w-1/3 max-lg:hidden">
+          <div className="flex flex-col w-1/3 max-lg:hidden gap-2">
             <StatusBox />
             <CSVLink
               className="flex text-xl items-center text-center justify-center bg-secondary rounded-xl p-2 m-4 z-20 shadow-lg hover:cursor-pointer hover:bg-secondarylight"
@@ -171,6 +183,22 @@ const WordsInFolderPage = () => {
               Eksport Słówek
             </CSVLink>
             <CsvFileInput onFileLoad={handleFileLoad} />
+            <div className="flex flex-col bg-secondary  rounded-xl p-2 gap-2 font-inter z-20">
+              <label className="text-2xl">Domyślny głos dla kolumny "Słowo":</label>
+              <LanguageSelector
+                defaultVoice={true}
+                selectedVoice={folder.defaultVoice}
+                userID={user.value}
+                folder={folder}/>
+            </div>
+            <div className="flex flex-col bg-secondary  rounded-xl p-2 gap-2 font-inter z-20">
+              <label className="text-2xl">Domyślny głos dla kolumny "Tłumaczenie":</label>
+              <LanguageSelector
+                defaultVoice={false}
+                selectedVoice={folder.defaultVoiceReversed}
+                userID={user.value}
+                folder={folder}/>
+            </div>
           </div>
         </div>
 

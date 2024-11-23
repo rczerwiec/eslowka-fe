@@ -48,5 +48,8 @@ export {
   useFetchFolderQuery,
   useFetchUserStoriesQuery,
   useCreateStoryMutation,
-  useUpdateStoryWordMutation
+  useUpdateStoryWordMutation,
+  useUpdateDefaultVoiceMutation,
+  useUpdateSecondaryVoiceMutation,
+  useFetchFolderByReferenceCodeQuery,
 } from "./api/main";

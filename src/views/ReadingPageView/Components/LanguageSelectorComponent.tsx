@@ -12,21 +12,24 @@ const languages = [
   ]
 
 const levels = [
-    { value: 'a1', label: 'A1' },
-    { value: 'a2', label: 'A2' },
-    { value: 'b1', label: 'B1' },
-    { value: 'b2', label: 'B2' },
-    { value: 'c1', label: 'C1' },
-    { value: 'c2', label: 'C2' },
+    { value: 'A1', label: 'A1' },
+    { value: 'A2', label: 'A2' },
+    { value: 'B1', label: 'B1' },
+    { value: 'B2', label: 'B2' },
+    { value: 'C1', label: 'C1' },
+    { value: 'C2', label: 'C2' },
   ]
 
 interface IProps{
   changeLangaugeState: (value: string) => void;
   changeLevelState: (value: string) => void;
+  setPage: (value: number) => void;
+  page: number;
+  availablePages: number;
 }
 
-function LanguageSelectorComponent({changeLevelState, changeLangaugeState}: IProps) {
-
+function LanguageSelectorComponent({changeLevelState, changeLangaugeState,setPage, page,availablePages}: IProps) {
+    
 
     return (
       <div className="flex gap-2 border-solid border-b-2 px-4 pb-2">
@@ -35,6 +38,7 @@ function LanguageSelectorComponent({changeLevelState, changeLangaugeState}: IPro
           options={languages}
           onChange={(option: SelectOptionType | null) => {if(option){
             changeLangaugeState(option.value)
+            setPage(1);
           }}}
         ></Select>
         <Select
@@ -42,20 +46,27 @@ function LanguageSelectorComponent({changeLevelState, changeLangaugeState}: IPro
           options={levels}
           onChange={(option: SelectOptionType | null) => {if(option){
             changeLevelState(option.value)
+            setPage(1);
           }}}
         ></Select>
         <>
           <div className="flex justify-center items-center text-base text-fifth">
-            Strona 1
+            Strona {page}
           </div>
           <div
-            onClick={() => {}}
+            onClick={() => {
+              if(page > 1){
+                setPage(page-1)
+              }
+            }}
             className="flex items-center bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight"
           >
             <FaAngleLeft />
           </div>
           <div
-            onClick={() => {}}
+            onClick={() => {
+              console.log(availablePages);
+              if (page < availablePages) setPage(page + 1);}}
             className="flex items-center bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight"
           >
             <FaAngleRight />

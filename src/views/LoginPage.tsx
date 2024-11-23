@@ -14,6 +14,7 @@ import { Colors, Sizes } from "../shared/Enums/Stylings";
 import { doSendPasswordResetEmail, doSignInWithEmailAndPassword, doSignInWithGoogle } from "../firebase/auth";
 import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
+import mainLogo from'../shared/img/eslowka.png';
 
 const LoginPage = () => {
   const user = useSelector((state: RootState) => state.userProfile);
@@ -94,6 +95,9 @@ const LoginPage = () => {
 
   return (
     <>
+    <div className="fixed top-4 left-4 w-20">
+      <img src={mainLogo}></img>
+    </div>
     {(user.userLoggedIn) && (<Navigate to={'/app'} replace={true}/> )}
     <div className="flex flex-col h-screen
        items-center justify-center 

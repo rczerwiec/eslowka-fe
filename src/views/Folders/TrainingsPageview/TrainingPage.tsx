@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import FirstTitle from "../../../shared/components/FirstTitle";
 import MainTitle from "../../../shared/components/MainTitle";
 import { toast } from "react-toastify";
+import TextToSpeech from "./Components/TextToSpeech";
 
 const TrainingPage = () => {
   const navigate = useNavigate();
@@ -79,6 +80,40 @@ const TrainingPage = () => {
                   >
                     <FaPlayCircle className="bg-main text-white rounded-md" />
                     <div className="text-xl">Słówko - Tłumaczenie (Odwrotne)</div>
+                  </button>
+                  <div className="flex gap-4 mr-4"></div>
+                </div>
+                <div className="flex items-center justify-between p-2 bg-fourth rounded-lg shadow-lg  hover:bg-secondarylight hover:cursor-pointer">
+                  <button
+                    onClick={() => {
+                      if(folder.words.length === 0 ){
+                        toast.error("Folder musi mieć dodane jakieś słówka!");
+                      }
+                      else{
+                        navigate("/app/folders/training/playHear");
+                      }
+                    }}
+                    className="flex items-center w-full gap-4 hover:cursor-pointer"
+                  >
+                    <FaPlayCircle className="bg-main text-white rounded-md" />
+                    <div className="text-xl">Słówko - Tłumaczenie - Mowa</div>
+                  </button>
+                  <div className="flex gap-4 mr-4"></div>
+                </div>
+                <div className="flex items-center justify-between p-2 bg-fourth rounded-lg shadow-lg  hover:bg-secondarylight hover:cursor-pointer">
+                  <button
+                    onClick={() => {
+                      if(folder.words.length === 0 ){
+                        toast.error("Folder musi mieć dodane jakieś słówka!");
+                      }
+                      else{
+                        navigate("/app/folders/training/playHearReversed");
+                      }
+                    }}
+                    className="flex items-center w-full gap-4 hover:cursor-pointer"
+                  >
+                    <FaPlayCircle className="bg-main text-white rounded-md" />
+                    <div className="text-xl">Słówko - Tłumaczenie (Odwrotne) - Mowa</div>
                   </button>
                   <div className="flex gap-4 mr-4"></div>
                 </div>

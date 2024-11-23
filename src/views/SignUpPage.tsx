@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Button from "../shared/components/Button";
 import { Colors, Sizes } from "../shared/Enums/Stylings";
 import { doCreateUserWithEmailAndPassword } from "../firebase/auth";
+import mainLogo from'../shared/img/eslowka.png';
 
 const SignUpPage = () => {
   const [createUser] = useCreateUserMutation();
@@ -93,6 +94,9 @@ const SignUpPage = () => {
 
   return (
     <>
+    <div className="fixed top-4 left-4 w-20">
+      <img src={mainLogo}></img>
+    </div>
       <div
         className="flex flex-col h-screen
        items-center justify-center 

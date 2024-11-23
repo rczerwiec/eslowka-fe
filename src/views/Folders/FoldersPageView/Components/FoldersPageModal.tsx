@@ -16,6 +16,18 @@ const FoldersPageModal: FC<{renderedFoldersLength: Number | undefined, isVisible
     const [createFolder] = useCreateFolderMutation();
     const user = useSelector((state: RootState) => state.userProfile);
 
+    const makeid = (length:number) => {
+      let result = '';
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      const charactersLength = characters.length;
+      let counter = 0;
+      while (counter < length) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        counter += 1;
+      }
+      return result;
+  }
+
     const onCreateFolder = async (newFolder: IFolder) => {
       if(newFolder.folderName===""){
         toast.error("Nazwa folderu nie może być pusta!");
@@ -38,7 +50,7 @@ const FoldersPageModal: FC<{renderedFoldersLength: Number | undefined, isVisible
     const onSubmit = () => {
       setNewFolder("");
       props.closeModal();
-      onCreateFolder({ id:props.renderedFoldersLength , folderName: newFolder, words: [], currentProgress: 0, maxProgress: 0  });
+      onCreateFolder({ id:props.renderedFoldersLength , folderName: newFolder, words: [], currentProgress: 0, maxProgress: 0, defaultVoice: "Microsoft Ryan Online (Natural) - English (United Kingdom)",  defaultVoiceReversed:"Microsoft Ryan Online (Natural) - English (United Kingdom)", referenceID:user.value+makeid(9)});
     }
 
 

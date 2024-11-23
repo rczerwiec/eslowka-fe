@@ -11,11 +11,13 @@ import useModal from "../../shared/components/Modal/useModal";
 
 
 function ReadingPage(){
+    const [page, setPage] = useState(1);
+    const [availablePages, setAvailablePages] = useState(1);
     const user = useSelector((state: RootState) => state.userProfile);
     const response = useFetchUserStoriesQuery(user.value);
     //level and language for selector
-    const [language, setLanguage] = useState<string>("english");
-    const [level, setLevel] = useState<string>("a1");
+    const [language, setLanguage] = useState<string>();
+    const [level, setLevel] = useState<string>();
     const StoryModal = useModal();
     //selected story
     const [selectedStory, setSelectedStory] = useState<IStory>()
@@ -38,24 +40,52 @@ function ReadingPage(){
           if (story !== undefined) {
             //console.log("story is definied");
             if (story.language !== undefined && story.level !== undefined) {
-              //console.log("language and level are definied");
-              if (story.language === language && story.level === level) {
-                //console.log("Story langauge and level are selected");
-                //console.log(story.language, language);
-                //console.log(story.level, level);
+              console.log("language and level are definied");
+              if (language === undefined && level === undefined) {
                 return true;
-              } else {
-                return false;
+              } 
+              else if(language !== undefined && level === undefined) {
+                if(story.language === language) {
+                  return true;
+                }
+              }
+              else if(language === undefined && level !== undefined) {
+                if(story.level === level) {
+                  return true;
+                }
+              }
+              else {
+                if (story.language === language && story.level === level) {
+                  //console.log("Story langauge and level are selected");
+                  //console.log(story.language, language);
+                  //console.log(story.level, level);
+                  return true;
+                } else {
+                  return false;
+                }
               }
             } else {
-              return false;
+              return true;
             }
           } else {
             return false;
           }
         });
     }
-    console.log(stories);
+
+    let knownWords = selectedStory?.words.filter((word)=>{
+      if(word.known > 0){
+        return true;
+      }
+      else{
+        return false;
+      }
+    })
+    let knownWordsLength = knownWords?.length
+    let percentage = 0.0
+    if(knownWordsLength && selectedStory){
+        percentage = knownWordsLength/selectedStory.words.length
+    }
     
 
     return (
@@ -72,10 +102,15 @@ function ReadingPage(){
               <LanguageSelectorComponent
                 changeLangaugeState={setLanguage}
                 changeLevelState={setLevel}
+                setPage={setPage}
+                page={page}
+                availablePages={availablePages}
               />
               <StoriesGridComponent
                 stories={stories}
                 onStorySelect={setSelectedStory}
+                page={page}
+                setAvailablePages={setAvailablePages}
               />
               <CreateOwnStoryComponent
                 level={level}
@@ -91,8 +126,8 @@ function ReadingPage(){
                     Tytuł: {selectedStory.title} ({selectedStory.level})
                   </div>
                   <div className="flex justify-center items-center gap-2 font-bold">
-                    <div>0/{selectedStory.words.length}</div>
-                    <progress className="rounded-xl" value={0.4} />
+                    <div>{knownWordsLength}/{selectedStory.words.length}</div>
+                    <progress className="rounded-xl" value={percentage} />
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-2 border p-4 rounded-xl bg-white">

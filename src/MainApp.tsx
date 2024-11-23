@@ -2,19 +2,12 @@ import { createBrowserRouter, RouterProvider, useNavigate } from "react-router-d
 import TrainingPage from "./views/Folders/TrainingsPageview/TrainingPage";
 import WordsInFolderPage from "./views/Folders/WordsPageView/WordsInFolderPage";
 import FoldersPage from "./views/Folders/FoldersPageView/FoldersPage";
-import SideBar from "./shared/components/UI/SideBar";
-import NavBar from "./shared/components/UI/NavBar/NavBar";
 import SignUpPage from "./views/SignUpPage";
 import LoginPage from "./views/LoginPage";
-import { onAuthStateChanged, signOut } from "firebase/auth";
-import { auth } from "./firebase/firebas";
-import { useEffect } from "react";
-import { getCurrentUser } from "./shared/store/slices/UserSlice";
-import { useSelector } from "react-redux";
-import { RootState } from "@reduxjs/toolkit/query";
 import App from "./App";
-import TranslationWordTraining from "./views/Folders/TrainingsPageview/TranslationTrainingPage";
-import WordsCollectionsPage from "./views/Folders/WordsCollectionPageView/WordsCollectionsPage";
+import TranslationWordTraining from "./views/Folders/TrainingsPageview/Modes/TextTrainings/TextTraining";
+import TextTraining from "./views/Folders/TrainingsPageview/Modes/TextTrainings/TextTraining";
+import TextTrainingReversed from "./views/Folders/TrainingsPageview/Modes/TextTrainings/TextTrainingReversed";
 import RulesPage from "./views/RulesPage";
 import ContactPage from "./views/ContactPage";
 import SettingsPage from "./views/SettingsPage";
@@ -23,9 +16,12 @@ import PremiumPage from "./views/PremiumPage";
 import FrontPage from "./views/FrontPage";
 import UpdatesPage from "./views/UpdatesPage/UpdatesPage";
 import RankingPage from "./views/RankingPage";
-import RevTranslationTraining from "./views/Folders/TrainingsPageview/RevTranslationTrainingPage";
+import RevTranslationTraining from "./views/Folders/TrainingsPageview/Modes/TextTrainings/TextTrainingReversed";
 import AIChatPage from "./views/AIChat/AIChatPage";
 import ReadingPage from "./views/ReadingPageView/ReadingPage";
+import WordsCollectionsPage from "./views/Folders/WordsCollectionPageView/WordsCollectionsPage";
+import HearTraining from "./views/Folders/TrainingsPageview/Modes/HearTrainings/HearTraining";
+import HearTrainingReversed from "./views/Folders/TrainingsPageview/Modes/HearTrainings/HearTrainingReversed";
 
 const MainApp = () => {
   const router = createBrowserRouter([
@@ -161,7 +157,7 @@ const MainApp = () => {
       path: "/app/folders/training/play",
       element: (
         <App>
-        <TranslationWordTraining/>
+        <TextTraining/>
        </App>
       ),
     },
@@ -177,7 +173,23 @@ const MainApp = () => {
       path: "/app/folders/training/playReversed",
       element: (
         <App>
-        <RevTranslationTraining/>
+        <TextTrainingReversed/>
+       </App>
+      ),
+    },
+    {
+      path: "/app/folders/training/playHear",
+      element: (
+        <App>
+        <HearTraining/>
+       </App>
+      ),
+    },
+    {
+      path: "/app/folders/training/playHearReversed",
+      element: (
+        <App>
+        <HearTrainingReversed/>
        </App>
       ),
     },

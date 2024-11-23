@@ -8,6 +8,18 @@ const UpdatesPage = () => {
       <FirstTitle>Aktualizacje</FirstTitle>
       <MainTitle>Aktualizacje</MainTitle>
       <div className="relative inline-block text-left pl-4 overflow-y-scroll max-h-[660px]">
+      <VersionList version="1.0.7 alpha">
+        <h1 className='text-xl font-bold'>Zmiany</h1>
+          <li>-Logo dodane do strony logowania i rejestracji.</li>
+          <li>-Generowanie historyjek przeniesione do osobnego modala.</li>
+          <li>-Dodana możliwość wprowadzenia własnego tytułu w historyjkach.</li>
+          <li>-Zmieniony wygląd historyjek (kart historyjek).</li>
+          <li>-Dodane nowe tryby ćwiczeń - ze słuchu.</li>
+          <li>-Dodana możliwość udostępniania swoich zbiorów innym - poprzez kod referencyjny.</li>
+        <h1 className='text-xl font-bold'>Poprawki</h1>
+          <li>-Poprawione przełączenia między stronami w historyjkach</li>
+          <li>-Progress bar w wybranej historyjce już działa </li>
+      </VersionList>
       <VersionList version="1.0.6 alpha">
         <h1 className='text-xl font-bold'>Zmiany</h1>
           <li>-Ćwicz Czytanie - dodana możliwość tworzenia własnych czytanek i uczenia się z nich</li>

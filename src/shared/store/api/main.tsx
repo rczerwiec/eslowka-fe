@@ -60,6 +60,16 @@ const mainApi = createApi({
           };
         },
       }),
+      fetchFolderByReferenceCode: builder.query({
+        providesTags: ["Folders"],
+        query: (data:{referenceCode:string}) => {
+          console.log(data.referenceCode);
+          return {
+            url: `/users/getByReferenceCode/${data.referenceCode}/referenceCode/reference`,
+            method: "GET",
+          };
+        },
+      }),
       fetchUsers: builder.query({
         providesTags: ["User"],
         query: () => {
@@ -187,6 +197,27 @@ const mainApi = createApi({
           };
         },
       }),
+      updateDefaultVoice: builder.mutation({
+        invalidatesTags: ["Words", "Folders"],
+        query: (data:{voice:any, userID: string, folderID: string}) => {
+          console.log(data.voice)
+          return {
+            url: `/users/${data.userID}/${data.folderID}/defaultVoice`,
+            method: "PATCH",
+            body: {voice:data.voice},
+          };
+        },
+      }),
+      updateSecondaryVoice: builder.mutation({
+        invalidatesTags: ["Words", "Folders"],
+        query: (data:{voice:any, userID: string, folderID: string}) => {
+          return {
+            url: `/users/${data.userID}/${data.folderID}/secondaryVoice`,
+            method: "PATCH",
+            body: {voice:data.voice},
+          };
+        },
+      }),
       removeWord: builder.mutation({
         invalidatesTags: ["Words", "Folders"],
         query: (data:{wordToRemove: INewWord, userID: string}) => {
@@ -252,6 +283,9 @@ export const {
   useUpdateUserInfoMutation,
   useFetchUserStoriesQuery,
   useCreateStoryMutation,
-  useUpdateStoryWordMutation
+  useUpdateStoryWordMutation,
+  useUpdateDefaultVoiceMutation,
+  useUpdateSecondaryVoiceMutation,
+  useFetchFolderByReferenceCodeQuery,
 } = mainApi;
 export { mainApi };

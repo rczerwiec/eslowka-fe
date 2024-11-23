@@ -1,21 +1,21 @@
 //ICONS & SVG
 import { IoMdArrowRoundBack } from "react-icons/io";
-import character1 from "../../../shared/img/character1.svg";
+import character1 from "../../../../../shared/img/character1.svg";
 
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import Character from "../../../shared/components/Character";
+import Character from "../../../../../shared/components/Character";
 import { useSelector } from "react-redux";
-import { RootState, useFetchRandomWordsArrayQuery, useFetchUserQuery, useUpdateUserDatesMutation, useUpdateUserStatsMutation, useUpdateWordStatusMutation } from "../../../shared/store";
-import { IWord } from "../../../shared/store/slices/FolderSlice";
+import { RootState, useFetchRandomWordsArrayQuery, useFetchUserQuery, useUpdateUserDatesMutation, useUpdateUserStatsMutation, useUpdateWordStatusMutation } from "../../../../../shared/store";
+import { IWord } from "../../../../../shared/store/slices/FolderSlice";
 import { useFormik } from "formik";
-import CheckTranslationUtil from "./Utils/CheckTranslationUtil";
-import FirstTitle from "../../../shared/components/FirstTitle";
-import Button from "../../../shared/components/Button";
-import RenderStatus from "./Components/RenderStatus";
-import IconStreak from "./Components/IconStreak";
+import CheckTranslationUtil from "../../Utils/CheckTranslationUtil";
+import FirstTitle from "../../../../../shared/components/FirstTitle";
+import Button from "../../../../../shared/components/Button";
+import RenderStatus from "../../Components/RenderStatus";
+import IconStreak from "../../Components/IconStreak";
 
-const TranslationWordTraining = () => {
+const TextTraining = () => {
   const user = useSelector((state: RootState) => state.userProfile);
 
   //FORMIK HOOK
@@ -206,4 +206,4 @@ let ButtonInput = (
     );
 };
 
-export default TranslationWordTraining;
+export default TextTraining;

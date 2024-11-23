@@ -15,10 +15,14 @@ import FolderRenderUtil from "./utils/FolderRenderUtil";
 import FirstTitle from "../../../shared/components/FirstTitle";
 import MainTitle from "../../../shared/components/MainTitle";
 import { motion } from "framer-motion";
+import Button from "../../../shared/components/Button";
+import { Colors } from "../../../shared/Enums/Stylings";
+import FolderReferenceCodeModal from "./Components/FolderReferenceCodeModal";
 
 const FoldersPage = () => {
   const user = useSelector((state: RootState) => state.userProfile);
   const { isVisible, closeModal, toggleModal } = useModal();
+  const ReferenceModal = useModal();
   const response = useFetchFoldersQuery(user.value);
   const [currentFolder, setCurrentFolder] = useState<IFolder>();
   const confirmationModal = useModal();
@@ -42,7 +46,14 @@ const FoldersPage = () => {
     <>
       <div className="flex flex-col w-full h-full">
         <FirstTitle>Foldery</FirstTitle>
-        <MainTitle>Twoje Foldery</MainTitle>
+        <div className="flex w-3/4 justify-between items-center">
+        <MainTitle>Twoje Foldery </MainTitle>
+        <div>
+          <Button onClick={()=>{
+            ReferenceModal.toggleModal();
+          }} bgColor={Colors.MAIN} textColor={Colors.WHITE}>KOD REF.</Button>
+        </div>
+        </div>
         <form>{folderRender?.renderedFolders}</form>
         <motion.div whileHover={{ scale: [null, 1.5, 1.4] }}
       transition={{ duration: 0.3 }}
@@ -63,6 +74,11 @@ const FoldersPage = () => {
         renderedFoldersLength={folderRender?.renderedFolderLength}
         isVisible={isVisible}
         closeModal={closeModal}
+      />
+      <FolderReferenceCodeModal
+        renderedFoldersLength={folderRender?.renderedFolderLength}
+        isVisible={ReferenceModal.isVisible}
+        closeModal={ReferenceModal.closeModal}
       />
       <RemoveConfirmModal
         isVisible={confirmationModal.isVisible}
