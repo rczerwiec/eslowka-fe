@@ -3,7 +3,7 @@ import { HiPlus } from "react-icons/hi";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import character1 from "../../../shared/img/character1.svg";
 
-import { RootState, useFetchSpecificWordsQuery } from "../../../shared/store";
+import { RootState, useFetchSpecificWordsQuery, useUpdateFolderNameMutation } from "../../../shared/store";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../../../shared/components/Modal";
@@ -22,6 +22,7 @@ import FirstTitle from "../../../shared/components/FirstTitle";
 import { motion } from "framer-motion";
 import LanguageSelector from "../TrainingsPageview/Components/LanguageSelector";
 import { FaCopy } from "react-icons/fa";
+import EditableText from "../../../shared/components/EditableText";
 
 const WordsInFolderPage = () => {
   const { isVisible, toggleModal, closeModal } = useModal();
@@ -37,6 +38,7 @@ const WordsInFolderPage = () => {
     folderID: folder.id,
     userID: user.value,
   });
+  const [renameFolder] = useUpdateFolderNameMutation();
 
   let renderedWords;
   let availablePages = 0;
@@ -122,6 +124,11 @@ const WordsInFolderPage = () => {
     setData(csvData);
     importModal.toggleModal();
   };
+
+  const handleFolderNameChange = (newName:string) => {
+    renameFolder({newName: newName, userID: user.value, folderID: folder.id})
+  }
+
   return (
     <>
       <div className="flex flex-col size-full">
@@ -131,7 +138,7 @@ const WordsInFolderPage = () => {
                             text-black text-3xl font-medium"
         >
           <div className="flex justify-center items-center gap-2 max-lg:hidden">
-            <div>{folder.folderName}</div>
+            <EditableText initialText={folder.folderName} onConfirm={handleFolderNameChange}/>
             <div className="text-xs text-fifth">({wordAmount} słówek)</div>
           </div>
           <div className="flex gap-4">

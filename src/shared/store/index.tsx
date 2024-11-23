@@ -52,4 +52,5 @@ export {
   useUpdateDefaultVoiceMutation,
   useUpdateSecondaryVoiceMutation,
   useFetchFolderByReferenceCodeQuery,
+  useUpdateFolderNameMutation
 } from "./api/main";

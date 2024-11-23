@@ -83,17 +83,17 @@ function AIChatPage() {
       </MainTitle>
       <div className="relative inline-block text-left font-inter">
         <div className="flex flex-col justify-center items-center container mx-auto px-4 py-8">
-        <ChatHistory chatHistory={chatHistoryGlobal.object} />
- 
+        {chatHistory.length > 0 ? (<ChatHistory chatHistory={chatHistoryGlobal.object} />) : (<span>{isLoading ? (<></>) : (<div className="flex flex-col max-h-[550px] max-lg:max-h-[450px] max-w-[1300px] border border-solid border-fifth rounded-xl p-4">Rozpocznij chat, wpisując swoją wiadomość poniżej!</div>)}</span>)}
           {isLoading && (
             <>
-              <div>
+              <div className="flex flex-col max-h-[550px] max-lg:max-h-[450px] max-w-[1300px] border border-solid border-fifth rounded-xl p-4">
                 <div className="flex justify-center items-center h-12">
                   <div className="animate-spin w-12 h-12 text-black">O</div>
                 </div>
               </div>
             </>
           )}
+
           <div className="flex mt-4 justify-center items-center">
             <div className="flex flex-col ">
               <div className="flex justify-center items-center font-inter text-fifth font-bold">

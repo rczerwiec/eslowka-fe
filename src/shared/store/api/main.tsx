@@ -46,7 +46,7 @@ const mainApi = createApi({
         providesTags: ["Stories"],
         query: (userID: string) => {
           return {
-            url: `/users/${userID}/stories`,
+            url: `/stories/${userID}/stories`,
             method: "GET",
           };
         },
@@ -55,7 +55,7 @@ const mainApi = createApi({
         providesTags: ["Folders"],
         query: (data:{folderName: string, userID: string}) => {
           return {
-            url: `/users/${data.userID}/${data.folderName}`,
+            url: `/folders/${data.userID}/${data.folderName}`,
             method: "GET",
           };
         },
@@ -65,7 +65,7 @@ const mainApi = createApi({
         query: (data:{referenceCode:string}) => {
           console.log(data.referenceCode);
           return {
-            url: `/users/getByReferenceCode/${data.referenceCode}/referenceCode/reference`,
+            url: `/folders/getByReferenceCode/${data.referenceCode}/referenceCode/reference`,
             method: "GET",
           };
         },
@@ -83,7 +83,7 @@ const mainApi = createApi({
         providesTags: ["Words"],
         query: (data:{folderID: string, userID: string}) => {
           return {
-            url: `/users/${data.userID}/folders/${data.folderID}/words`,
+            url: `/folders/${data.userID}/folders/${data.folderID}/words`,
             method: "GET",
           };
         },
@@ -92,7 +92,7 @@ const mainApi = createApi({
         providesTags: ["Words"],
         query: (data:{folderID:string, userID: string}) => {
           return {
-            url: `/users/${data.userID}/folders/${data.folderID}/randomWords`,
+            url: `/folders/${data.userID}/folders/${data.folderID}/randomWords`,
             method: "GET",
           };
         },
@@ -101,7 +101,7 @@ const mainApi = createApi({
         providesTags: ["Folders"],
         query: (userID) => {
           return {
-            url: `/users/${userID}/folders/`,
+            url: `/folders/${userID}/folders/`,
             method: "GET",
           };
         },
@@ -111,7 +111,7 @@ const mainApi = createApi({
         invalidatesTags: ["Words", "Folders"],
         query: (data:{newWord: INewWord, userID: string}) => {
           return {
-            url: `/users/${data.userID}/word`,
+            url: `/folders/${data.userID}/word`,
             method: "PATCH",
             body: {newWord: data.newWord.word, folderId: data.newWord.folderID},
           };
@@ -121,7 +121,7 @@ const mainApi = createApi({
         invalidatesTags: ["Words", "Folders"],
         query: (data:{newWords: INewWords, userID: string}) => {
           return {
-            url: `/users/${data.userID}/words`,
+            url: `/folders/${data.userID}/words`,
             method: "PATCH",
             body: data.newWords.words,
           };
@@ -131,7 +131,7 @@ const mainApi = createApi({
         invalidatesTags: ["Words", "Folders"],
         query: (data:{updatedWord: INewWord, userID: string}) => {
           return {
-            url: `/users/${data.userID}/word/status`,
+            url: `/folders/${data.userID}/word/status`,
             method: "PATCH",
             body: data.updatedWord.word,
           };
@@ -141,7 +141,7 @@ const mainApi = createApi({
         invalidatesTags: ["User"],
         query: (data:{updatedSettings: ISettings, userID: string}) => {
           return {
-            url: `/users/${data.userID}/settings`,
+            url: `/settings/${data.userID}/settings`,
             method: "PATCH",
             body: data.updatedSettings,
           };
@@ -181,7 +181,7 @@ const mainApi = createApi({
         invalidatesTags: ["Words", "Folders"],
         query: (data:{updatedWord: INewWord, userID: string}) => {
           return {
-            url: `/users/${data.userID}/word/details`,
+            url: `/folders/${data.userID}/word/details`,
             method: "PATCH",
             body: data.updatedWord.word,
           };
@@ -191,7 +191,7 @@ const mainApi = createApi({
         invalidatesTags: ["Words", "Folders","Stories"],
         query: (data:{storyID: number, storyWordID: number, userID: string, word: { id: number; word: string; known: number }}) => {
           return {
-            url: `/users/${data.userID}/story/${data.storyID}/${data.storyWordID}`,
+            url: `/stories/${data.userID}/story/${data.storyID}/${data.storyWordID}`,
             method: "PATCH",
             body: data.word,
           };
@@ -202,7 +202,7 @@ const mainApi = createApi({
         query: (data:{voice:any, userID: string, folderID: string}) => {
           console.log(data.voice)
           return {
-            url: `/users/${data.userID}/${data.folderID}/defaultVoice`,
+            url: `/folders/${data.userID}/${data.folderID}/defaultVoice`,
             method: "PATCH",
             body: {voice:data.voice},
           };
@@ -212,9 +212,19 @@ const mainApi = createApi({
         invalidatesTags: ["Words", "Folders"],
         query: (data:{voice:any, userID: string, folderID: string}) => {
           return {
-            url: `/users/${data.userID}/${data.folderID}/secondaryVoice`,
+            url: `/folders/${data.userID}/${data.folderID}/secondaryVoice`,
             method: "PATCH",
             body: {voice:data.voice},
+          };
+        },
+      }),
+      updateFolderName: builder.mutation({
+        invalidatesTags: ["Words", "Folders"],
+        query: (data:{newName:string, userID: string, folderID: string}) => {
+          return {
+            url: `/folders/${data.userID}/${data.folderID}/rename`,
+            method: "PATCH",
+            body: {newName:data.newName},
           };
         },
       }),
@@ -222,7 +232,7 @@ const mainApi = createApi({
         invalidatesTags: ["Words", "Folders"],
         query: (data:{wordToRemove: INewWord, userID: string}) => {
           return {
-            url: `/users/${data.userID}/word`,
+            url: `/folders/${data.userID}/word`,
             method: "DELETE",
             body: data.wordToRemove.word,
           };
@@ -232,7 +242,7 @@ const mainApi = createApi({
         invalidatesTags: ["Words", "Folders"],
         query: (data:{folderToRemove: IFolder, userID: string}) => {
           return {
-            url: `/users/${data.userID}/folder`,
+            url: `/folders/${data.userID}/folder`,
             method: "DELETE",
             body: data.folderToRemove,
           };
@@ -242,7 +252,7 @@ const mainApi = createApi({
         invalidatesTags: ["Folders"],
         query: (data:{newFolder: IFolder, userID: string}) => {
           return {
-            url: `/users/${data.userID}/`,
+            url: `/folders/${data.userID}/`,
             method: "PATCH",
             body: data.newFolder,
           };
@@ -252,7 +262,7 @@ const mainApi = createApi({
         invalidatesTags: ["Stories"],
         query: (data:{newStory: IStory, userID: string}) => {
           return {
-            url: `/users/${data.userID}/story`,
+            url: `/stories/${data.userID}/story`,
             method: "PATCH",
             body: data.newStory,
           };
@@ -287,5 +297,6 @@ export const {
   useUpdateDefaultVoiceMutation,
   useUpdateSecondaryVoiceMutation,
   useFetchFolderByReferenceCodeQuery,
+  useUpdateFolderNameMutation
 } = mainApi;
 export { mainApi };

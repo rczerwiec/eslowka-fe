@@ -8,6 +8,12 @@ const UpdatesPage = () => {
       <FirstTitle>Aktualizacje</FirstTitle>
       <MainTitle>Aktualizacje</MainTitle>
       <div className="relative inline-block text-left pl-4 overflow-y-scroll max-h-[660px]">
+      <VersionList version="1.0.8 alpha">
+        <h1 className='text-xl font-bold'>Zmiany</h1>
+          <li>-Możliwość edycji nazwy folderu poprzez dwukrotne kliknięcie myszką na nazwe (będąc w danym folderze)</li>
+        <h1 className='text-xl font-bold'>Poprawki</h1>
+          <li>-Drobne zmiany wizualne w Chat AI</li>
+      </VersionList>
       <VersionList version="1.0.7 alpha">
         <h1 className='text-xl font-bold'>Zmiany</h1>
           <li>-Logo dodane do strony logowania i rejestracji.</li>
