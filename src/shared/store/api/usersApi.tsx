@@ -3,10 +3,10 @@ import { IDates} from "../slices/UserSlice";
 import { RootState } from ".."
 
 //http://localhost:3000/users/669787b41e2ea369890f4f67/folders/0/words
-const mainApi = createApi({
-  reducerPath: "main",
+const usersApi = createApi({
+  reducerPath: "users",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3000/",
+    baseUrl: "http://localhost:3000/users/",
     prepareHeaders: async (headers, {getState}) => {
       const store  = await getState() as RootState;
       // console.log("myTOKEN",store.userProfile.token);
@@ -17,15 +17,15 @@ const mainApi = createApi({
       return headers;
   }
   }),
-  tagTypes: ["Words", "Folders", "User", "Stories"],
+  tagTypes: ["User"],
   endpoints(builder) {
     return {
       //CREATE USER============================================================
       createUser: builder.mutation({
-        invalidatesTags: ["Words", "Folders"],
+        invalidatesTags: ["User"],
         query: (newUser) => {
           return {
-            url: `/users/signup`,
+            url: `/signup`,
             method: "POST",
             body: newUser,
           };
@@ -36,7 +36,7 @@ const mainApi = createApi({
         providesTags: ["User"],
         query: (userID: string) => {
           return {
-            url: `/users/${userID}`,
+            url: `/${userID}`,
             method: "GET",
           };
         },
@@ -45,7 +45,7 @@ const mainApi = createApi({
         providesTags: ["User"],
         query: () => {
           return {
-            url: `/users/`,
+            url: `/`,
             method: "GET",
           };
         },
@@ -55,7 +55,7 @@ const mainApi = createApi({
         invalidatesTags: ["User"],
         query: (data:{datesToUpdate: IDates, userID: string}) => {
           return {
-            url: `/users/${data.userID}/dates`,
+            url: `/${data.userID}/dates`,
             method: "PATCH",
             body: data.datesToUpdate,
           };
@@ -65,7 +65,7 @@ const mainApi = createApi({
         invalidatesTags: ["User"],
         query: (data:{experience: number, userID: string}) => {
           return {
-            url: `/users/${data.userID}/userStatsUpdate`,
+            url: `/${data.userID}/userStatsUpdate`,
             method: "PATCH",
             body: {experience: data.experience},
           };
@@ -75,7 +75,7 @@ const mainApi = createApi({
         invalidatesTags: ["User"],
         query: (data:{userName: string, userID: string}) => {
           return {
-            url: `/users/${data.userID}/userInfo`,
+            url: `/${data.userID}/userInfo`,
             method: "PATCH",
             body: {userName: data.userName},
           };
@@ -92,5 +92,5 @@ export const {
   useFetchUsersQuery,
   useUpdateUserDatesMutation,
   useUpdateUserInfoMutation,
-} = mainApi;
-export { mainApi };
+} = usersApi;
+export { usersApi };

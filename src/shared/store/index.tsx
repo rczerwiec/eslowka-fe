@@ -1,39 +1,38 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { setupListeners } from '@reduxjs/toolkit/query'
-import {mainApi} from "./api/mainApi";
+import { setupListeners } from "@reduxjs/toolkit/query";
+import { usersApi } from "./api/usersApi";
 import folderReducer from "./slices/FolderSlice";
 import userReducer from "./slices/UserSlice";
-import chatReducer from "./slices/ChatHistorySlice"
+import chatReducer from "./slices/ChatHistorySlice";
 import { useDispatch } from "react-redux";
 import { storiesApi } from "./api/storiesApi";
 import { settingsApi } from "./api/settingsApi";
 import { foldersApi } from "./api/folderApi";
 
-
 export const store = configureStore({
   reducer: {
-      [mainApi.reducerPath]: mainApi.reducer,
-      [storiesApi.reducerPath]: storiesApi.reducer,
-      [settingsApi.reducerPath]: settingsApi.reducer,
-      [foldersApi.reducerPath]: foldersApi.reducer,
-      folderProfile: folderReducer,
-      userProfile: userReducer,
-      chatProfile: chatReducer,
-    },
-    middleware: (getDefaultMiddleware) => {
-      return getDefaultMiddleware().concat(
-          mainApi.middleware,
-          storiesApi.middleware,
-          foldersApi.middleware,
-      );
-    },
-})
+    [usersApi.reducerPath]: usersApi.reducer,
+    [storiesApi.reducerPath]: storiesApi.reducer,
+    [settingsApi.reducerPath]: settingsApi.reducer,
+    [foldersApi.reducerPath]: foldersApi.reducer,
+    folderProfile: folderReducer,
+    userProfile: userReducer,
+    chatProfile: chatReducer,
+  },
+  middleware: (getDefaultMiddleware) => {
+    return getDefaultMiddleware().concat(
+      usersApi.middleware,
+      storiesApi.middleware,
+      foldersApi.middleware
+    );
+  },
+});
 
 setupListeners(store.dispatch);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
-export const useAppDispatch = useDispatch.withTypes<AppDispatch>()
+export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
 
 export {
   useFetchUserQuery,
@@ -42,17 +41,15 @@ export {
   useFetchUsersQuery,
   useUpdateUserDatesMutation,
   useUpdateUserInfoMutation,
-} from "./api/mainApi";
+} from "./api/usersApi";
 
 export {
   useGetUserStoriesQuery,
   useCreateStoryMutation,
-  useUpdateWordInStoryMutation
-} from "./api/storiesApi"
+  useUpdateWordInStoryMutation,
+} from "./api/storiesApi";
 
-export {
-  useUpdateSettingsMutation,
-} from "./api/settingsApi";
+export { useUpdateSettingsMutation } from "./api/settingsApi";
 
 export {
   useGetUserFoldersQuery,
@@ -69,5 +66,5 @@ export {
   useUpdateWordDetailsMutation,
   useUpdateWordStatusAndStreakMutation,
   useDeleteWordInFolderMutation,
-  useDeleteUserFolderMutation
-} from "./api/folderApi"
+  useDeleteUserFolderMutation,
+} from "./api/folderApi";

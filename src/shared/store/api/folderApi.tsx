@@ -80,7 +80,7 @@ const foldersApi = createApi({
         invalidatesTags: ["Words", "Folders"],
         query: (data:{newWord: INewWord, userID: string}) => {
           return {
-            url: `/folders/${data.userID}/word`,
+            url: `/${data.userID}/word`,
             method: "PATCH",
             body: {newWord: data.newWord.word, folderId: data.newWord.folderID},
           };
@@ -151,7 +151,7 @@ const foldersApi = createApi({
         invalidatesTags: ["Words", "Folders"],
         query: (data:{wordToRemove: INewWord, userID: string}) => {
           return {
-            url: `/folders/${data.userID}/word`,
+            url: `/${data.userID}/word`,
             method: "DELETE",
             body: data.wordToRemove.word,
           };
@@ -161,7 +161,7 @@ const foldersApi = createApi({
         invalidatesTags: ["Words", "Folders"],
         query: (data:{folderToRemove: IFolder, userID: string}) => {
           return {
-            url: `/folders/${data.userID}/folder`,
+            url: `/${data.userID}/folder`,
             method: "DELETE",
             body: data.folderToRemove,
           };

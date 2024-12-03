@@ -14,7 +14,7 @@ const UpdatesPage = () => {
         <h1 className='text-xl font-bold'>Poprawki</h1>
           <li>-Drobne zmiany wizualne w Chat AI</li>
           <li>-Optymalizacja backendu aplikacji</li>
-          <li>-Optymalizacja frontendu aplikacji</li>
+          <li>-Optymalizacja api aplikacji</li>
       </VersionList>
       <VersionList version="1.0.7 alpha">
         <h1 className='text-xl font-bold'>Zmiany</h1>
