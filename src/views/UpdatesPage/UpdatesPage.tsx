@@ -13,6 +13,8 @@ const UpdatesPage = () => {
           <li>-Możliwość edycji nazwy folderu poprzez dwukrotne kliknięcie myszką na nazwe (będąc w danym folderze)</li>
         <h1 className='text-xl font-bold'>Poprawki</h1>
           <li>-Drobne zmiany wizualne w Chat AI</li>
+          <li>-Optymalizacja backendu aplikacji</li>
+          <li>-Optymalizacja frontendu aplikacji</li>
       </VersionList>
       <VersionList version="1.0.7 alpha">
         <h1 className='text-xl font-bold'>Zmiany</h1>

@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useUpdateDefaultVoiceMutation, useUpdateSecondaryVoiceMutation } from "../../../../shared/store";
+import { useEffect } from "react";
+import { useUpdateFolderDefaultVoiceMutation, useUpdateFolderSecondaryVoiceMutation } from "../../../../shared/store";
 import { useDispatch } from "react-redux";
 import { change, IFolder } from "../../../../shared/store/slices/FolderSlice";
 
@@ -21,8 +21,8 @@ interface IProps{
  * @returns {JSX.Element} A div containing a label and a select element for voice selection.
  */
 function LanguageSelector({defaultVoice, selectedVoice,userID,folder,setVoice}:IProps){
-    const [updateDefaultVoice] = useUpdateDefaultVoiceMutation();
-    const [updateSecondaryVoice] = useUpdateSecondaryVoiceMutation();
+    const [updateDefaultVoice] = useUpdateFolderDefaultVoiceMutation();
+    const [updateSecondaryVoice] = useUpdateFolderSecondaryVoiceMutation();
     const dispatch = useDispatch();
 
 
@@ -38,6 +38,7 @@ function LanguageSelector({defaultVoice, selectedVoice,userID,folder,setVoice}:I
         else{
           console.log("Nie znaleziono głosu!")
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     const handleVoiceChange = async (event: any) => {

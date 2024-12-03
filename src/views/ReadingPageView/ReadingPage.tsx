@@ -3,7 +3,7 @@ import CreateOwnStoryComponent from "./Components/CreateOwnStoryComponent";
 import LanguageSelectorComponent from "./Components/LanguageSelectorComponent";
 import StoriesGridComponent from './Components/StoriesGridComponent';
 import { useSelector } from "react-redux";
-import { RootState, useFetchUserStoriesQuery, useUpdateStoryWordMutation } from "../../shared/store";
+import { RootState, useGetUserStoriesQuery, useUpdateWordInStoryMutation } from "../../shared/store";
 import PageTemplate from "../../shared/components/PageTemplate";
 import { IStory } from "../../shared/store/slices/UserSlice";
 import AIWordModal from "../AIChat/AIWordModal";
@@ -14,7 +14,7 @@ function ReadingPage(){
     const [page, setPage] = useState(1);
     const [availablePages, setAvailablePages] = useState(1);
     const user = useSelector((state: RootState) => state.userProfile);
-    const response = useFetchUserStoriesQuery(user.value);
+    const response = useGetUserStoriesQuery(user.value);
     //level and language for selector
     const [language, setLanguage] = useState<string>();
     const [level, setLevel] = useState<string>();
@@ -25,7 +25,7 @@ function ReadingPage(){
     const [selectedWord, setSelectedWord] = useState("");
 
     //update word in story
-    const [updateWord] = useUpdateStoryWordMutation();
+    const [updateWord] = useUpdateWordInStoryMutation();
 
 
     let stories;

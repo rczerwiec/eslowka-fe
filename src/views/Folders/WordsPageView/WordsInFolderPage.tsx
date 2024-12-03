@@ -3,7 +3,7 @@ import { HiPlus } from "react-icons/hi";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import character1 from "../../../shared/img/character1.svg";
 
-import { RootState, useFetchSpecificWordsQuery, useUpdateFolderNameMutation } from "../../../shared/store";
+import { RootState, useGetAllWordsInFolderQuery, useUpdateFolderNameMutation } from "../../../shared/store";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../../../shared/components/Modal";
@@ -34,7 +34,7 @@ const WordsInFolderPage = () => {
   const [currentWord, setCurrentWord] = useState<IWord>();
   const [page, setPage] = useState(1);
   const user = useSelector((state: RootState) => state.userProfile);
-  const response = useFetchSpecificWordsQuery({
+  const response = useGetAllWordsInFolderQuery({
     folderID: folder.id,
     userID: user.value,
   });

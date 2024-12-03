@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { RootState, useFetchUserQuery, useUpdateUserInfoMutation, useUpdateUserSettingsMutation } from "../shared/store";
+import { RootState, useFetchUserQuery, useUpdateUserInfoMutation, useUpdateSettingsMutation } from "../shared/store";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ISettings } from "../shared/store/slices/UserSlice";
@@ -10,7 +10,7 @@ const SettingsPage = () => {
     const user = useSelector((state: RootState) => state.userProfile);
     const navigate= useNavigate();
     const response = useFetchUserQuery(user.value);
-    const [saveSettings] = useUpdateUserSettingsMutation();
+    const [saveSettings] = useUpdateSettingsMutation();
     const [saveInfo] = useUpdateUserInfoMutation();
     const [userName, setUsername] = useState("");
     const [settings, setSettings] = useState<ISettings>({language: "default", wordsPerTraining: 0, darkmode: false});

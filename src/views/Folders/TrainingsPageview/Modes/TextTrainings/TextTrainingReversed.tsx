@@ -8,11 +8,11 @@ import Character from "../../../../../shared/components/Character";
 import { useSelector } from "react-redux";
 import {
   RootState,
-  useFetchRandomWordsArrayQuery,
+  useGetRandomFolderWordsQuery,
   useFetchUserQuery,
   useUpdateUserDatesMutation,
   useUpdateUserStatsMutation,
-  useUpdateWordStatusMutation,
+  useUpdateWordStatusAndStreakMutation,
 } from "../../../../../shared/store";
 import { IWord } from "../../../../../shared/store/slices/FolderSlice";
 import { useFormik } from "formik";
@@ -57,11 +57,11 @@ const TextTrainingReversed = () => {
   ]);
   const folder = useSelector((state: RootState) => state.folderProfile);
   const navigate = useNavigate();
-  const { isLoading, isSuccess, error, data } = useFetchRandomWordsArrayQuery({
+  const { isLoading, isSuccess, error, data } = useGetRandomFolderWordsQuery({
     folderID: folder.id,
     userID: user.value,
   });
-  const [updateStatus] = useUpdateWordStatusMutation();
+  const [updateStatus] = useUpdateWordStatusAndStreakMutation();
   const [updateStats] = useUpdateUserStatsMutation();
   const [updateDates] = useUpdateUserDatesMutation();
   const response = useFetchUserQuery(user.value);

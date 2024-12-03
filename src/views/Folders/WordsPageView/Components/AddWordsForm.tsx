@@ -1,8 +1,8 @@
-import { Field, useFormik } from "formik";
+import { useFormik } from "formik";
 import {
   RootState,
-  useCreateWordMutation,
-  useCreateWordsMutation,
+  useCreateWordInFolderMutation,
+  useCreateMultipleWordsInFolderMutation,
 } from "../../../../shared/store";
 import {
   IFolder,
@@ -20,8 +20,8 @@ const AddWordsForm: FC<{
   closeModal: () => void;
 }> = (props): JSX.Element => {
   const user = useSelector((state: RootState) => state.userProfile);
-  const [createWord] = useCreateWordMutation();
-  const [createWords] = useCreateWordsMutation();
+  const [createWord] = useCreateWordInFolderMutation();
+  const [createWords] = useCreateMultipleWordsInFolderMutation();
   const formik = useFormik({
     initialValues: {
       word: "",

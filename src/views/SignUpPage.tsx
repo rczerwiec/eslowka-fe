@@ -1,8 +1,6 @@
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { useCreateUserMutation } from "../shared/store";
-import { createUserWithEmailAndPassword, sendEmailVerification, UserCredential } from "firebase/auth";
-import { auth } from "../firebase/firebas";
 import loginPageSvg from "../shared/img/loginPage.svg"
 import Character from "../shared/components/Character";
 import { toast, ToastContainer } from 'react-toastify';
@@ -95,7 +93,7 @@ const SignUpPage = () => {
   return (
     <>
     <div className="fixed top-4 left-4 w-20">
-      <img src={mainLogo}></img>
+      <img src={mainLogo} alt="Logo"></img>
     </div>
       <div
         className="flex flex-col h-screen

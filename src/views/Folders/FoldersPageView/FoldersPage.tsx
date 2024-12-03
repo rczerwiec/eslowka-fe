@@ -1,7 +1,7 @@
 //ICONS & SVG
 import character1 from "../../../shared/img/character1.svg";
 import { HiPlus } from "react-icons/hi";
-import { RootState, useFetchFoldersQuery } from "../../../shared/store";
+import { RootState, useGetUserFoldersQuery } from "../../../shared/store";
 import { IFolder } from "../../../shared/store/slices/FolderSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { change } from "../../../shared/store/slices/FolderSlice";
@@ -23,7 +23,7 @@ const FoldersPage = () => {
   const user = useSelector((state: RootState) => state.userProfile);
   const { isVisible, closeModal, toggleModal } = useModal();
   const ReferenceModal = useModal();
-  const response = useFetchFoldersQuery(user.value);
+  const response = useGetUserFoldersQuery(user.value);
   const [currentFolder, setCurrentFolder] = useState<IFolder>();
   const confirmationModal = useModal();
   const navigate = useNavigate();

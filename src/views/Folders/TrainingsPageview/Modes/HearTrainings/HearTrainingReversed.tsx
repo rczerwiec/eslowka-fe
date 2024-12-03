@@ -8,11 +8,11 @@ import Character from "../../../../../shared/components/Character";
 import { useSelector } from "react-redux";
 import {
   RootState,
-  useFetchRandomWordsArrayQuery,
+  useGetRandomFolderWordsQuery,
   useFetchUserQuery,
   useUpdateUserDatesMutation,
   useUpdateUserStatsMutation,
-  useUpdateWordStatusMutation,
+  useUpdateWordStatusAndStreakMutation,
 } from "../../../../../shared/store";
 import { IWord } from "../../../../../shared/store/slices/FolderSlice";
 import { useFormik } from "formik";
@@ -20,7 +20,6 @@ import CheckTranslationUtil from "../../Utils/CheckTranslationUtil";
 import FirstTitle from "../../../../../shared/components/FirstTitle";
 import Button from "../../../../../shared/components/Button";
 import RenderStatus from "../../Components/RenderStatus";
-import IconStreak from "../../Components/IconStreak";
 import TextToSpeech from "../../Components/TextToSpeech";
 import LanguageSelector from "../../Components/LanguageSelector";
 
@@ -59,11 +58,11 @@ const HearTrainingReversed = () => {
   ]);
   const folder = useSelector((state: RootState) => state.folderProfile);
   const navigate = useNavigate();
-  const { isLoading, isSuccess, error, data } = useFetchRandomWordsArrayQuery({
+  const { isLoading, isSuccess, error, data } = useGetRandomFolderWordsQuery({
     folderID: folder.id,
     userID: user.value,
   });
-  const [updateStatus] = useUpdateWordStatusMutation();
+  const [updateStatus] = useUpdateWordStatusAndStreakMutation();
   const [updateStats] = useUpdateUserStatsMutation();
   const [updateDates] = useUpdateUserDatesMutation();
   const response = useFetchUserQuery(user.value);
@@ -189,9 +188,6 @@ const HearTrainingReversed = () => {
   };
 
   let renderStatus = <RenderStatus changeStatus={changeStatus} status={status}/>
-
-  let streakIcon=<IconStreak streak={currentWord.streak} reverseStreak={currentWord.reverseStreak}/>
-  
 
   //BUTTON AND TRANSLATION INPUTS
   let ButtonInput = (

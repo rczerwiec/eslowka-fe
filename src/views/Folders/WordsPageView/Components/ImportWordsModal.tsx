@@ -1,7 +1,7 @@
 import { FC } from "react"
-import { IFolder, INewWords, IWord } from "../../../../shared/store/slices/FolderSlice"
+import { INewWords, IWord } from "../../../../shared/store/slices/FolderSlice"
 import { Modal } from "../../../../shared/components/Modal"
-import { RootState, useCreateWordsMutation } from "../../../../shared/store";
+import { RootState, useCreateMultipleWordsInFolderMutation } from "../../../../shared/store";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +10,7 @@ import { Colors } from "../../../../shared/Enums/Stylings";
 
 
 const ImportWordsModal: FC<{isVisible: boolean, closeModal: () => void, folder: IWord[], data: any}> = (props): JSX.Element => {
-    const [createWords] = useCreateWordsMutation();
+    const [createWords] = useCreateMultipleWordsInFolderMutation();
     const user = useSelector((state: RootState) => state.userProfile);
     const navigate = useNavigate();
     const onWordsCreate = async (newWords: INewWords) => {

@@ -1,11 +1,11 @@
-import { FC, useEffect, useState } from "react";
-import { Modal, useModal } from "../../../../shared/components/Modal";
+import {useEffect, useState } from "react";
+import { Modal} from "../../../../shared/components/Modal";
 import Character from "../../../../shared/components/Character";
 import { BiSolidExit } from "react-icons/bi";
 import { FaCheckCircle } from "react-icons/fa";
 import { IFolder } from "../../../../shared/store/slices/FolderSlice";
 import character2 from "../../../../shared/img/character2.svg";
-import { RootState, useCreateFolderMutation, useFetchFolderByReferenceCodeQuery } from "../../../../shared/store";
+import { RootState, useCreateFolderMutation, useGetFolderByReferenceCodeQuery } from "../../../../shared/store";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
@@ -18,13 +18,12 @@ interface IProps{
 function FolderReferenceCodeModal({renderedFoldersLength, isVisible, closeModal} :IProps){
 
     const [referenceCode, setReferenceCode] = useState("");
-    const response = useFetchFolderByReferenceCodeQuery({referenceCode});
+    const response = useGetFolderByReferenceCodeQuery({referenceCode});
     const [createFolder] = useCreateFolderMutation();
     const user = useSelector((state: RootState) => state.userProfile);
     useEffect(()=>{
 
     },[])
-    let folder:IFolder;
 
 
     const makeid = (length:number) => {

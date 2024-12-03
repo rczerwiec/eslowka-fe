@@ -1,5 +1,5 @@
 import Select from "react-select";
-import { useFetchFolderQuery } from "../../shared/store";
+import { useGetSingleFolderQuery } from "../../shared/store";
 import { useState } from "react";
 
 interface IProps{
@@ -13,7 +13,7 @@ interface SelectOptionType { label: string, value: string }
 
 const FolderSelector = (props:IProps) => {
     const [folderName, setFolderName] = useState<string>("")
-    const response = useFetchFolderQuery({folderName: folderName,userID: props.userID});
+    const response = useGetSingleFolderQuery({folderName: folderName,userID: props.userID});
 
     if(response.isSuccess) {
         if(folderName !== ""){

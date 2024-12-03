@@ -1,15 +1,10 @@
-import { Field, useFormik } from "formik";
+import { useFormik } from "formik";
 import {
   RootState,
-  useCreateWordMutation,
-  useCreateWordsMutation,
   useUpdateWordDetailsMutation,
-  useUpdateWordStatusMutation,
 } from "../../../../shared/store";
 import {
   IFolder,
-  INewWord,
-  INewWords,
   IWord,
 } from "../../../../shared/store/slices/FolderSlice";
 import { FC } from "react";
@@ -17,7 +12,7 @@ import { FaCheckCircle } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { toast} from 'react-toastify';
 import Button from "../../../../shared/components/Button";
-import { Colors, Sizes } from "../../../../shared/Enums/Stylings";
+import { Sizes } from "../../../../shared/Enums/Stylings";
 
 const UpdateWordForm: FC<{
   folder: IFolder;

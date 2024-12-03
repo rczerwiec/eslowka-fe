@@ -1,11 +1,11 @@
 import { BiSolidExit } from "react-icons/bi";
 import { Modal } from "../../../../shared/components/Modal";
-import { useRemoveFolderMutation } from "../../../../shared/store";
+import { useDeleteUserFolderMutation } from "../../../../shared/store";
 import { IFolder } from "../../../../shared/store/slices/FolderSlice";
 import { FC } from "react";
 
 const RemoveConfirmModal: FC<{isVisible: boolean, closeModal: () => void, folder: IFolder | undefined, userID: string}> = (props): JSX.Element => {
-    const [removeFolder] = useRemoveFolderMutation();
+    const [removeFolder] = useDeleteUserFolderMutation();
     let folderToRemove: IFolder;
     if(props.folder !== undefined){
         folderToRemove = props.folder;

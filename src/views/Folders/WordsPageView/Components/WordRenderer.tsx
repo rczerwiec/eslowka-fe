@@ -3,7 +3,7 @@ import { IFolder, IWord } from "../../../../shared/store/slices/FolderSlice";
 import { FaFire, FaSkull } from "react-icons/fa6";
 import WordStatusForm from "./WordStatusForm";
 import { FaTrashAlt } from "react-icons/fa";
-import { RootState, useRemoveWordMutation } from "../../../../shared/store";
+import { RootState, useDeleteWordInFolderMutation } from "../../../../shared/store";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { FiEdit } from "react-icons/fi";
@@ -35,7 +35,7 @@ const WordRenderer: FC<{
 }> = (props): JSX.Element => {
   const user = useSelector((state: RootState) => state.userProfile);
 
-  const [removeWord] = useRemoveWordMutation();
+  const [removeWord] = useDeleteWordInFolderMutation();
   let tr: any;
   //IF WORDS TABLE IS NOT EMPTY
   if (props.data.length !== 0) {

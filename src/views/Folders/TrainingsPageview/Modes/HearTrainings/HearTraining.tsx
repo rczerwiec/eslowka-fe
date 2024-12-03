@@ -6,15 +6,13 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import Character from "../../../../../shared/components/Character";
 import { useSelector } from "react-redux";
-import { RootState, useFetchRandomWordsArrayQuery, useFetchUserQuery, useUpdateUserDatesMutation, useUpdateUserStatsMutation, useUpdateWordStatusMutation } from "../../../../../shared/store";
+import { RootState, useGetRandomFolderWordsQuery, useFetchUserQuery, useUpdateUserDatesMutation, useUpdateUserStatsMutation, useUpdateWordStatusAndStreakMutation } from "../../../../../shared/store";
 import { IWord } from "../../../../../shared/store/slices/FolderSlice";
 import { useFormik } from "formik";
 import CheckTranslationUtil from "../../Utils/CheckTranslationUtil";
 import FirstTitle from "../../../../../shared/components/FirstTitle";
 import Button from "../../../../../shared/components/Button";
 import RenderStatus from "../../Components/RenderStatus";
-import IconStreak from "../../Components/IconStreak";
-import HearTrainingReversed from './HearTraining';
 import TextToSpeech from "../../Components/TextToSpeech";
 import LanguageSelector from "../../Components/LanguageSelector";
 
@@ -35,8 +33,8 @@ const HearTraining = () => {
   const [wordsState, setWordsState] = useState<IWord[]>([{word: "Ładowanie...", id: -1, translation: "Ładowanie...",note: "", repeated: 0, known: 0, folderId: -1, streak:0, reverseStreak: 0,}]);
   const folder = useSelector((state: RootState) => state.folderProfile);
   const navigate = useNavigate();
-  const {isLoading, isSuccess, error, data} = useFetchRandomWordsArrayQuery({folderID:folder.id, userID: user.value});
-  const [updateStatus] = useUpdateWordStatusMutation();
+  const {isLoading, isSuccess, error, data} = useGetRandomFolderWordsQuery({folderID:folder.id, userID: user.value});
+  const [updateStatus] = useUpdateWordStatusAndStreakMutation();
   const [updateStats] = useUpdateUserStatsMutation();
   const [updateDates] = useUpdateUserDatesMutation();
   const response = useFetchUserQuery(user.value);
@@ -124,8 +122,6 @@ const HearTraining = () => {
 
 
   let renderStatus = <RenderStatus changeStatus={changeStatus} status={status}/>
-
-  let streakIcon=<IconStreak streak={currentWord.streak} reverseStreak={currentWord.reverseStreak}/>
   
 
 
@@ -180,10 +176,10 @@ let ButtonInput = (
             <div className={ButtonsState[2]}>
               {ButtonsState[3]} - {currentWord.translation}
             </div>
-
+            <TextToSpeech voice={voice} text={currentWord.word} />
             <form onSubmit={formik.handleSubmit}>
               <div className="flex flex-col gap-2 items-center justify-center">
-                <TextToSpeech voice={voice} text={currentWord.word} />
+                
                 <div className="text-sm font-inter font-thin text-fifth">
                   {currentWord.note}
                 </div>
