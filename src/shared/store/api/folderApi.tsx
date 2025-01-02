@@ -6,7 +6,7 @@ import { RootState } from "..";
 const foldersApi = createApi({
   reducerPath: "folders",
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_testApiUrl+"folders/",
+    baseUrl: process.env.REACT_APP_prodApiUrl+"folders/",
     prepareHeaders: async (headers, { getState }) => {
       const store = (await getState()) as RootState;
       // console.log("myTOKEN",store.userProfile.token);
