@@ -9,16 +9,39 @@ import Button from "../shared/components/Button";
 import { Colors, Sizes } from "../shared/Enums/Stylings";
 import { doCreateUserWithEmailAndPassword } from "../firebase/auth";
 import mainLogo from'../shared/img/eslowka.png';
+import { useEffect, useState } from "react";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const SignUpPage = () => {
   const [createUser] = useCreateUserMutation();
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+      const auth = getAuth();
+  
+      const unsubscribe = onAuthStateChanged(auth, (loggedUser) => {
+        if (loggedUser) {
+          navigate("/app")// User is signed in
+        } else {
+          console.log(null); // No user is signed in
+        }
+        setLoading(false); // Finished checking auth state
+      });
+  
+      return () => unsubscribe(); // Cleanup listener on component unmount
+    }, []);
   //Register the user
   const UserRegister = async (
     email: string,
     userName: string,
     password: string
   ) => {
+    if (email!=="czerwiecr1999@gmail.com" || "kowalczykmarta143@gmail.com"){
+      toast.error("Rejestracja dostępna tylko dla testerów aplikacji!");
+      return;
+    }
+
+
     await doCreateUserWithEmailAndPassword(email,password).then(
       (user) => {
         //=====Create an user in database if firebase signup was successful
@@ -102,12 +125,7 @@ const SignUpPage = () => {
        items-center justify-center 
        bg-gradient-to-r from-gradient_from to-gradient_to"
       >
-        <div className="fixed top-28 z-20 flex flex-col justify-center items-center max-w-[400px] font-inter p-2 max-lg:hidden">
-          <div className="text-2xl text-main font-bold">WAŻNE!</div>
-          <div className="text-xs font-semibold text-center text-red-600">Aplikacja jest w bardzo wczesnej wersji - alpha. W tej wersji, aplikacja jest darmowa. Jednocześnie ostrzegamy iż Twoje dane mogą zostać utracone w wyniku
-            częstych resetów bazy danych. Pamiętaj o regularnym eksportowaniu swoich folderów słówek!
-          </div>
-        </div>
+   
 
         <section
           className="flex relative max-md:flex-col

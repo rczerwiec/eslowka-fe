@@ -16,6 +16,8 @@ const UpdatesPage = () => {
           <li>-W folderze słówek została powiększona długość znaków w słówkach</li>
           <li>-W folderze słówek przycisk udostępniania numeru referencyjnego już działa!</li>
           <li>-Zakładka "Ćwicz Czytanie", dostępna w responsywnej wersji aplikacji!</li>
+          <li>-Jeśli jesteś w oknie logowania lub rejestracji, to jeśli jesteś zalogowany - aplikacja automatycznie Cię przeniesie do głównej strony aplikacji!</li>
+          <li>-Jeśli jesteś w oknie aplikacji, to jeśli nie jesteś zalogowany - aplikacja automatycznie Cię przeniesie do okna logowania!</li>
       </VersionList>
       <VersionList version="1.0.8 alpha">
         <h1 className='text-xl font-bold'>Zmiany</h1>

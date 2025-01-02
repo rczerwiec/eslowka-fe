@@ -5,7 +5,7 @@ import loginPageSvg from "../shared/img/loginPage.svg"
 import Character from "../shared/components/Character";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { sendPasswordResetEmail, signOut } from "firebase/auth";
+import { getAuth, onAuthStateChanged, sendPasswordResetEmail, signOut } from "firebase/auth";
 import { auth } from "../firebase/firebas";
 import { RootState, useCreateUserMutation, useUpdateUserDatesMutation } from "../shared/store";
 import { FaGoogle } from "react-icons/fa6";
@@ -15,14 +15,37 @@ import { doSendPasswordResetEmail, doSignInWithEmailAndPassword, doSignInWithGoo
 import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import mainLogo from'../shared/img/eslowka.png';
+import { useEffect, useState } from "react";
 
 const LoginPage = () => {
   const user = useSelector((state: RootState) => state.userProfile);
+  const auth = getAuth();
+  const authUser = auth.currentUser;
+  const [loading, setLoading] = useState(true);
+
+
   const navigate = useNavigate();
   const [createUser] = useCreateUserMutation();
   const [updateDates] = useUpdateUserDatesMutation();
   //Register with Google Auth
-  console.log(user.userLoggedIn)
+  console.log(authUser)
+  useEffect(() => {
+    const auth = getAuth();
+
+    const unsubscribe = onAuthStateChanged(auth, (loggedUser) => {
+      if (loggedUser) {
+        navigate("/app")// User is signed in
+      } else {
+        console.log(null); // No user is signed in
+      }
+      setLoading(false); // Finished checking auth state
+    });
+
+    return () => unsubscribe(); // Cleanup listener on component unmount
+  }, []);
+
+
+
   const handleGoogleSignIn = async (e:any) => {
     e.preventDefault();
     try {
