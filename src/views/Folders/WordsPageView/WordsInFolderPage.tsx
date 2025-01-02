@@ -39,6 +39,7 @@ const WordsInFolderPage = () => {
     userID: user.value,
   });
   const [renameFolder] = useUpdateFolderNameMutation();
+  const [copied, setCopied] = useState(false);
 
   let renderedWords;
   let availablePages = 0;
@@ -90,7 +91,7 @@ const WordsInFolderPage = () => {
     pageArrows = (
       <>
         <div className="flex justify-center items-center text-base text-fifth">
-          Strona {page}
+          Strona {page}/{availablePages}
         </div>
         <div
           onClick={() => {
@@ -129,6 +130,15 @@ const WordsInFolderPage = () => {
     renameFolder({newName: newName, userID: user.value, folderID: folder.id})
   }
 
+  const handleFolderIDCopy = () => {
+    navigator.clipboard.writeText(folder.referenceID)
+      .then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000); // Reset the copied state after 2 seconds
+      })
+      .catch((err) => console.error("Failed to copy text: ", err));
+  };
+
   return (
     <>
       <div className="flex flex-col size-full">
@@ -161,15 +171,23 @@ const WordsInFolderPage = () => {
               <IoMdArrowRoundBack className="max-lg:hidden" />
               <div className="text-lg">Powrót </div>
             </div>
-            <div
+            <div onClick={()=>{
+              handleFolderIDCopy();
+            }}
               className="flex gap-2 items-center p-2 hover:cursor-pointer hover:bg-secondarylight text-fifth rounded-lg"
             >
-              <div className="flex text-sm gap-1 justify-center items-center">
+              {copied ? (<div className="text-sm font-inter">Skopiowane!</div>) : (    <><div className="flex text-sm gap-1 justify-center items-center">
+                
+
+
                 <label>Udostępnij </label>
                 <FaCopy className="max-lg:hidden text-base" />
                 <label>:</label>
                 </div>
-              <div className="text-sm">{folder.referenceID} </div>
+                <div className="text-sm">{folder.referenceID} </div></>
+              )}
+          
+              
             </div>
           </div>
         </div>
@@ -183,23 +201,23 @@ const WordsInFolderPage = () => {
           <div className="flex flex-col w-1/3 max-lg:hidden gap-2">
             <StatusBox />
             <CSVLink
-              className="flex text-xl items-center text-center justify-center bg-secondary rounded-xl p-2 m-4 z-20 shadow-lg hover:cursor-pointer hover:bg-secondarylight"
+              className="flex p-2 justify-center font-bold items-center shadow-lg mx-2 rounded-xl text-sm font-inter bg-white z-10 hover:bg-secondarylight  border-secondary border-y-2 border-x-2 max-lg:hidden"
               data={resultArray}
               filename={"eslowka-eksport.csv"}
             >
               Eksport Słówek
             </CSVLink>
             <CsvFileInput onFileLoad={handleFileLoad} />
-            <div className="flex flex-col bg-secondary  rounded-xl p-2 gap-2 font-inter z-20">
-              <label className="text-2xl">Domyślny głos dla kolumny "Słowo":</label>
+            <div className="flex flex-col gap-2 p-2 justify-center font-bold items-center shadow-lg mx-2 rounded-xl text-sm font-inter bg-white z-10  border-secondary border-y-2 border-x-2 max-lg:hidden">
+              <label className="text-sm">Domyślny głos dla kolumny "Słowo":</label>
               <LanguageSelector
                 defaultVoice={true}
                 selectedVoice={folder.defaultVoice}
                 userID={user.value}
                 folder={folder}/>
             </div>
-            <div className="flex flex-col bg-secondary  rounded-xl p-2 gap-2 font-inter z-20">
-              <label className="text-2xl">Domyślny głos dla kolumny "Tłumaczenie":</label>
+            <div className="flex flex-col gap-2 p-2 justify-center font-bold items-center shadow-lg mx-2 rounded-xl text-sm font-inter bg-white z-10  border-secondary border-y-2 border-x-2 max-lg:hidden">
+              <label className="text-sm">Domyślny głos dla kolumny "Tłumaczenie":</label>
               <LanguageSelector
                 defaultVoice={false}
                 selectedVoice={folder.defaultVoiceReversed}

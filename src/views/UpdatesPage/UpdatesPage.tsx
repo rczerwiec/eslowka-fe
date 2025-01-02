@@ -8,6 +8,15 @@ const UpdatesPage = () => {
       <FirstTitle>Aktualizacje</FirstTitle>
       <MainTitle>Aktualizacje</MainTitle>
       <div className="relative inline-block text-left pl-4 overflow-y-scroll max-h-[660px]">
+      <VersionList version="1.0.9 alpha">
+        <h1 className='text-xl font-bold'>Zmiany</h1>
+          <li>-W folderze słówek poprawione UI prawego panelu</li>
+        <h1 className='text-xl font-bold'>Poprawki</h1>
+          <li>-W folderze słówek dodana dostępna ilość stron</li>
+          <li>-W folderze słówek została powiększona długość znaków w słówkach</li>
+          <li>-W folderze słówek przycisk udostępniania numeru referencyjnego już działa!</li>
+          <li>-Zakładka "Ćwicz Czytanie", dostępna w responsywnej wersji aplikacji!</li>
+      </VersionList>
       <VersionList version="1.0.8 alpha">
         <h1 className='text-xl font-bold'>Zmiany</h1>
           <li>-Utworzona pierwsza wersja strony produktu</li>

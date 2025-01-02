@@ -16,10 +16,10 @@ import UpdatesPage from "./views/UpdatesPage/UpdatesPage";
 import RankingPage from "./views/RankingPage";
 import AIChatPage from "./views/AIChat/AIChatPage";
 import ReadingPage from "./views/ReadingPageView/ReadingPage";
-import WordsCollectionsPage from "./views/Folders/WordsCollectionPageView/WordsCollectionsPage";
 import HearTraining from "./views/Folders/TrainingsPageview/Modes/HearTrainings/HearTraining";
 import HearTrainingReversed from "./views/Folders/TrainingsPageview/Modes/HearTrainings/HearTrainingReversed";
 import LandingPage from "./views/LandingPage/LandingPage";
+import CollectionsPage from './views/Collections/CollectionsPage';
 
 const MainApp = () => {
   const router = createBrowserRouter([
@@ -48,14 +48,6 @@ const MainApp = () => {
       element: (
        <App>
         <FoldersPage/>
-       </App>
-      ),
-    },
-    {
-      path: "/app/collections",
-      element: (
-       <App>
-        <WordsCollectionsPage/>
        </App>
       ),
     },
@@ -94,6 +86,14 @@ const MainApp = () => {
       element: (
        <App>
         <PaymentsPage/>
+       </App>
+      ),
+    },
+    {
+      path: "/app/collections",
+      element: (
+       <App>
+        <CollectionsPage/>
        </App>
       ),
     },

@@ -80,9 +80,8 @@ function LanguageSelector({defaultVoice, selectedVoice,userID,folder,setVoice}:I
     
 
     return(
-        <div className="flex flex-row justify-center items-center w-fit">
-        <label className="text-xl">Domyślny język:</label>
-        <select className="text-xs" value={selectedVoice} onChange={handleVoiceChange}>
+        <div className="flex flex-row justify-center items-center">
+        <select className="text-xs border w-64" value={selectedVoice} onChange={handleVoiceChange}>
           {window.speechSynthesis.getVoices().map((voice) => (
             <option key={voice.name} value={voice.name}>
               {voice.name}
