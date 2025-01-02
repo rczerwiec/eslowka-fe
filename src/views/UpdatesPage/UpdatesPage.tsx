@@ -10,6 +10,7 @@ const UpdatesPage = () => {
       <div className="relative inline-block text-left pl-4 overflow-y-scroll max-h-[660px]">
       <VersionList version="1.0.8 alpha">
         <h1 className='text-xl font-bold'>Zmiany</h1>
+          <li>-Utworzona pierwsza wersja strony produktu</li>
           <li>-Możliwość edycji nazwy folderu poprzez dwukrotne kliknięcie myszką na nazwe (będąc w danym folderze)</li>
         <h1 className='text-xl font-bold'>Poprawki</h1>
           <li>-Drobne zmiany wizualne w Chat AI</li>

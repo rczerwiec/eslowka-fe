@@ -8,7 +8,7 @@ export const doCreateUserWithEmailAndPassword = async (email:string, password:st
     const user = await createUserWithEmailAndPassword(auth, email, password)
     .then((user) => {
       sendEmailVerification(user.user);
-      console.log("pomyslnie")
+      //console.log("pomyslnie")
       return user;
     })
 
@@ -19,7 +19,7 @@ export const doCreateUserWithEmailAndPassword = async (email:string, password:st
 export const doSignInWithEmailAndPassword = async (email:string, password:string)=>{
     const user = await signInWithEmailAndPassword(auth, email, password).then(
         (userCredential: UserCredential) => {
-            console.log("Zalogowano pomyslnie")
+            //console.log("Zalogowano pomyslnie")
             return userCredential;
         }
     );
@@ -32,7 +32,7 @@ export const doSignInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
     const user = await signInWithPopup(auth, provider).then(
         (userCredential: UserCredential) => {
-            console.log("Zalogowano pomyslnie przez Google!")
+            //console.log("Zalogowano pomyslnie przez Google!")
             return userCredential;
         }
     );

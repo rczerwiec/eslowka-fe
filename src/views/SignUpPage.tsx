@@ -92,8 +92,10 @@ const SignUpPage = () => {
 
   return (
     <>
-    <div className="fixed top-4 left-4 w-20">
-      <img src={mainLogo} alt="Logo"></img>
+ <div className="fixed top-4 left-4 w-20 cursor-pointer">
+      <img onClick={()=>{
+      navigate('/')
+    }} src={mainLogo}></img>
     </div>
       <div
         className="flex flex-col h-screen

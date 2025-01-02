@@ -5,7 +5,6 @@ import FoldersPage from "./views/Folders/FoldersPageView/FoldersPage";
 import SignUpPage from "./views/SignUpPage";
 import LoginPage from "./views/LoginPage";
 import App from "./App";
-import TranslationWordTraining from "./views/Folders/TrainingsPageview/Modes/TextTrainings/TextTraining";
 import TextTraining from "./views/Folders/TrainingsPageview/Modes/TextTrainings/TextTraining";
 import TextTrainingReversed from "./views/Folders/TrainingsPageview/Modes/TextTrainings/TextTrainingReversed";
 import RulesPage from "./views/RulesPage";
@@ -13,24 +12,17 @@ import ContactPage from "./views/ContactPage";
 import SettingsPage from "./views/SettingsPage";
 import PaymentsPage from "./views/PaymentsPage";
 import PremiumPage from "./views/PremiumPage";
-import FrontPage from "./views/FrontPage";
 import UpdatesPage from "./views/UpdatesPage/UpdatesPage";
 import RankingPage from "./views/RankingPage";
-import RevTranslationTraining from "./views/Folders/TrainingsPageview/Modes/TextTrainings/TextTrainingReversed";
 import AIChatPage from "./views/AIChat/AIChatPage";
 import ReadingPage from "./views/ReadingPageView/ReadingPage";
 import WordsCollectionsPage from "./views/Folders/WordsCollectionPageView/WordsCollectionsPage";
 import HearTraining from "./views/Folders/TrainingsPageview/Modes/HearTrainings/HearTraining";
 import HearTrainingReversed from "./views/Folders/TrainingsPageview/Modes/HearTrainings/HearTrainingReversed";
+import LandingPage from "./views/LandingPage/LandingPage";
 
 const MainApp = () => {
   const router = createBrowserRouter([
-    {
-      path: "/",
-      element: (
-        <LoginPage/>
-      ),
-    },
     {
       path: "/signup",
       element: (
@@ -92,9 +84,9 @@ const MainApp = () => {
       ),
     },
     {
-      path: "/hello",
+      path: "/",
       element: (
-        <FrontPage/>
+        <LandingPage/>
       ),
     },
     {

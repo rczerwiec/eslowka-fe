@@ -95,8 +95,10 @@ const LoginPage = () => {
 
   return (
     <>
-    <div className="fixed top-4 left-4 w-20">
-      <img src={mainLogo}></img>
+    <div className="fixed top-4 left-4 w-20 cursor-pointer">
+      <img onClick={()=>{
+      navigate('/')
+    }} src={mainLogo}></img>
     </div>
     {(user.userLoggedIn) && (<Navigate to={'/app'} replace={true}/> )}
     <div className="flex flex-col h-screen
