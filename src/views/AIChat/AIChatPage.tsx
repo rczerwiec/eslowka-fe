@@ -7,6 +7,7 @@ import { IChatHistoryPart, IParts } from "../../shared/store/slices/ChatHistoryS
 import { useDispatch, useSelector } from "react-redux";
 import {change} from "../../shared/store/slices/ChatHistorySlice";
 import { RootState } from "../../shared/store";
+import { toast } from "react-toastify";
 
 function AIChatPage() {
   const [userInput, setUserInput] = useState("");
@@ -34,6 +35,10 @@ function AIChatPage() {
   });
 
   const sendMessage = async () => {
+    if(isLoading){
+      toast.error("Generowanie danych jest w toku...");
+      return;
+    }
     if (userInput.trim() === "") return;
     setIsLoading(true);
 
@@ -46,9 +51,40 @@ function AIChatPage() {
     };
 
     try {
+      const countResultTokensFromInput = await model?.countTokens(
+        userInput,
+      );
+
+      const totalTokens = countResultTokensFromInput?.totalTokens;
+      console.log(totalTokens?.toString());
+      if (totalTokens !== undefined) {
+        if(totalTokens > 850) {
+          toast.error("Przekroczono ilość tokenów!");
+          return;
+        }
+      }
+
       const chatSession = await model?.startChat({generationConfig, history: chatHistory});
+
+ 
+
+
+    
       let response = "";
       const result = await chatSession?.sendMessage(userInput);
+      if(chatSession !== undefined){
+        const countResult = await model?.countTokens({
+          generateContentRequest: { contents: await chatSession?.getHistory()},
+        });
+        console.log("CHAT SESSION:",countResult?.totalTokens); // 10
+        if (countResult !== undefined) {
+          if(countResult.totalTokens > 1650) {
+            toast.error("Przekroczono ilość tokenów!");
+            return;
+          }
+        }
+      }
+     
       if(result !== undefined){
         response = await result.response.text();
       }

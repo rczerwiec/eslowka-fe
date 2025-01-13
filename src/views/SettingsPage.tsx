@@ -27,7 +27,11 @@ const SettingsPage = () => {
       }
     },[response]);
 
-    
+    const licence = response.data?.accountType || 'BŁAD';
+    const level = response.data?.level || 'BŁAD';
+    const experience = response.data?.experience || 'BŁĄD';
+    const joinedDate = response.data?.joined || 'BŁĄD';
+    const streak = response.data?.streak || 'BŁĄD';
 
     return (
       <div className="flex flex-col w-full h-full">
@@ -44,10 +48,11 @@ const SettingsPage = () => {
               onChange={(e) => {
                 setUsername(e.target.value)}}
             ></input>
-            <div>Poziom:{response.data.level}</div>
-            <div>Doświadczenie:{response.data.experience}</div>
-            <div>Data utworzenia konta:{response.data.joined}</div>
-            <div>Streak dni:{response.data.streak}</div>
+            <div>Typ licencji:{licence}</div>
+            <div>Poziom:{level}</div>
+            <div>Doświadczenie:{experience}</div>
+            <div>Data utworzenia konta:{joinedDate}</div>
+            <div>Streak dni:{streak}</div>
             <div>Język:{settings.language}</div>
             <div>Tryb Ciemny:{settings.darkmode.toString()}</div>
             <label>Ilość Słowek Na Ćwiczenie:</label>

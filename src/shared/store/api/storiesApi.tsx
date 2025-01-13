@@ -7,7 +7,7 @@ import { RootState } from "../../store"
 const storiesApi = createApi({
   reducerPath: "stories",
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_prodApiUrl+"stories/",
+    baseUrl: process.env.REACT_APP_testApiUrl+"stories/",
     prepareHeaders: async (headers, {getState}) => {
       const store  = await getState() as RootState;
       // console.log("myTOKEN",store.userProfile.token);

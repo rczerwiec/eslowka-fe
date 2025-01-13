@@ -5,6 +5,7 @@ import { auth } from "../../../../firebase/firebas";
 import { useSelector } from "react-redux";
 import { RootState, useFetchUserQuery } from "../../../store";
 import { toast } from "react-toastify";
+import logo from "../../../img/eslowka.png"
 import UserMenuComponent from "./components/UserMenuComponent";
 import StatsComponent from "./components/StatsComponent";
 
@@ -29,9 +30,7 @@ const NavBar:FC<{}> = (props):JSX.Element => {
     signOut(auth).then(() => {
     // Sign-out successful.
         toast.success("Pomyślnie wylogowano! Zostaniesz przekierowany!");
-        setTimeout(() => {
-          navigate("/");
-        }, 3000);
+
     }).catch((error) => {
     // An error happened
     toast.success("Błąd podczas wylogowywania!");
@@ -80,12 +79,17 @@ const NavBar:FC<{}> = (props):JSX.Element => {
 
 
 const Logo = () => {
+  const navigate = useNavigate();
+
   return (
     <div
-      className="text-secondary font-bold font-inter text-3xl
-        pl-4 max-lg:hidden"
+      className="flex justify-center items-center text-secondary font-bold font-inter text-3xl
+        pl-4 max-lg:hidden cursor-pointer" onClick={()=>{
+          navigate('/')
+        }}
     >
-      ESłówka.pl
+         <img className="h-10 w-10 mr-2" src={logo} alt="logo"/>
+      <span className="text-2xl font-inter">ESłówka.pl</span>
     </div>
   );
 };

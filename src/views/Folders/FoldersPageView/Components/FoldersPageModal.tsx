@@ -49,8 +49,8 @@ const FoldersPageModal: FC<{renderedFoldersLength: Number | undefined, isVisible
 
     const onSubmit = () => {
       setNewFolder("");
-      props.closeModal();
       onCreateFolder({ id:props.renderedFoldersLength , folderName: newFolder, words: [], currentProgress: 0, maxProgress: 0, defaultVoice: "Microsoft Ryan Online (Natural) - English (United Kingdom)",  defaultVoiceReversed:"Microsoft Ryan Online (Natural) - English (United Kingdom)", referenceID:user.value+makeid(9)});
+      props.closeModal();
     }
 
 

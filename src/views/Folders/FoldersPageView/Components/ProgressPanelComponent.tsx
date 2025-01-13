@@ -12,7 +12,7 @@ function ProgressPanel(percentage:number){
     if (percentage > 40 && percentage < 70) {
         progressTextColor = progressPanelConfig.textColor.orange
     } else if (percentage >= 70) {
-        progressTextColor = progressPanelConfig.textColor.red
+        progressTextColor = progressPanelConfig.textColor.green
     }   
 
     return(

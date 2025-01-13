@@ -28,7 +28,6 @@ const LoginPage = () => {
   const [createUser] = useCreateUserMutation();
   const [updateDates] = useUpdateUserDatesMutation();
   //Register with Google Auth
-  console.log(authUser)
   useEffect(() => {
     const auth = getAuth();
 

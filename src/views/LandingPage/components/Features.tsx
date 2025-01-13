@@ -10,7 +10,7 @@ const Features = () => {
         </span>
         <h2 className='text-3xl sm:text-5xl lg:text-6xl mt-10 lg:mt-20 tracking-wide'>
             Łatwo ucz się 
-            <span className='bg-gradient-to-r from-white to-cyan-200 text-transparent bg-clip-text'>
+            <span className='bg-gradient-to-r from-white to-cyan-50 text-transparent bg-clip-text'>
              {" "}nowych słówek
             </span>
             <div className='flex flex-wrap mt-10 lg:mt-20'></div>

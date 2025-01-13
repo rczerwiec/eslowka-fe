@@ -16,6 +16,7 @@ export interface IUser{
     joined: Date;
     lastLogin: Date;
     practiceDate: Date;
+    accountType: string;
 }
 
 export interface ISettings {

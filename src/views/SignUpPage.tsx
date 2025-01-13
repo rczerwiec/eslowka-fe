@@ -36,10 +36,10 @@ const SignUpPage = () => {
     userName: string,
     password: string
   ) => {
-    if (email!=="czerwiecr1999@gmail.com" || "kowalczykmarta143@gmail.com"){
-      toast.error("Rejestracja dostępna tylko dla testerów aplikacji!");
-      return;
-    }
+    // if (email!=="czerwiecr1999@gmail.com" || "kowalczykmarta143@gmail.com"){
+    //   toast.error("Rejestracja dostępna tylko dla testerów aplikacji!");
+    //   return;
+    // }
 
 
     await doCreateUserWithEmailAndPassword(email,password).then(
@@ -52,15 +52,6 @@ const SignUpPage = () => {
           uid: user.user.uid,
           userName: userName,
           email: email,
-          folders: [],
-          settings: {
-            language: "polish",
-            darkmode: false,
-            wordsPerTraining: 5,
-          },
-          experience: 0,
-          level: 0,
-          streak: 1,
         };
 
         //Send user object to database

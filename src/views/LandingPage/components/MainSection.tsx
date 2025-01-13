@@ -6,7 +6,7 @@ const MainSection = () => {
   return (
     <div id="main" className="flex flex-col items-center mt-6 lg:mt-10 font-inter">
         <h1 className="text-4xl sm:text-6xl lg:text-7xl text-center tracking-wide font-bold">
-            Najlepsza platforma do nauki     <span className='bg-gradient-to-r from-white to-cyan-200 text-transparent bg-clip-text'>
+            Najlepsza platforma do nauki     <span className='bg-gradient-to-r from-white to-cyan-50 text-transparent bg-clip-text'>
              {" "}słówek online!
             </span>
         </h1>

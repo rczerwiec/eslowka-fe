@@ -58,37 +58,37 @@ export const features = [
     icon: <AiFillAmazonCircle/>,
     text: 'Prosty w obsłudze interfejs',
     description:
-      'W intuycyjny sposób przemieszczaj się po aplikacji przy pomocy przyjaznego dla oka interfejsu.',
+      'Intuicyjnie poruszaj się po aplikacji dzięki przejrzystemu i estetycznemu interfejsowi.',
   },
   {
     icon: <AiFillAmazonCircle />,
     text: 'Sprytne ćwiczenia',
     description:
-      'Gdy powtarzasz swoje słówka, w tle dzieje się prawdziwa magia. Aplikacja stale monitoruje jak sobie radzisz z danymi słowami i pomaga Ci dobrać odpowiedni pakiet do ćwiczeń.',
+      'Podczas powtarzania słówek w tle działa prawdziwa magia. Aplikacja nieustannie analizuje Twoje postępy i dobiera idealny zestaw ćwiczeń, aby nauka była jeszcze bardziej efektywna.',
   },
   {
     icon: <AiFillAmazonCircle />,
     text: 'Wieloplatformowość',
     description:
-      'Korzystaj z swoich słówek na stronie i swoim urządzeniu mobilnym. Ucz się w pociągu, w poczekalni czy w jakimkolwiek innym miejscu.',
+      'Ucz się swoich słówek zarówno na stronie internetowej, jak i na urządzeniu mobilnym. Ćwicz w pociągu, w poczekalni lub gdziekolwiek jesteś.',
   },
   {
     icon: <AiFillAmazonCircle />,
     text: 'Gotowe zbiory',
     description:
-      'Korzystaj z gotowych zbiorów słówek, utworzonych przez nas oraz przez społeczność esłówka. Dziel się swoimi zbiorami ze znajomymi czy nawet kursantami',
+      'Wykorzystuj gotowe zestawy słówek stworzone przez nas i społeczność eSłówka. Udostępniaj własne zbiory znajomym, a nawet swoim kursantom.',
   },
   {
     icon: <AiFillAmazonCircle />,
     text: 'Własne historyjki!',
     description:
-      'Wymyśl dowolny tytuł i pozwól by sztuczna inteligencja stworzyła na jego podstawe całą opowieść. Od Ciebie zależy w jakim języku i na jakim poziomie ma ona być.',
+      'Wprowadź dowolny tytuł, a sztuczna inteligencja stworzy na jego podstawie całą opowieść. To Ty decydujesz, w jakim języku i na jakim poziomie trudności ma powstać historia.',
   },
   {
     icon: <AiFillAmazonCircle />,
     text: 'Pomocny ChatAI',
     description:
-      'Nie masz weny twórcze? Nie chcesz przeszukiwać całego internetu w poszukiwaniu nowych zbiorów? Nie ma problemu! Poproś o to AI!',
+      'Brakuje Ci inspiracji? Nie masz ochoty przeszukiwać internetu w poszukiwaniu nowych zestawów? Żaden problem! Zleć to AI!',
   },
 ];
 
@@ -96,22 +96,22 @@ export const checklistItems = [
   {
     title: 'Utwórz zbiór słówek',
     description:
-      'Wybierz gotowy, stwórz własny lub wspomóż się narzędzmi żeby utworzyć zbiór słówek, których chcesz się uczyć.',
+      'Wybierz gotowy zestaw, stwórz własny lub skorzystaj z dostępnych narzędzi, aby utworzyć zbiór słówek, których chcesz się uczyć.',
   },
   {
     title: 'Powtarzaj słówka',
     description:
-      'Powtarzaj słowka za pomocą dostępnych ćwiczeń, proś Chat AI by generował Ci zdania z tymi słówkami i proś by poprawiał Ci błędy.',
+      'Powtarzaj słówka za pomocą dostępnych ćwiczeń, poproś Chat AI o tworzenie zdań z użyciem tych słówek i korektę Twoich błędów.',
   },
   {
     title: 'Twórz historyjki',
     description:
-      'Historyjki pozwalają Ci ćwiczyć czytanie. Wymyśl tytuł i wygeneruj coś. Od Ciebie zależy jaki to ma być poziom A1? B2, a może C2? W każdym momencie możesz dodać nieznane słówko do swojego zbioru!',
+      'Historyjki pomagają ćwiczyć czytanie. Wymyśl tytuł i wygeneruj opowieść na wybranym poziomie — A1, B2, a może C2? W każdej chwili możesz dodać nieznane słówko do swojego zbioru!',
   },
   {
     title: 'Śledź swój progress',
     description:
-      'Wbijaj poziomy i obserwuj jak Twój progress rośnie dla danego zbioru!',
+      'Zdobywaj kolejne poziomy i śledź swój postęp w nauce dla wybranego zbioru!',
   },
 ];
 
@@ -127,7 +127,7 @@ export const pricingOptions = [
     ],
   },
   {
-    title: 'Pro',
+    title: 'Premium',
     price: '19 PLN',
     features: [
       'Dostępne wszystkie funkcje aplikacji',
@@ -137,7 +137,7 @@ export const pricingOptions = [
     ],
   },
   {
-    title: 'Pro Roczne',
+    title: 'Premium Roczne',
     price: '199 PLN',
     features: [
       'Dostępne wszystkie funkcje aplikacji',
@@ -162,7 +162,7 @@ export const platformLinks = [
 ];
 
 export const communityLinks = [
-  { href: '#', text: 'Facebiij' },
+  { href: '#', text: 'Facebook' },
   { href: '#', text: 'Youtube' },
   { href: '#', text: 'Tiktok' },
   { href: '#', text: 'Discord' },

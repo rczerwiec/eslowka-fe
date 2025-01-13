@@ -21,7 +21,7 @@ import ImportWordsModal from "./Components/ImportWordsModal";
 import FirstTitle from "../../../shared/components/FirstTitle";
 import { motion } from "framer-motion";
 import LanguageSelector from "../TrainingsPageview/Components/LanguageSelector";
-import { FaCopy } from "react-icons/fa";
+import { FaCopy, FaPlayCircle } from "react-icons/fa";
 import EditableText from "../../../shared/components/EditableText";
 
 const WordsInFolderPage = () => {
@@ -142,13 +142,16 @@ const WordsInFolderPage = () => {
   return (
     <>
       <div className="flex flex-col size-full">
-      <FirstTitle>Foldery - {folder.folderName}</FirstTitle>
+        <FirstTitle>Foldery - {folder.folderName}</FirstTitle>
         <div
           className="flex px-4 gap-4 h-20 max-lg:w-full items-center max-lg:justify-center
                             text-black text-3xl font-medium"
         >
           <div className="flex justify-center items-center gap-2 max-lg:hidden">
-            <EditableText initialText={folder.folderName} onConfirm={handleFolderNameChange}/>
+            <EditableText
+              initialText={folder.folderName}
+              onConfirm={handleFolderNameChange}
+            />
             <div className="text-xs text-fifth">({wordAmount} słówek)</div>
           </div>
           <div className="flex gap-4">
@@ -164,6 +167,15 @@ const WordsInFolderPage = () => {
             </div>
             <div
               onClick={() => {
+                navigate("/app/folders/training");
+              }}
+              className="flex gap-1 items-center bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight"
+            >
+              <FaPlayCircle className="text-lg" />
+              <div className="text-lg">Ćwicz</div>
+            </div>
+            <div
+              onClick={() => {
                 navigate("/app/folders");
               }}
               className="flex items-center bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight"
@@ -171,23 +183,24 @@ const WordsInFolderPage = () => {
               <IoMdArrowRoundBack className="max-lg:hidden" />
               <div className="text-lg">Powrót </div>
             </div>
-            <div onClick={()=>{
-              handleFolderIDCopy();
-            }}
+            <div
+              onClick={() => {
+                handleFolderIDCopy();
+              }}
               className="flex gap-2 items-center p-2 hover:cursor-pointer hover:bg-secondarylight text-fifth rounded-lg"
             >
-              {copied ? (<div className="text-sm font-inter">Skopiowane!</div>) : (    <><div className="flex text-sm gap-1 justify-center items-center">
-                
-
-
-                <label>Udostępnij </label>
-                <FaCopy className="max-lg:hidden text-base" />
-                <label>:</label>
-                </div>
-                <div className="text-sm">{folder.referenceID} </div></>
+              {copied ? (
+                <div className="text-sm font-inter">Skopiowane!</div>
+              ) : (
+                <>
+                  <div className="flex text-sm gap-1 justify-center items-center">
+                    <label>Udostępnij </label>
+                    <FaCopy className="max-lg:hidden text-base" />
+                    <label>:</label>
+                  </div>
+                  <div className="text-sm">{folder.referenceID} </div>
+                </>
               )}
-          
-              
             </div>
           </div>
         </div>
@@ -209,26 +222,33 @@ const WordsInFolderPage = () => {
             </CSVLink>
             <CsvFileInput onFileLoad={handleFileLoad} />
             <div className="flex flex-col gap-2 p-2 justify-center font-bold items-center shadow-lg mx-2 rounded-xl text-sm font-inter bg-white z-10  border-secondary border-y-2 border-x-2 max-lg:hidden">
-              <label className="text-sm">Domyślny głos dla kolumny "Słowo":</label>
+              <label className="text-sm">
+                Domyślny głos dla kolumny "Słowo":
+              </label>
               <LanguageSelector
                 defaultVoice={true}
                 selectedVoice={folder.defaultVoice}
                 userID={user.value}
-                folder={folder}/>
+                folder={folder}
+              />
             </div>
             <div className="flex flex-col gap-2 p-2 justify-center font-bold items-center shadow-lg mx-2 rounded-xl text-sm font-inter bg-white z-10  border-secondary border-y-2 border-x-2 max-lg:hidden">
-              <label className="text-sm">Domyślny głos dla kolumny "Tłumaczenie":</label>
+              <label className="text-sm">
+                Domyślny głos dla kolumny "Tłumaczenie":
+              </label>
               <LanguageSelector
                 defaultVoice={false}
                 selectedVoice={folder.defaultVoiceReversed}
                 userID={user.value}
-                folder={folder}/>
+                folder={folder}
+              />
             </div>
           </div>
         </div>
 
-        <motion.div whileHover={{ scale: [null, 1.5, 1.4] }}
-      transition={{ duration: 0.3 }}
+        <motion.div
+          whileHover={{ scale: [null, 1.5, 1.4] }}
+          transition={{ duration: 0.3 }}
           onClick={() => {
             toggleModal();
           }}
@@ -247,7 +267,7 @@ const WordsInFolderPage = () => {
         closeModal={importModal.closeModal}
         folder={response.data}
         data={data}
-        />
+      />
       <AddWordsModal
         isVisible={isVisible}
         closeModal={closeModal}

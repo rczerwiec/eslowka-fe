@@ -8,6 +8,22 @@ const UpdatesPage = () => {
       <FirstTitle>Aktualizacje</FirstTitle>
       <MainTitle>Aktualizacje</MainTitle>
       <div className="relative inline-block text-left pl-4 overflow-y-scroll max-h-[660px]">
+      <VersionList version="1.0.10 alpha">
+        <h1 className='text-xl font-bold'>Zmiany</h1>
+          <li>-Dodane logo w lewym górnym rogu aplikacji</li>
+          <li>-Cennik dodany również do zakładki "Premium"</li>
+          <li>-Dodana możliwość przejścia do ćwiczeń bezpośrednio z folderu ze słówkami</li>
+          <li>-Podczas tworzenia konta, tworzy się również domyślny folder i domyślne historyjki</li>
+        <h1 className='text-xl font-bold'>Poprawki</h1>
+        <li>-Kliknięcie na logo w aplikacji przenosi teraz do strony głównej</li>
+        <li>-Poprawiona kolorystyka na stronie landingowej</li>
+        <li>-Poprawione liczne literówki na stronie landingowej</li>
+        <li>-Zabezpieczenia chatu AI</li>
+        <li>-Zabezpieczenia historyjek</li>
+        <li>-Poprawione błędy ui</li>
+        <li>-Poprawione błędy na stronie ustawień</li>
+        <li>-Po wylogowaniu aplikacja nie wyrzuca już na stronę główną</li>
+      </VersionList>
       <VersionList version="1.0.9 alpha">
         <h1 className='text-xl font-bold'>Zmiany</h1>
           <li>-W folderze słówek poprawione UI prawego panelu</li>
