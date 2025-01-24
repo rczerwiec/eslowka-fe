@@ -47,6 +47,7 @@ export {
   useGetUserStoriesQuery,
   useCreateStoryMutation,
   useUpdateWordInStoryMutation,
+  useDeleteStoryMutation,
 } from "./api/storiesApi";
 
 export { useUpdateSettingsMutation } from "./api/settingsApi";

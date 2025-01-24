@@ -41,6 +41,16 @@ const storiesApi = createApi({
           };
         },
       }),
+      deleteStory: builder.mutation({
+        invalidatesTags: ["Stories"],
+        query: (data:{storyToRemove: IStory, userID: string}) => {
+          return {
+            url: `/${data.userID}/story`,
+            method: "DELETE",
+            body: data.storyToRemove,
+          };
+        },
+      }),
       createStory: builder.mutation({
         invalidatesTags: ["Stories"],
         query: (data:{newStory: IStory, userID: string}) => {
@@ -59,6 +69,7 @@ export const {
   useGetUserStoriesQuery,
   useCreateStoryMutation,
   useUpdateWordInStoryMutation,
+  useDeleteStoryMutation
 } = storiesApi;
 
 export { storiesApi };

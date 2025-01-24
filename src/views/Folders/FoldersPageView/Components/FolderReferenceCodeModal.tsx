@@ -3,14 +3,14 @@ import { Modal} from "../../../../shared/components/Modal";
 import Character from "../../../../shared/components/Character";
 import { BiSolidExit } from "react-icons/bi";
 import { FaCheckCircle } from "react-icons/fa";
-import { IFolder } from "../../../../shared/store/slices/FolderSlice";
+import { IFolder, IWord } from "../../../../shared/store/slices/FolderSlice";
 import character2 from "../../../../shared/img/character2.svg";
 import { RootState, useCreateFolderMutation, useGetFolderByReferenceCodeQuery } from "../../../../shared/store";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 interface IProps{
-  renderedFoldersLength: Number | undefined,
+  renderedFoldersLength: number | undefined,
   isVisible: boolean,
   closeModal: () => void,
 }
@@ -43,8 +43,8 @@ function FolderReferenceCodeModal({renderedFoldersLength, isVisible, closeModal}
         toast.error("Nazwa folderu nie może być pusta!");
         return;
       }
-      if(newFolder.folderName.length>20){
-        toast.error("Nazwa folderu nie może być dłuższa niż 20 znaków!");
+      if(newFolder.folderName.length>40){
+        toast.error("Nazwa folderu nie może być dłuższa niż 40 znaków!");
         return;
       }
 
@@ -68,8 +68,19 @@ function FolderReferenceCodeModal({renderedFoldersLength, isVisible, closeModal}
         console.log("Success");
         const folder:IFolder = response.data;
         console.log(folder);
+        const updatedWords = folder.words.map((word:IWord, index:number)=>{
+          console.log(word);
+          console.log(index);
+          if(renderedFoldersLength){
+            word = {...word, folderId: renderedFoldersLength}
+          }
+          return word;
+
+        })
+
+
         closeModal();
-        onCreateFolder({ id:renderedFoldersLength , folderName: folder.folderName, words: folder.words, currentProgress: folder.currentProgress, maxProgress: folder.maxProgress, defaultVoice: folder.defaultVoice,  defaultVoiceReversed:folder.defaultVoiceReversed, referenceID:user.value+makeid(9)});
+        onCreateFolder({ id:renderedFoldersLength , folderName: folder.folderName, words: updatedWords, currentProgress: folder.currentProgress, maxProgress: folder.maxProgress, defaultVoice: folder.defaultVoice,  defaultVoiceReversed:folder.defaultVoiceReversed, referenceID:user.value+makeid(9)});
       }
       if(response.isError){
         console.log("Error",response.error);

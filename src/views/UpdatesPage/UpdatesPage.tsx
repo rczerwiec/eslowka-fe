@@ -8,6 +8,13 @@ const UpdatesPage = () => {
       <FirstTitle>Aktualizacje</FirstTitle>
       <MainTitle>Aktualizacje</MainTitle>
       <div className="relative inline-block text-left pl-4 overflow-y-scroll max-h-[660px]">
+      <VersionList version="1.0.11 alpha">
+        <h1 className='text-xl font-bold'>Zmiany</h1>
+        <li>-Zwiększony limit nazwy folderu do 40 znaków</li>
+        <li>-Dodana możliwośc usuwania historyjek</li>
+        <h1 className='text-xl font-bold'>Poprawki</h1>
+        <li>-Poprawione błędy z kopiowaniem poprzez kod referencyjny</li>
+      </VersionList>
       <VersionList version="1.0.10 alpha">
         <h1 className='text-xl font-bold'>Zmiany</h1>
           <li>-Dodane logo w lewym górnym rogu aplikacji</li>

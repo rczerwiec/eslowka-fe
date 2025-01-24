@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { IStory } from "../../../shared/store/slices/UserSlice";
+import { FaTrashAlt } from "react-icons/fa";
+import { RootState, useDeleteStoryMutation } from "../../../shared/store";
+import { useSelector } from "react-redux";
 
 interface IProps{
   stories?: any;
@@ -10,7 +13,8 @@ interface IProps{
 
 
 function StoriesGridComponent({stories, onStorySelect,page,setAvailablePages}:IProps) {
-  
+  const [removeStory] = useDeleteStoryMutation();
+  const user = useSelector((state: RootState) => state.userProfile);
 
   let renderedStories;
   if (stories) {
@@ -41,13 +45,12 @@ function StoriesGridComponent({stories, onStorySelect,page,setAvailablePages}:IP
         // });
         return (
           <div
-            onClick={() => {
-              onStorySelect(story);
-            }}
             className="flex flex-col shadow-lg h-full min-h-60 max-h-60 bg-white hover:bg-fourth hover:cursor-pointer rounded-lg m-2"
           >
             <div className="flex justify-between items-center bg-secondary py-1 rounded-lg">
-              <div className=" ">
+              <div             onClick={() => {
+              onStorySelect(story);
+            }} className=" ">
                 {story.level === "A1" ? (
                   <span className="bg-green-400 p-2 rounded-lg border-black border-2">
                     {story.level}
@@ -79,14 +82,23 @@ function StoriesGridComponent({stories, onStorySelect,page,setAvailablePages}:IP
                 )}
                 <span className="p-2">{story.title}</span>
               </div>
+              <span onClick={()=>{
+                    removeStory({storyToRemove: story, userID: user.value})
+              }
+            
+              } className="p-2"><FaTrashAlt/></span>
             </div>
             
-            <div className="flex flex-col items-center h-full justify-between text-base p-2 text-left text-black font-thin ">
+            <div             onClick={() => {
+              onStorySelect(story);
+            }} className="flex flex-col items-center h-full justify-between text-base p-2 text-left text-black font-thin ">
               <span className="flex flex-wrap flex-col gap-1">
                 {story.description}
               </span>
             </div>
-            <span className="flex text-white bg-secondarylight rounded-b-lg p-1 justify-center">{story.language}</span>
+            <span             onClick={() => {
+              onStorySelect(story);
+            }} className="flex text-white bg-secondarylight rounded-b-lg p-1 justify-center">{story.language}</span>
           </div>
         );
       });

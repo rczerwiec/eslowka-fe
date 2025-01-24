@@ -33,8 +33,8 @@ const FoldersPageModal: FC<{renderedFoldersLength: Number | undefined, isVisible
         toast.error("Nazwa folderu nie może być pusta!");
         return;
       }
-      if(newFolder.folderName.length>20){
-        toast.error("Nazwa folderu nie może być dłuższa niż 20 znaków!");
+      if(newFolder.folderName.length>40){
+        toast.error("Nazwa folderu nie może być dłuższa niż 40 znaków!");
         return;
       }
 
