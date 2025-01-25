@@ -28,14 +28,12 @@ function DropDownComponent({signOut,hoverOn,hoverOff}:DropDownComponentInterface
        <a onClick={()=>{navigate('/app/ai')
         hoverOff();
        }} className="flex gap-2 block px-4 py-2 text-sm   text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><FaRobot className="text-xl"/>Chat AI</a>
-       <a onClick={()=>{navigate('/app/ranking')
-        hoverOff();
-       }} className="flex gap-2 block px-4 py-2 text-sm   text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><FaBook className="text-xl"/>Ćwicz Czytanie</a>
        <a onClick={()=>{navigate('/app/read')
         hoverOff();
+       }} className="flex gap-2 block px-4 py-2 text-sm   text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><FaBook className="text-xl"/>Ćwicz Czytanie</a>
+       <a onClick={()=>{navigate('/app/ranking')
+        hoverOff();
        }} className="flex gap-2 block px-4 py-2 text-sm   text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><PiRankingFill className="text-xl"/>Ranking</a>
-       
-       
        </div>
       <div className="py-1" role="none">
       <a onClick={()=>{navigate('/app/settings')

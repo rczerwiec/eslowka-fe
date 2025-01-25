@@ -23,7 +23,8 @@ export const store = configureStore({
     return getDefaultMiddleware().concat(
       usersApi.middleware,
       storiesApi.middleware,
-      foldersApi.middleware
+      foldersApi.middleware,
+      settingsApi.middleware,
     );
   },
 });

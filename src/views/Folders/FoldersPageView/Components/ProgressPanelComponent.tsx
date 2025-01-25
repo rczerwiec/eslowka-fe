@@ -1,4 +1,4 @@
-function ProgressPanel(percentage:number){
+function ProgressPanel(percentage:{ percentage: number; }){
     
     const progressPanelConfig = {
         textColor: {
@@ -9,9 +9,9 @@ function ProgressPanel(percentage:number){
     }
 
     let progressTextColor = progressPanelConfig.textColor.red
-    if (percentage > 40 && percentage < 70) {
+    if (percentage.percentage > 40 && percentage.percentage < 70) {
         progressTextColor = progressPanelConfig.textColor.orange
-    } else if (percentage >= 70) {
+    } else if (percentage.percentage >= 70) {
         progressTextColor = progressPanelConfig.textColor.green
     }   
 
@@ -21,7 +21,7 @@ function ProgressPanel(percentage:number){
                 Progress:
               </div>
               <div className={`${progressTextColor} font-inter font-medium text-base`}>
-                {percentage}%
+                {percentage.percentage}%
               </div>
             </div>
     )

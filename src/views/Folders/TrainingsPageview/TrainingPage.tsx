@@ -1,7 +1,5 @@
-//ICONS & SVG
 import { IoMdArrowRoundBack } from "react-icons/io";
 import character1 from "../../../shared/img/character1.svg";
-
 import { useNavigate } from "react-router-dom";
 import { FaPlayCircle } from "react-icons/fa";
 import Character from "../../../shared/components/Character";
@@ -11,118 +9,77 @@ import { useEffect } from "react";
 import FirstTitle from "../../../shared/components/FirstTitle";
 import MainTitle from "../../../shared/components/MainTitle";
 import { toast } from "react-toastify";
-import TextToSpeech from "./Components/TextToSpeech";
 
 const TrainingPage = () => {
   const navigate = useNavigate();
   const folder = useSelector((state: RootState) => state.folderProfile);
-  useEffect(()=>{
-    if(folder.id===undefined){
+
+  useEffect(() => {
+    if (folder.id === undefined) {
       navigate("/app/folders");
     }
-  },[])
+  }, []);
+
+  const handleNavigation = (route: string) => {
+    if (folder.words.length === 0) {
+      toast.error("Folder musi mieć dodane jakieś słówka!");
+    } else {
+      navigate(route);
+    }
+  };
 
   return (
-    <>
-      <div className="flex flex-col w-full h-full">
-        <FirstTitle
+    <div className="flex flex-col w-full h-full bg-gray-50">
+      <FirstTitle>Tryby</FirstTitle>
+      <div className="flex justify-between items-center px-6 py-4 bg-white shadow-md rounded-lg">
+        <MainTitle>Wybierz Tryb</MainTitle>
+        <button
+          onClick={() => navigate("/app/folders")}
+          className="flex items-center gap-2 bg-secondary text-white px-4 py-2 rounded-lg hover:bg-secondarylight transition duration-200"
         >
-          Tryby
-        </FirstTitle>
-        <div
-          className="flex px-4 h-20 w-3/4 max-lg:w-full items-center justify-between
-                            text-black text-3xl font-medium"
-        >
-          <div>Wybierz Tryb</div>
-          <div
-            onClick={() => {
-              navigate("/app/folders");
-            }}
-            className="flex items-center bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight"
-          >
-            <IoMdArrowRoundBack />
-            <div className="text-lg">Powrót </div>
-          </div>
-          </div>
-          <div
-              className="flex flex-col px-4 mb-2 items-left
-                text-black text-3xl font-medium"
-            >
-              <div className="flex flex-col  gap-4 w-3/4 max-lg:w-full justify-center">
-                <div className="flex items-center justify-between p-2 bg-fourth rounded-lg shadow-lg  hover:bg-secondarylight hover:cursor-pointer">
-                  <button
-                    onClick={() => {
-                      if(folder.words.length === 0 ){
-                        toast.error("Folder musi mieć dodane jakieś słówka!");
-                      }
-                      else{
-                        navigate("/app/folders/training/play");
-                      }
-                    }}
-                    className="flex items-center w-full gap-4 hover:cursor-pointer"
-                  >
-                    <FaPlayCircle className="bg-main text-white rounded-md" />
-                    <div className="text-xl">Słówko - Tłumaczenie</div>
-                  </button>
-                  <div className="flex gap-4 mr-4"></div>
-                </div>
-                <div className="flex items-center justify-between p-2 bg-fourth rounded-lg shadow-lg  hover:bg-secondarylight hover:cursor-pointer">
-                  <button
-                    onClick={() => {
-                      if(folder.words.length === 0 ){
-                        toast.error("Folder musi mieć dodane jakieś słówka!");
-                      }
-                      else{
-                        navigate("/app/folders/training/playReversed");
-                      }
-                    }}
-                    className="flex items-center w-full gap-4 hover:cursor-pointer"
-                  >
-                    <FaPlayCircle className="bg-main text-white rounded-md" />
-                    <div className="text-xl">Słówko - Tłumaczenie (Odwrotne)</div>
-                  </button>
-                  <div className="flex gap-4 mr-4"></div>
-                </div>
-                <div className="flex items-center justify-between p-2 bg-fourth rounded-lg shadow-lg  hover:bg-secondarylight hover:cursor-pointer">
-                  <button
-                    onClick={() => {
-                      if(folder.words.length === 0 ){
-                        toast.error("Folder musi mieć dodane jakieś słówka!");
-                      }
-                      else{
-                        navigate("/app/folders/training/playHear");
-                      }
-                    }}
-                    className="flex items-center w-full gap-4 hover:cursor-pointer"
-                  >
-                    <FaPlayCircle className="bg-main text-white rounded-md" />
-                    <div className="text-xl">Słówko - Tłumaczenie - Mowa</div>
-                  </button>
-                  <div className="flex gap-4 mr-4"></div>
-                </div>
-                <div className="flex items-center justify-between p-2 bg-fourth rounded-lg shadow-lg  hover:bg-secondarylight hover:cursor-pointer">
-                  <button
-                    onClick={() => {
-                      if(folder.words.length === 0 ){
-                        toast.error("Folder musi mieć dodane jakieś słówka!");
-                      }
-                      else{
-                        navigate("/app/folders/training/playHearReversed");
-                      }
-                    }}
-                    className="flex items-center w-full gap-4 hover:cursor-pointer"
-                  >
-                    <FaPlayCircle className="bg-main text-white rounded-md" />
-                    <div className="text-xl">Słówko - Tłumaczenie (Odwrotne) - Mowa</div>
-                  </button>
-                  <div className="flex gap-4 mr-4"></div>
-                </div>
-              </div>
-            </div>
+          <IoMdArrowRoundBack />
+          <span>Powrót</span>
+        </button>
       </div>
-      <Character alt="character1" className="absolute z-0 w-1/5 bottom-0 right-0 max-lg:hidden" character={character1}/>
-    </>
+
+      <div className="flex flex-col items-center gap-6 px-6 py-8">
+        <ModeButton
+          title="Słówko - Tłumaczenie"
+          onClick={() => handleNavigation("/app/folders/training/play")}
+        />
+        <ModeButton
+          title="Słówko - Tłumaczenie (Odwrotne)"
+          onClick={() => handleNavigation("/app/folders/training/playReversed")}
+        />
+        <ModeButton
+          title="Słówko - Tłumaczenie - Mowa"
+          onClick={() => handleNavigation("/app/folders/training/playHear")}
+        />
+        <ModeButton
+          title="Słówko - Tłumaczenie (Odwrotne) - Mowa"
+          onClick={() => handleNavigation("/app/folders/training/playHearReversed")}
+        />
+      </div>
+
+      <Character
+        alt="character1"
+        className="absolute z-0 w-1/5 bottom-0 right-0 max-lg:hidden"
+        character={character1}
+      />
+    </div>
   );
 };
+
+const ModeButton = ({ title, onClick }: { title: string; onClick: () => void }) => (
+  <button
+    onClick={onClick}
+    className="flex items-center justify-between w-full max-w-3xl p-4 bg-white shadow-md rounded-lg hover:bg-secondarylight transition duration-200"
+  >
+    <div className="flex items-center gap-4">
+      <FaPlayCircle className="text-secondary text-2xl" />
+      <span className="text-lg font-medium text-gray-800">{title}</span>
+    </div>
+  </button>
+);
 
 export default TrainingPage;

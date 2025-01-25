@@ -108,65 +108,57 @@ function AIChatPage() {
   };
 
   return (
-    <div className="flex flex-col w-full h-full">
-      <FirstTitle
-      >
-        ESłówka - Chat AI 1.0.2
-      </FirstTitle>
-      <MainTitle
-      >
-        Chat AI
-      </MainTitle>
-      <div className="relative inline-block text-left font-inter">
-        <div className="flex flex-col justify-center items-center container mx-auto px-4 py-8">
-        {chatHistory.length > 0 ? (<ChatHistory chatHistory={chatHistoryGlobal.object} />) : (<span>{isLoading ? (<></>) : (<div className="flex flex-col max-h-[550px] max-lg:max-h-[450px] max-w-[1300px] border border-solid border-fifth rounded-xl p-4">Rozpocznij chat, wpisując swoją wiadomość poniżej!</div>)}</span>)}
-          {isLoading && (
-            <>
-              <div className="flex flex-col max-h-[550px] max-lg:max-h-[450px] max-w-[1300px] border border-solid border-fifth rounded-xl p-4">
-                <div className="flex justify-center items-center h-12">
-                  <div className="animate-spin w-12 h-12 text-black">O</div>
-                </div>
-              </div>
-            </>
-          )}
-
-          <div className="flex mt-4 justify-center items-center">
-            <div className="flex flex-col ">
-              <div className="flex justify-center items-center font-inter text-fifth font-bold">
-                Wprowadź swoją wiadomość!
-              </div>
-              <div>
-                <form className="flex max-lg:flex-col justify-center items-center gap-1">
-              <input
-                className="bg-fifth_light h-10 rounded-md p-3 w-[20rem]"
-                type="text"
-                placeholder="twoja wiadomosc"
-                value={userInput}
-                onChange={handleUserInput}
-              ></input>
-              <button
-                className="bg-secondary font-inter text-white font-bold text-xl w-fit px-16 py-2 rounded-xl"
-                onClick={sendMessage}
-                disabled={isLoading}
-              >
-                Wyslij
-              </button>
-              </form>
-              </div>
+    <div className="flex flex-col w-full h-full bg-gray-100 p-6">
+      <FirstTitle>ESłówka - Chat AI 1.0.2</FirstTitle>
+      <MainTitle>Chat AI</MainTitle>
+      <div className="container mx-auto px-4 py-8 font-inter">
+        {chatHistory.length > 0 ? (
+          <ChatHistory chatHistory={chatHistoryGlobal.object} />
+        ) : (
+          !isLoading && (
+            <div className="flex flex-col items-center justify-center max-h-[550px] max-lg:max-h-[450px] max-w-[1300px] border border-gray-300 rounded-xl p-6 text-gray-600 text-center">
+              Rozpocznij chat, wpisując swoją wiadomość poniżej!
             </div>
-            
+          )
+        )}
+        {isLoading && (
+          <div className="flex flex-col items-center justify-center max-h-[550px] max-lg:max-h-[450px] max-w-[1300px] border border-gray-300 rounded-xl p-6">
+            <div className="animate-spin w-12 h-12 border-t-4 border-secondary rounded-full"></div>
           </div>
-          <div className="flex mt-4 justify-center items-center">          <button
-            className="bg-secondary font-inter text-white font-bold text-xl w-fit px-16 py-2 rounded-xl"
+        )}
+
+        <div className="flex flex-col mt-6 items-center gap-4">
+          <div className="text-lg font-semibold text-fifth">Wprowadź swoją wiadomość!</div>
+          <form
+            className="flex flex-col sm:flex-row justify-center items-center gap-2"
+            onSubmit={(e) => {
+              e.preventDefault();
+              sendMessage();
+            }}
+          >
+            <input
+              className="bg-gray-200 h-12 rounded-lg p-4 w-80 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-secondary"
+              type="text"
+              placeholder="Twoja wiadomość"
+              value={userInput}
+              onChange={handleUserInput}
+            />
+            <button
+              className="bg-secondary text-white font-bold text-lg px-8 py-3 rounded-lg hover:bg-secondary-dark transition duration-200"
+              type="submit"
+              disabled={isLoading}
+            >
+              Wyślij
+            </button>
+          </form>
+          <button
+            className="bg-red-500 text-white font-bold text-lg px-8 py-3 rounded-lg hover:bg-red-600 transition duration-200"
             onClick={clearChat}
           >
-            Wyczysc Chat
-          </button></div>
-
-
+            Wyczyść Chat
+          </button>
         </div>
       </div>
-      
     </div>
   );
 }

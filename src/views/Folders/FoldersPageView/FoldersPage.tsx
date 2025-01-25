@@ -29,8 +29,8 @@ const FoldersPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  //RENDER FOLDERS
-  let folderRender = FolderRenderUtil(
+  // Helper function to handle folder rendering
+  const folderRender = FolderRenderUtil(
     response.data,
     response.isLoading,
     response.isError,
@@ -43,40 +43,65 @@ const FoldersPage = () => {
   );
 
   return (
-    <>
-      <div className="flex flex-col w-full h-full">
-        <FirstTitle>Foldery</FirstTitle>
-        <div className="flex w-3/4 justify-between items-center">
-        <MainTitle>Twoje Foldery </MainTitle>
-        <div>
-          <Button onClick={()=>{
-            ReferenceModal.toggleModal();
-          }} bgColor={Colors.MAIN} textColor={Colors.WHITE}>KOD REF.</Button>
-        </div>
-        </div>
-        <form>{folderRender?.renderedFolders}</form>
-        <motion.div whileHover={{ scale: [null, 1.5, 1.4] }}
-      transition={{ duration: 0.3 }}
-          onClick={() => {
-            toggleModal();
-          }}
-          className="flex z-10 absolute bottom-0 right-0 m-8 h-16 w-16 bg-secondary hover:bg-secondarylight hover:cursor-pointer rounded-full shadow-md items-center justify-center"
+    <div className="flex flex-col w-full h-full bg-gray-100 p-6 relative">
+      {/* Page Title */}
+      <FirstTitle>Foldery</FirstTitle>
+      <div className="flex justify-between items-center w-full max-w-4xl mx-auto">
+        <MainTitle>Twoje Foldery</MainTitle>
+        <Button
+          onClick={ReferenceModal.toggleModal}
+          bgColor={Colors.MAIN}
+          textColor={Colors.WHITE}
+          className="hidden lg:block"
         >
-          <HiPlus className="text-2xl" />
-        </motion.div>
+          KOD REF.
+        </Button>
       </div>
+
+      {/* Folder List */}
+      <div className="w-full max-w-4xl mx-auto mt-6">
+      {Array.isArray(folderRender?.renderedFolders) && folderRender?.renderedFolders.length > 0 ? (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-4 max-h-[calc(100vh-150px)] overflow-y-auto">
+    {folderRender.renderedFolders}
+  </div>
+) : (
+  <div className="text-center text-gray-500 font-medium mt-10">Brak folderów do wyświetlenia.</div>
+)}
+      </div>
+
+      {/* Add Folder Button */}
+      <Button
+        onClick={ReferenceModal.toggleModal}
+        bgColor={Colors.MAIN}
+        textColor={Colors.WHITE}
+        className="fixed bottom-20 left-8 z-20 h-16 w-16 rounded-full shadow-lg lg:hidden flex items-center justify-center"
+      >
+        KOD REF.
+      </Button>
+      <motion.div
+        whileHover={{ scale: [null, 1.2, 1.1] }}
+        transition={{ duration: 0.3 }}
+        onClick={toggleModal}
+        className="fixed bottom-20 right-8 z-20 h-16 w-16 bg-secondary hover:bg-secondarylight rounded-full shadow-lg flex items-center justify-center cursor-pointer"
+      >
+        <HiPlus className="text-3xl text-white" />
+      </motion.div>
+
+      {/* Character Image */}
       <Character
         alt="character1"
-        className="absolute z-0 w-1/5 bottom-0 right-0 max-lg:hidden"
+        className="absolute bottom-0 right-0 w-1/5 max-lg:hidden"
         character={character1}
       />
+
+      {/* Modals */}
       <FoldersPageModal
-        renderedFoldersLength={folderRender?.renderedFolderLength}
+        renderedFoldersLength={folderRender?.renderedFolderLength || 0}
         isVisible={isVisible}
         closeModal={closeModal}
       />
       <FolderReferenceCodeModal
-        renderedFoldersLength={folderRender?.renderedFolderLength}
+        renderedFoldersLength={folderRender?.renderedFolderLength || 0}
         isVisible={ReferenceModal.isVisible}
         closeModal={ReferenceModal.closeModal}
       />
@@ -86,7 +111,7 @@ const FoldersPage = () => {
         folder={currentFolder}
         userID={user.value}
       />
-    </>
+    </div>
   );
 };
 

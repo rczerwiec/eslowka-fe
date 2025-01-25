@@ -32,7 +32,7 @@ function LanguageSelectorComponent({changeLevelState, changeLangaugeState,setPag
     
 
     return (
-      <div className="flex gap-2 border-solid border-b-2 px-4 pb-2">
+      <div className="flex gap-2 border-solid border-b-2 p-6">
         <Select
           placeholder="Wybierz język"
           options={languages}
@@ -50,7 +50,7 @@ function LanguageSelectorComponent({changeLevelState, changeLangaugeState,setPag
           }}}
         ></Select>
         <>
-          <div className="flex justify-center items-center text-base text-fifth">
+          <div className="flex justify-center items-center text-base text-fifth max-lg:hidden">
             Strona {page}
           </div>
           <div
@@ -72,7 +72,7 @@ function LanguageSelectorComponent({changeLevelState, changeLangaugeState,setPag
             <FaAngleRight />
           </div>
         </>
-        <input className="border-solid border-2 rounded-xl p-1" placeholder="Wyszukaj..." type="text"></input>
+        <input className="border-solid border-2 rounded-xl p-1 max-lg:hidden" placeholder="Wyszukaj..." type="text"></input>
       </div>
     );
 }

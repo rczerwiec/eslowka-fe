@@ -58,30 +58,41 @@ return(
 <Modal isVisible={props.isVisible} onClose={props.closeModal}>
 <div className="absolute bg-whiteMain mt-20 z-20 h-2/4 w-full top-0 bg-white rounded xl:w-1/3 xl:left-0 xl:right-0 xl:mr-auto xl:ml-auto">
   <div className="absolute flex flex-col p-8 shrink h-full w-full overflow-y-auto  scrollbar-hide">
-    <div className="font-inter font-bold text-3xl text-fifth z-10">
-      Nowy Folder
-    </div>
-      <form onSubmit={onSubmit} className="flex flex-col justify-center items-center mt-8 z-10">
-      <div className="font-inter font-medium text-xl text-fifth">
-        Nazwa Folderu
+       {/* Header */}
+       <div className="flex justify-between items-center mb-6">
+        <h2 className="font-inter font-bold text-3xl text-fifth">Nowy Folder</h2>
+        <BiSolidExit
+          onClick={props.closeModal}
+          className="text-3xl text-fifth cursor-pointer hover:scale-110 transition-transform"
+        />
       </div>
-      <input
-        className="bg-fifth_light w-3/4 h-10 rounded-md p-3"
-        placeholder="np. warzywa"
-        value={newFolder}
-        onChange={(e) => setNewFolder(e.target.value)}  
-      ></input>
-          <button className="absolute bottom-0 right-0 pr-8 pb-6 text-3xl text-secondary hover:text-4xl hover:cursor-pointer">
-      <FaCheckCircle
-        onClick={onSubmit}
-      />
-    </button>
+
+    {/* Form */}
+    <form onSubmit={onSubmit} className="flex flex-col items-center gap-6">
+        <label className="font-inter font-medium text-xl text-fifth">
+          Nazwa Folderu
+        </label>
+        <input
+          className="bg-fifth_light w-full max-w-md h-12 rounded-md px-4 text-base placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-secondary"
+          placeholder="np. Warzywa"
+          value={newFolder}
+          onChange={(e) => setNewFolder(e.target.value)}
+        />
+        <button
+          type="submit"
+          className="flex items-center gap-2 px-6 py-3 bg-secondary text-white font-bold rounded-md hover:bg-secondarylight transition-transform transform hover:scale-105"
+        >
+          <FaCheckCircle className="text-lg" />
+          Utwórz Folder
+        </button>
       </form>
     
-    <Character alt="character2" className="absolute z-0 w-3/6 bottom-0 left-auto" character={character2}/>
-    <div className="absolute z-20 top-0 right-0 pr-8 pt-6 text-3xl text-fifth"  >
-      <BiSolidExit onClick={props.closeModal}  className="hover:cursor-pointer"/>
-    </div>
+  {/* Character Image */}
+  <Character
+        alt="character2"
+        className="absolute z-0 w-2/4 bottom-0 left-0 opacity-10"
+        character={character2}
+      />
 
   </div>
 </div>

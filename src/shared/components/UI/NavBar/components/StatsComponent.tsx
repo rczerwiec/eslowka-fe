@@ -1,42 +1,39 @@
 import { FC } from "react";
 import { FaFire } from "react-icons/fa6";
 
-interface StatsComponentInterface{
-    streak: number;
-    experience: number;
-    level: number;
+interface StatsComponentInterface {
+  streak: number;
+  experience: number;
+  level: number;
 }
 
-function StatsComponent({streak, experience, level}:StatsComponentInterface){
+function StatsComponent({ streak, experience, level }: StatsComponentInterface) {
+  // Formatowanie doświadczenia
+  let experienceFormatted = `${experience} XP`;
+  if (experience >= 1000) {
+    const exp = experience.toString();
+    if (experience < 1_000_000) {
+      experienceFormatted = `${exp.slice(0, exp.length - 3)},${exp.slice(-3, -1)}k XP`;
+    } else {
+      experienceFormatted = `${exp.slice(0, exp.length - 6)},${exp.slice(-6, -3)}kk XP`;
+    }
+  }
 
-      let experience_spring = experience.toString()+"XP";
-      if (experience > 999 && experience < 9999) {
-        experience_spring =
-        experience.toString().slice(0, 1) + ',' + experience.toString().slice(1, 3) + 'k XP';
-      } else if (experience > 9999 && experience < 99999) {
-        experience_spring =
-        experience.toString().slice(0, 2) + ',' + experience.toString().slice(2, 4) + 'k XP';
-      } else if (experience > 99999 && experience < 999999) {
-        experience_spring =
-        experience.toString().slice(0, 3) + ',' + experience.toString().slice(3, 5) + 'k XP';
-      } else if (experience > 999999 && experience < 9999999) {
-        experience_spring =
-        experience.toString().slice(0, 1) + ',' + experience.toString().slice(1, 6) + 'kk XP';
-      }
-      
-
-    return (
-      <div className="flex items-center ml-6 ">
-        <div className="font-bold font-inter text-2xl">{streak}</div>
-        <div className="mr-3">
-          <FaFire className="text-xl" />
-        </div>
-        <div className="flex flex-col border-fourth rounded-lg p-1 border-2 border-solid justify-center items-center font-bold font-inter text-[10px] mr-3">
-          <div className="text-base">{level} LVL</div>
-          <div>{experience_spring}</div>
-        </div>
+  return (
+    <div className="flex items-center gap-4 px-4 py-2 rounded-l-lg max-lg:bg-secondary">
+      {/* Licznik streak */}
+      <div className="flex items-center gap-2 text-white">
+        <FaFire className="text-2xl text-white" />
+        <span className="font-inter font-semibold text-xl">{streak}</span>
       </div>
-    );
-  };
 
-  export default StatsComponent;
+      {/* Poziom i doświadczenie */}
+      <div className="flex flex-col items-center justify-center bg-secondarylight text-white rounded-lg px-2 py-2">
+        <div className="text-lg font-bold">{level} LVL</div>
+        <div className="text-sm">{experienceFormatted}</div>
+      </div>
+    </div>
+  );
+}
+
+export default StatsComponent;

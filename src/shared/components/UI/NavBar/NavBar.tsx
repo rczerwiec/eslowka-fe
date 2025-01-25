@@ -57,14 +57,14 @@ const NavBar:FC<{}> = (props):JSX.Element => {
 
   return (
     <div>
-      <div className="flex top-0 right-0 bg-gradient-to-r from-main to-secondary from-70% w-full h-14 justify-between items-center">
+      <div className="flex top-0 right-0 bg-gradient-to-r from-main to-secondary from-70% w-full h-14 justify-between items-center ">
         <Logo />
         <div className="flex gap-2 h-full justify-center items-center">
           <PremiumButton/>
           <div
             className="h-full flex items-center justify-between
                               bg-secondary 
-                      w-min:54 max-lg:w-screen gap-2 lg:rounded-tl-xl lg:rounded-bl-xl"
+                      w-min:54 max-lg:w-screen gap-2 rounded-xl lg:rounded-tl-xl lg:rounded-bl-xl"
           >
           <StatsComponent streak={streak} level={level} experience={experience}/>
           <UserMenuComponent signOut={handleLogout} userName={userName} hoverOn={hoverOn} hoverOff={hoverOff} display={display}/>   
@@ -83,13 +83,12 @@ const Logo = () => {
 
   return (
     <div
-      className="flex justify-center items-center text-secondary font-bold font-inter text-3xl
-        pl-4 max-lg:hidden cursor-pointer" onClick={()=>{
-          navigate('/')
-        }}
+      className="flex max-lg:hidden items-center text-black font-bold font-inter text-2xl bg-gradient-to-r from-secondarylight to-white 
+                 px-4 py-2 rounded-full shadow-md cursor-pointer hover:shadow-lg hover:scale-105 transition-transform duration-300 ease-in-out"
+      onClick={() => navigate("/")}
     >
-         <img className="h-10 w-10 mr-2" src={logo} alt="logo"/>
-      <span className="text-2xl font-inter">ESłówka.pl</span>
+      <img className="h-12 w-12 mr-3 rounded-full" src={logo} alt="logo" />
+      <span className="text-lg font-inter">ESłówka.pl</span>
     </div>
   );
 };
@@ -97,14 +96,17 @@ const Logo = () => {
 const PremiumButton = () => {
   const navigate = useNavigate();
 
-    return (
-        <div onClick={()=>{navigate('/app/premium')}}
-        className="flex w-28  mr-5 h-2/3 justify-center items-center
-                            bg-gold rounded-xl font-bold font-inter hover:cursor-pointer hover:bg-slate-200 max-lg:hidden"
-      >
-        Premium
-      </div>
-    )
-}
+  return (
+    <div
+      onClick={() => {
+        navigate("/app/premium");
+      }}
+      className="max-lg:hidden flex w-32 h-12 justify-center items-center bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-full 
+                 text-white font-bold font-inter text-lg shadow-lg hover:scale-105 hover:bg-yellow-600 transition duration-300 ease-in-out cursor-pointer"
+    >
+      Premium
+    </div>
+  );
+};
 
 export default NavBar;

@@ -1,18 +1,14 @@
+import { FC, useState } from "react";
 import { useFormik } from "formik";
+import { FaCheckCircle } from "react-icons/fa";
+import { toast } from "react-toastify";
 import {
   RootState,
   useCreateWordInFolderMutation,
   useCreateMultipleWordsInFolderMutation,
 } from "../../../../shared/store";
-import {
-  IFolder,
-  INewWord,
-  INewWords,
-} from "../../../../shared/store/slices/FolderSlice";
-import { FC } from "react";
-import { FaCheckCircle } from "react-icons/fa";
+import { IFolder, INewWord, INewWords } from "../../../../shared/store/slices/FolderSlice";
 import { useSelector } from "react-redux";
-import { toast} from 'react-toastify';
 
 const AddWordsForm: FC<{
   folder: IFolder;
@@ -22,131 +18,35 @@ const AddWordsForm: FC<{
   const user = useSelector((state: RootState) => state.userProfile);
   const [createWord] = useCreateWordInFolderMutation();
   const [createWords] = useCreateMultipleWordsInFolderMutation();
+
   const formik = useFormik({
     initialValues: {
       word: "",
       translation: "",
       toggle: false,
-      words: [
-        {
-          id: props.newID,
-          word: "",
-          translation: "",
-          note: "",
-          folderId: props.folder.id,
-          repeated: 0,
-          known: 0,
-          streak: 0,
-          reverseStreak: 0,
-        },
-        {
-          id: props.newID + 1,
-          word: "",
-          translation: "",
-          note: "",
-          folderId: props.folder.id,
-          repeated: 0,
-          known: 0,
-          streak: 0,
-          reverseStreak: 0,
-        },
-        {
-          id: props.newID + 2,
-          word: "",
-          translation: "",
-          note: "",
-          folderId: props.folder.id,
-          repeated: 0,
-          known: 0,
-          streak: 0,
-          reverseStreak: 0,
-        },
-        {
-          id: props.newID + 3,
-          word: "",
-          translation: "",
-          note: "",
-          folderId: props.folder.id,
-          repeated: 0,
-          known: 0,
-          streak: 0,
-          reverseStreak: 0,
-        },
-        {
-          id: props.newID + 4,
-          word: "",
-          translation: "",
-          note: "",
-          folderId: props.folder.id,
-          repeated: 0,
-          known: 0,
-          streak: 0,
-          reverseStreak: 0,
-        },
-        {
-          id: props.newID + 5,
-          word: "",
-          translation: "",
-          note: "",
-          folderId: props.folder.id,
-          repeated: 0,
-          known: 0,
-          streak: 0,
-          reverseStreak: 0,
-        },
-        {
-          id: props.newID + 6,
-          word: "",
-          translation: "",
-          note: "",
-          folderId: props.folder.id,
-          repeated: 0,
-          known: 0,
-          streak: 0,
-          reverseStreak: 0,
-        },
-        {
-          id: props.newID + 7,
-          word: "",
-          translation: "",
-          note: "",
-          folderId: props.folder.id,
-          repeated: 0,
-          known: 0,
-          streak: 0,
-          reverseStreak: 0,
-        },
-        {
-          id: props.newID + 8,
-          word: "",
-          translation: "",
-          note: "",
-          folderId: props.folder.id,
-          repeated: 0,
-          known: 0,
-          streak: 0,
-          reverseStreak: 0,
-        },
-      ],
+      words: Array(9).fill({
+        id: props.newID,
+        word: "",
+        translation: "",
+        note: "",
+        folderId: props.folder.id,
+        repeated: 0,
+        known: 0,
+        streak: 0,
+        reverseStreak: 0,
+      }),
     },
     onSubmit: (values) => {
       if (values.toggle) {
-        onWordsCreate({ words: values.words, folderID: props.folder.id }).then(() => {
-          toast.success("Pomyślnie utworzono słówka!");
-        }).catch(() => {
-          toast.error("Błąd podczas tworzenia słówek!");
-        });
+        onWordsCreate({ words: values.words, folderID: props.folder.id })
+          .then(() => toast.success("Pomyślnie utworzono słówka!"))
+          .catch(() => toast.error("Błąd podczas tworzenia słówek!"));
         props.closeModal();
       } else {
-        if(values.word==="" || values.word===undefined || values.word===null){
+        if (!values.word || !values.translation) {
           toast.error("Uzupełnij wszystkie pola!");
           return;
         }
-        if(values.translation==="" || values.translation===undefined || values.translation===null){
-          toast.error("Uzupełnij wszystkie pola!");
-          return;
-        }
-
         onWordCreate({
           word: {
             id: props.newID,
@@ -160,127 +60,108 @@ const AddWordsForm: FC<{
             note: "",
           },
           folderID: props.folder.id,
-        }).then(() => {
-          toast.success("Pomyślnie utworzono słówko!");
-        }).catch(() => {
-          toast.error("Błąd podczas tworzenia słówka!");
-        });;
+        })
+          .then(() => toast.success("Pomyślnie utworzono słówko!"))
+          .catch(() => toast.error("Błąd podczas tworzenia słówka!"));
         props.closeModal();
       }
     },
   });
 
-  //CREATE NEW WORD
   const onWordCreate = async (newWord: INewWord) => {
-
-    //UPDATE FOLDER - ADD WORD IN DB
-    return await createWord({newWord:newWord, userID: user.value})
-      .unwrap()
-      .then((res) => {
-      })
-      .catch((err) => {
-      });
+    return createWord({ newWord: newWord, userID: user.value }).unwrap();
   };
 
-  //CREATE NEW WORD
   const onWordsCreate = async (newWords: INewWords) => {
-    
-    //UPDATE FOLDER - ADD WORDS IN DB
-    return await createWords({newWords:newWords, userID: user.value})
-      .unwrap()
-      .then((res) => {
-      })
-      .catch((err) => {
-      });
+    return createWords({ newWords: newWords, userID: user.value }).unwrap();
   };
 
-  let toRender;
-  if (formik.values.toggle) {
-
-    let tempRender = [...Array(9)].map((e, i) => (
-      <div key={i}>
+  const renderInputs = formik.values.toggle ? (
+    <div className="flex flex-col gap-4">
+      <div className="flex justify-between">
+        <label className="font-bold text-fifth text-lg">Słówko</label>
+        <label className="font-bold text-fifth text-lg">Tłumaczenie</label>
+      </div>
+      {formik.values.words.map((_, index) => (
+        <div key={index} className="flex gap-4">
+          <input
+            id={`words[${index}].word`}
+            name={`words[${index}].word`}
+            type="text"
+            className="bg-fifth_light w-full h-10 rounded-md p-3"
+            placeholder={`Słówko ${index + 1}`}
+            value={formik.values.words[index].word}
+            onChange={formik.handleChange}
+          />
+          <input
+            id={`words[${index}].translation`}
+            name={`words[${index}].translation`}
+            type="text"
+            className="bg-fifth_light w-full h-10 rounded-md p-3"
+            placeholder={`Tłumaczenie ${index + 1}`}
+            value={formik.values.words[index].translation}
+            onChange={formik.handleChange}
+          />
+        </div>
+      ))}
+      <p className="text-xs text-neutral-500 italic text-right">
+        *Puste słówka nie zostaną dodane
+      </p>
+    </div>
+  ) : (
+    <div className="flex flex-col gap-4">
+      <div className="flex justify-between items-center">
+        <label className="font-bold text-fifth text-lg">Słówko</label>
         <input
-          id={"words[" + i + "].word"}
-          name={"words[" + i + "].word"}
+          id="word"
+          name="word"
           type="text"
-          className="bg-fifth_light p-4 w-2/4 h-8 rounded-md font-inter text-xs font-extralight"
-          placeholder="np. świnia"
-          value={formik.values.words[i].word}
-          onChange={formik.handleChange}
-        ></input>
-        <input
-          id={"words[" + i + "].translation"}
-          name={"words[" + i + "].translation"}
-          type="text"
-          className="bg-fifth_light p-4 w-2/4 h-8 rounded-md font-inter text-xs font-extralight"
+          className="bg-fifth_light w-full h-10 rounded-md p-3"
           placeholder="np. pig"
-          value={formik.values.words[i].translation}
+          value={formik.values.word}
           onChange={formik.handleChange}
-        ></input>
+        />
       </div>
-      )
-    );
-
-    toRender = (
-      <div className="z-50">
-        <div className="flex justify-center">
-          <label className="w-1/2" htmlFor="word">
-            Słówko
-          </label>
-          <label htmlFor="word">Tłumaczenie</label>
-        </div>
-        <div className="flex justify-center flex-col gap-2">{tempRender}
-          <p className="flex justify-end text-xs font-inter text-fifth underline">*Puste słówka nie zostaną dodane</p>
-        </div>
+      <div className="flex justify-between items-center">
+        <label className="font-bold text-fifth text-lg">Tłumaczenie</label>
+        <input
+          id="translation"
+          name="translation"
+          type="text"
+          className="bg-fifth_light w-full h-10 rounded-md p-3"
+          placeholder="np. świnia"
+          value={formik.values.translation}
+          onChange={formik.handleChange}
+        />
       </div>
-    );
-  } else {
-    //SINGLE WORD ADDITION
-    toRender = (
-      <div className="flex flex-col font-inter gap-4 m-2">
-        <div className="flex justify-between w-3/4">
-          <label className="font-bold text-fifth text-xl" htmlFor="word">Słówko</label>
-          <input
-            id="word"
-            name="word"
-            type="text"
-            className="bg-fifth_light w-2/4 h-10 rounded-md p-3 z-10"
-            placeholder="np. pig"
-            value={formik.values.word}
-            onChange={formik.handleChange}
-          ></input>
-        </div>
-        <div className="flex justify-between w-3/4">
-          <label className="font-bold text-fifth text-xl" htmlFor="word">Tłumaczenie</label>
-          <input
-            id="translation"
-            name="translation"
-            type="text"
-            className="bg-fifth_light w-2/4 h-10 rounded-md p-3 z-10"
-            placeholder="np. swinia"
-            value={formik.values.translation}
-            onChange={formik.handleChange}
-          ></input>
-        </div>
-      </div>
-    );
-  }
+    </div>
+  );
 
   return (
-    <form onSubmit={formik.handleSubmit} className="z-10">
-                  <div className="font-inter font-bold text-2xl text-fifth z-10 truncate">
-              Nowe Słówko - {props.folder.folderName}
-            </div>
-      <div className="flex font-inter text-fifth font-extralight m-2 gap-2">
-        <input type="checkbox" name="toggle" onChange={formik.handleChange} />
-        <label>Dodaj kilka</label>
+    <form onSubmit={formik.handleSubmit} className="p-8 bg-white rounded-lg shadow-lg">
+      <h2 className="font-bold text-2xl text-fifth mb-4">
+        Dodaj słówka - {props.folder.folderName}
+      </h2>
+      <div className="flex items-center gap-2 mb-4">
+        <input
+          type="checkbox"
+          id="toggle"
+          name="toggle"
+          onChange={formik.handleChange}
+          checked={formik.values.toggle}
+          className="h-5 w-5"
+        />
+        <label htmlFor="toggle" className="text-fifth text-sm">
+          Dodaj kilka słówek jednocześnie
+        </label>
       </div>
-
-      {toRender}
-      <button type="submit" className="absolute bottom-0 right-0 pr-8 pb-6 text-3xl text-secondary">
-              <FaCheckCircle className="hover:text-4xl hover:cursor-pointer"
-              />
-            </button>
+      {renderInputs}
+      <button
+        type="submit"
+        className="mt-6 flex items-center justify-center w-full bg-secondary text-white font-bold text-lg py-3 rounded-md hover:bg-secondarylight transition"
+      >
+        <FaCheckCircle className="mr-2" /> Zapisz
+      </button>
     </form>
   );
 };

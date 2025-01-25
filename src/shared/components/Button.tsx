@@ -14,7 +14,7 @@ interface IProps {
 
 function Button({ children, onClick, bgColor,textColor,type, size, className,animated }: IProps) {
   
-  if(!className) className = "font-inter font-bold w-fit px-16 py-2 rounded-xl"
+  const currentClassName = "font-inter font-bold w-fit px-16 py-2 rounded-xl "+className
   let duration = null;
   let scale:any = null;
   if(animated){
@@ -28,7 +28,7 @@ function Button({ children, onClick, bgColor,textColor,type, size, className,ani
     <button
       type={type}
       className={
-        'bg-'+bgColor+'text-'+textColor+'text-'+size+className
+        'bg-'+bgColor+'text-'+textColor+'text-'+size+currentClassName
       }
     >
       {children}

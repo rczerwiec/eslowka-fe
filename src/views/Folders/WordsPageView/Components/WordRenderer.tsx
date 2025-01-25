@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { FiEdit } from "react-icons/fi";
 
-export const WordsTable: FC<{ renderedWords: JSX.Element | undefined }> = (
+export const WordsTable: FC<{ renderedWords: JSX.Element | null }> = (
   props
 ): JSX.Element => {
   return (

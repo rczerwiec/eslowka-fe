@@ -127,7 +127,7 @@ const HearTraining = () => {
 
 //BUTTON AND TRANSLATION INPUTS
 let ButtonInput = (
-  <div className="flex gap-4">
+  <div className="flex gap-4 max-lg:flex-col max-lg:justify-center max-lg:items-center">
   <input
     className={ButtonsState[5]}
     placeholder={ButtonsState[4]}

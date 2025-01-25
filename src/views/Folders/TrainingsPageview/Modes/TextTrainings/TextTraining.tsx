@@ -125,85 +125,120 @@ const TextTraining = () => {
   
 
 
-//BUTTON AND TRANSLATION INPUTS
+// BUTTON AND TRANSLATION INPUTS
+// Creating the ButtonInput element, which contains a text input field and buttons for user interactions
 let ButtonInput = (
-  <div className="flex gap-4">
-  <input
-    className={ButtonsState[5]}
-    placeholder={ButtonsState[4]}
-    disabled={isDisabled}
-    ref={inputRef}
-    id="translation"
-    name="translation"
-    type="text"
-    onChange={formik.handleChange}
-    value={formik.values.translation}
-  ></input>
-  <div
-    onClick={() => {}}
-    className="relative left-0 flex items-center"
-  >
-    <Button onClick={setStatusBar} className={ButtonsState[0]} >Sprawdź </Button>
-    <button onClick={()=> {
-      CheckTranslationUtil(updateWord, updateUserStats ,currentWord, status, formik, wordsState, navigate, setWordsState,setIsDisabled, setStatus, setCurrentWord, setButtonsState, reversed);
-    }} className={ButtonsState[1]} ref={buttonRef}>Dalej </button>
+  <div className="flex gap-4 max-lg:flex-col max-lg:justify-center max-lg:items-center">
+    {/* Text input field for translation */}
+    <input
+      className={ButtonsState[5]} // CSS class dependent on the button state
+      placeholder={ButtonsState[4]} // Placeholder also dependent on the button state
+      disabled={isDisabled} // Disables the input based on a condition
+      ref={inputRef} // Reference to the input field
+      id="translation" // ID for the input field
+      name="translation" // Name attribute for the input field
+      type="text" // Input type is text
+      onChange={formik.handleChange} // Change handler from Formik
+      value={formik.values.translation} // Value managed by Formik
+    ></input>
+    <div
+      onClick={() => {}} // Placeholder for onClick functionality
+      className="relative left-0 flex items-center " // Position and alignment classes
+    >
+      {/* Button to check the status bar */}
+      <Button onClick={setStatusBar} className={ButtonsState[0]}>Sprawdź</Button>
+      {/* Button to proceed to the next word */}
+      <button
+        onClick={() => {
+          CheckTranslationUtil(
+            updateWord,
+            updateUserStats,
+            currentWord,
+            status,
+            formik,
+            wordsState,
+            navigate,
+            setWordsState,
+            setIsDisabled,
+            setStatus,
+            setCurrentWord,
+            setButtonsState,
+            reversed
+          );
+        }}
+        className={ButtonsState[1]} // CSS class based on button state
+        ref={buttonRef} // Reference to the button
+      >
+        Następne
+      </button>
+    </div>
   </div>
-</div>)
+);
 
-    return (
-      <>
-        <div className="flex flex-col w-full h-full">
-        <FirstTitle>Ćwicz Słówka</FirstTitle>
-          <div
-            className="flex px-4 h-20 w-3/4 max-lg:w-full items-center justify-between
-                            text-black text-3xl font-medium"
-          >
-            <div className="max-lg:text-2xl">Słówko - Tłumaczenie</div>
-            <div
-              onClick={() => {
-                navigate("/app/folders/training");
-              }}
-              className="flex items-center bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight"
-            >
-              <IoMdArrowRoundBack />
-              <div className="text-lg">Powrót </div>
-            </div>
-          </div>
-          <div
-            className="flex flex-col px-4 mb-2 w-3/4 max-lg:w-full items-center gap-8
-                text-black text-3xl font-medium"
-          >
-
+return (
+  <>
+    {/* Main container for the page */}
+    <div className="flex flex-col w-full h-full">
+      {/* Title for the exercise */}
+      <FirstTitle>Trenuj Słówka</FirstTitle>
+      <div
+        className="flex px-4 h-20 w-3/4 max-lg:w-full items-center justify-between
+                    text-black text-3xl font-medium"
+      >
+        {/* Subtitle indicating the exercise type */}
+        <div className="max-lg:text-2xl">Słówko - Tłumaczenie</div>
+        {/* Back button to navigate to the training folders */}
+        <div
+          onClick={() => {
+            navigate("/app/folders/training");
+          }}
+          className="flex items-center bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight"
+        >
+          <IoMdArrowRoundBack />
+          <div className="text-lg">Powrót</div>
+        </div>
+      </div>
+      <div
+        className="flex flex-col px-4 mb-2 w-3/4 max-lg:w-full items-center gap-8
+            text-black text-3xl font-medium"
+      >
+        {/* Displaying the current word's status */}
         <div className={ButtonsState[2]}>
-                {ButtonsState[3]} - {currentWord.translation}
-              </div>
-              <div className="flex flex-col gap-2 items-center justify-center">
-            <div className="flex items-center justify-center gap-2 font-thin text-5xl">            {currentWord.word}{streakIcon}
-              </div>
-              <div className="text-sm font-inter font-thin text-fifth">{currentWord.note}</div>
-            </div>
-       <form onSubmit={formik.handleSubmit}>
-        {ButtonInput}         
-
-     </form>
-            {/* STATUSY SŁÓWKA */}
-            <div className="flex flex-col justify-center items-center w-1/3 max-lg:w-full text-center font-inter gap-4">
-              {renderStatus}
-              <div className="flex text-center font-thin text-sm text-fifth">
-                Wybrany status określa, jak często dane słówko będzie pojawiało
+          {ButtonsState[3]} - {currentWord.translation}
+        </div>
+        {/* Displaying the current word and any streak icon */}
+        <div className="flex flex-col gap-2 items-center justify-center">
+          <div className="flex items-center justify-center gap-2 font-thin text-5xl">
+            {currentWord.word}
+            {streakIcon}
+          </div>
+          {/* Note associated with the current word */}
+          <div className="text-sm font-inter font-thin text-fifth">{currentWord.note}</div>
+        </div>
+        {/* Form containing the ButtonInput */}
+        <form onSubmit={formik.handleSubmit}>
+          {ButtonInput}
+        </form>
+        {/* Word status information */}
+        <div className="flex flex-col justify-center items-center w-1/3 max-lg:w-full text-center font-inter gap-4">
+          {renderStatus}
+          <div className="flex text-center font-thin text-sm text-fifth">
+          Wybrany status określa, jak często dane słówko będzie pojawiało
                 się w ćwiczeniach. Status możesz zmieniać w dowolnej chwili, zmienia on się również wraz 
                 z ilością powtórzeń danego słowa.
-              </div>
-            </div>
           </div>
         </div>
-        <Character
-          alt="character1"
-          className="absolute z-0 w-1/5 bottom-0 right-0 max-lg:hidden"
-          character={character1}
-        />
-      </>
-    );
+      </div>
+    </div>
+    {/* Character illustration */}
+    <Character
+      alt="character1"
+      className="absolute z-0 w-1/5 bottom-0 right-0 max-lg:hidden"
+      character={character1}
+    />
+  </>
+);
+
 };
 
 export default TextTraining;

@@ -4,114 +4,91 @@ import { FaTrashAlt } from "react-icons/fa";
 import { RootState, useDeleteStoryMutation } from "../../../shared/store";
 import { useSelector } from "react-redux";
 
-interface IProps{
-  stories?: any;
+interface IProps {
+  stories?: IStory[];
   onStorySelect: (story: IStory) => void;
-  page:number;
+  page: number;
   setAvailablePages: (page: number) => void;
 }
 
-
-function StoriesGridComponent({stories, onStorySelect,page,setAvailablePages}:IProps) {
+function StoriesGridComponent({ stories, onStorySelect, page, setAvailablePages }: IProps) {
   const [removeStory] = useDeleteStoryMutation();
   const user = useSelector((state: RootState) => state.userProfile);
 
   let renderedStories;
-  if (stories) {
-    if (stories.length > 0) {
-      
-      let availablePages = stories.length / 10;
-      console.log(availablePages)
-      availablePages = ~~availablePages + 1;
-      setAvailablePages(availablePages);
-      stories = stories.slice(10 * (page - 1), 10 * page - 1+1)
-      renderedStories = stories.map((story: any) => {
-        // let storyWords = story.words.map((word: any, index: number) => {
-        //   if (word.word != "") {
-        //     let bgColor = ""
-        //     if(word.known === false){
-        //       bgColor = "bg-green-400"
-        //     }
 
-        //     return (
-        //       <span
-        //         onClick={() => {}}
-        //         className={"hover:bg-secondary hover:p-1 py-1 cursor-pointer rounded-xl flex-none "+bgColor}
-        //       >
-        //         {word.word}
-        //       </span>
-        //     );
-        //   }
-        // });
-        return (
+  if (stories && stories.length > 0) {
+    const availablePages = Math.ceil(stories.length / 8);
+    setAvailablePages(availablePages);
+
+    const paginatedStories = stories.slice(8 * (page - 1), 8 * page);
+
+    renderedStories = paginatedStories.map((story) => (
+      <div
+        key={story.id}
+        className="flex flex-col shadow-lg bg-white hover:bg-gray-100 hover:shadow-xl transition rounded-lg overflow-hidden"
+      >
+        <div className="flex justify-between items-center bg-secondary py-2 px-3">
           <div
-            className="flex flex-col shadow-lg h-full min-h-60 max-h-60 bg-white hover:bg-fourth hover:cursor-pointer rounded-lg m-2"
+            className="flex items-center gap-2 cursor-pointer"
+            onClick={() => onStorySelect(story)}
           >
-            <div className="flex justify-between items-center bg-secondary py-1 rounded-lg">
-              <div             onClick={() => {
-              onStorySelect(story);
-            }} className=" ">
-                {story.level === "A1" ? (
-                  <span className="bg-green-400 p-2 rounded-lg border-black border-2">
-                    {story.level}
-                  </span>
-                ) : story.level === "A2" ? (
-                  <span className="bg-green-600 p-2 rounded-lg border-black border-2">
-                    {story.level}
-                  </span>
-                ) : story.level === "B1" ? (
-                  <span className="bg-yellow-400 p-2 rounded-lg border-black border-2">
-                    {story.level}
-                  </span>
-                ) : story.level === "B2" ? (
-                  <span className="bg-orange-400 p-2 rounded-lg border-black border-2">
-                    {story.level}
-                  </span>
-                ) : story.level === "C1" ? (
-                  <span className="bg-red-600 p-2 rounded-lg border-black border-2">
-                    {story.level}
-                  </span>
-                ) : story.level === "C2" ? (
-                  <span className="bg-violet-600 p-2 rounded-lg border-black border-2">
-                    {story.level}
-                  </span>
-                ) : (
-                  <span className="bg-black p-2 rounded-lg border-black border-2">
-                    {story.level}
-                  </span>
-                )}
-                <span className="p-2">{story.title}</span>
-              </div>
-              <span onClick={()=>{
-                    removeStory({storyToRemove: story, userID: user.value})
-              }
-            
-              } className="p-2"><FaTrashAlt/></span>
-            </div>
-            
-            <div             onClick={() => {
-              onStorySelect(story);
-            }} className="flex flex-col items-center h-full justify-between text-base p-2 text-left text-black font-thin ">
-              <span className="flex flex-wrap flex-col gap-1">
-                {story.description}
-              </span>
-            </div>
-            <span             onClick={() => {
-              onStorySelect(story);
-            }} className="flex text-white bg-secondarylight rounded-b-lg p-1 justify-center">{story.language}</span>
+            <span
+              className={`p-2 rounded-md text-white text-sm font-semibold ${getLevelBgColor(story.level)}`}
+            >
+              {story.level}
+            </span>
+            <span className="font-bold text-lg truncate">{story.title}</span>
           </div>
-        );
-      });
-    } else {
-      renderedStories = <div>Brak historii do wyświetlenia.</div>;
-    }
+          <button
+            className="text-red-600 hover:text-red-800"
+            onClick={() => removeStory({ storyToRemove: story, userID: user.value })}
+          >
+            <FaTrashAlt />
+          </button>
+        </div>
+        <div
+          className="p-4 flex-1 text-gray-700 text-sm overflow-hidden cursor-pointer"
+          onClick={() => onStorySelect(story)}
+        >
+          <p className="line-clamp-3 text-ellipsis overflow-hidden">{story.description}</p>
+        </div>
+        <div
+          className="text-center text-white bg-secondarylight py-2 cursor-pointer"
+          onClick={() => onStorySelect(story)}
+        >
+          {story.language}
+        </div>
+      </div>
+    ));
+  } else {
+    renderedStories = <div className="text-center text-gray-500">Brak historii do wyświetlenia.</div>;
   }
 
   return (
-    <div className="grid grid-cols-5 grid-rows-2 border-solid border-b-2 px-4 font-inter pt-2 gap-2">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-6 max-h-[calc(100vh-300px)] overflow-y-auto">
       {renderedStories}
     </div>
   );
+}
+
+function getLevelBgColor(level: string): string {
+  switch (level) {
+    case "A1":
+      return "bg-green-400";
+    case "A2":
+      return "bg-green-600";
+    case "B1":
+      return "bg-yellow-400";
+    case "B2":
+      return "bg-orange-400";
+    case "C1":
+      return "bg-red-600";
+    case "C2":
+      return "bg-violet-600";
+    default:
+      return "bg-gray-400";
+  }
 }
 
 export default StoriesGridComponent;

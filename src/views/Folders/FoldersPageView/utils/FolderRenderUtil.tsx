@@ -1,8 +1,20 @@
-import { FC } from "react";
+import React from "react";
 import { IFolder } from "../../../../shared/store/slices/FolderSlice";
 import { TbFolderFilled } from "react-icons/tb";
 import { FaEdit, FaFolder, FaPlayCircle } from "react-icons/fa";
 import ProgressPanel from "../Components/ProgressPanelComponent";
+
+interface FolderRenderUtilProps {
+  folders: IFolder[];
+  isLoading: boolean;
+  isError: boolean;
+  isSuccess: boolean;
+  dispatch: unknown;
+  change: (folder: IFolder) => void;
+  navigate: (url: string) => void;
+  setCurrentFolder: (folder: IFolder) => void;
+  toggleConfirmationModal: () => void;
+}
 
 const FolderRenderUtil = (
   folders: IFolder[],
@@ -10,102 +22,112 @@ const FolderRenderUtil = (
   isError: boolean,
   isSuccess: boolean,
   dispatch: any,
-  change: (folder:IFolder)=> void,
+  change: (folder: IFolder) => void,
   navigate: (url: string) => void,
   setCurrentFolder: (folder: IFolder) => void,
-  toggleConfirmationModal: () => void,
+  toggleConfirmationModal: () => void
 ) => {
   let renderedFolderLength = 0;
-  let renderedFolders;
+
+  // Helper to render action buttons
+  const renderActionButton = (
+    icon: React.ReactNode,
+    label: string,
+    onClick: () => void
+  ) => (
+    <button
+      onClick={onClick}
+      className="flex flex-col gap-1 text-gray-600 hover:text-main font-medium items-center"
+    >
+      {icon}
+      <span className="text-xs">{label}</span>
+    </button>
+  );
+
+  // Loading State
   if (isLoading) {
-    renderedFolders = <div>Ładowanie</div>
-    return {renderedFolders,renderedFolderLength};
-  } else if (isError) {
-    renderedFolders = <div>Ładowanie</div>
-    return {renderedFolders,renderedFolderLength};
-  } else if (isSuccess) {
-    let wordAmount = 0;
+    return { renderedFolders: <div>Ładowanie...</div>, renderedFolderLength };
+  }
 
-    //RENDER FOLDERS
-    renderedFolders = folders.map((folder: IFolder) => {
-      wordAmount = folder.words.length;
+  // Error State
+  if (isError) {
+    return {
+      renderedFolders: <div>Błąd podczas ładowania folderów.</div>,
+      renderedFolderLength,
+    };
+  }
 
-      const percentage = ~~(
-        (100 * folder.currentProgress) /
-        folder.maxProgress
+  // Success State
+  if (isSuccess && folders.length > 0) {
+    const renderedFolders = folders.map((folder) => {
+      const wordAmount = folder.words.length;
+      const percentage = Math.floor(
+        (100 * folder.currentProgress) / folder.maxProgress
       );
 
-      //CALCULATE PROGRESS
-      let progressPanel = ProgressPanel(percentage);
-      
       return (
         <div
           key={folder.id}
-          className="flex flex-col pl-4 mb-2 items-left
-                        text-black text-3xl font-medium max-lg:pr-4"
+          className="flex flex-col bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition duration-200"
         >
-          <div className="flex flex-col w-3/4 max-lg:w-full justify-center">
-            <div className="flex items-center w-full bg-fourth rounded-lg shadow-lg  hover:bg-secondarylight">
-              <button
-                onClick={() => {
-                  dispatch(change(folder));
-                  navigate("/app/folders/words");
-                }}
-                className="flex w-full items-center gap-4 p-2 hover:cursor-pointer h-full"
-              >
-                <TbFolderFilled className="bg-main text-white rounded-md" />
-                <div className="text-xl hidden">{folder.id}</div>
-                <div className="text-xl">{folder.folderName}</div>
-                <div className="text-xs text-fifth max-lg:hidden">
-                  (Słówka:{wordAmount})
-                </div>
-              </button>
-              <div className="flex justify-center items-center gap-4 mr-4">
-                {progressPanel}
-                <button
-                  onClick={() => {
-                    dispatch(change(folder));
-                    navigate("/app/folders/words");
-                  }}
-                  className="flex flex-col gap-1 text-fifth hover:cursor-pointer hover:text-main font-inter items-center"
-                >
-                  <FaEdit className="text-lg" />
-                  <div className="text-xs">Edytuj</div>
-                </button>
-                <button
-                  onClick={() => {
-                    dispatch(change(folder));
-                    navigate("/app/folders/training");
-                  }}
-                  className="flex flex-col gap-1 text-fifth hover:cursor-pointer hover:text-main font-inter items-center"
-                >
-                  <FaPlayCircle className="text-lg" />
-                  <div className="text-xs">Ćwicz</div>
-                </button>
-                <div
-                  onClick={() => {
-                    toggleConfirmationModal();
-                    setCurrentFolder(folder);
-                  }}
-                  className="flex flex-col gap-1 text-fifth hover:cursor-pointer hover:text-main font-inter items-center"
-                >
-                  <FaFolder className="text-lg" />
-                  <div className="text-xs">Usuń</div>
-                </div>
-              </div>
+          <div className="flex items-center justify-between bg-secondary p-4 text-white">
+            <div className="flex items-center gap-4 cursor-pointer" onClick={() => {
+              dispatch(change(folder));
+              navigate("/app/folders/words");
+            }}>
+              <TbFolderFilled className="text-2xl" />
+              <div className="text-lg font-semibold truncate">{folder.folderName}</div>
+            </div>
+            <div className="text-sm hidden max-lg:block">(Słówka: {wordAmount})</div>
+          </div>
+
+          <div className="p-4">
+            <ProgressPanel percentage={percentage} />
+            <div className="mt-2 text-sm text-gray-600">Słówka: {wordAmount}</div>
+          </div>
+
+          <div className="flex justify-around items-center bg-gray-100 p-4">
+            {renderActionButton(
+              <FaEdit className="text-lg" />, "Edytuj", () => {
+                dispatch(change(folder));
+                navigate("/app/folders/words");
+              }
+            )}
+            {renderActionButton(
+              <FaPlayCircle className="text-lg text-green-500" />, "Ćwicz", () => {
+                dispatch(change(folder));
+                navigate("/app/folders/training");
+              }
+            )}
+            <div
+              onClick={() => {
+                toggleConfirmationModal();
+                setCurrentFolder(folder);
+              }}
+              className="flex flex-col items-center gap-1 text-red-500 hover:text-red-700 cursor-pointer"
+            >
+              <FaFolder className="text-lg" />
+              <span className="text-xs">Usuń</span>
             </div>
           </div>
         </div>
       );
     });
-    if (folders.length === 0) {
-      renderedFolderLength = 0;
-    } else {
-      renderedFolderLength = folders[renderedFolders.length - 1].id + 1;
-    }
 
-    return {renderedFolders,renderedFolderLength}
+    renderedFolderLength = folders.length;
+
+    return { renderedFolders, renderedFolderLength };
   }
+
+  // No Folders State
+  if (isSuccess && folders.length === 0) {
+    return {
+      renderedFolders: <div className="text-center text-gray-500">Brak folderów do wyświetlenia.</div>,
+      renderedFolderLength,
+    };
+  }
+
+  return { renderedFolders: null, renderedFolderLength };
 };
 
 export default FolderRenderUtil;

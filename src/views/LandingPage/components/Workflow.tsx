@@ -6,12 +6,12 @@ import groupPng from '../../../constants/group.png'
 const Workflow = () => {
     return (
       <div id="workflow" className="mt-20 font-inter">
-        <h2 className="text-3xl sm:text-5xl lg:text-6xl text-center mt-6 tracking-wide">
-          Jak powinna wyglądać Twoja praca z {" "}
-          <span className="bg-gradient-to-r from-white to-cyan-50 text-transparent bg-clip-text">
-            naszą aplikacją?
-          </span>
-        </h2>
+ <h2 className="text-3xl sm:text-5xl lg:text-6xl text-center mt-6 tracking-wide font-bold">
+        Jak powinna wyglądać Twoja praca z {" "}
+        <span className="bg-gradient-to-r from-secondarylight to-white text-transparent bg-clip-text">
+          naszą aplikacją?
+        </span>
+      </h2>
         <div className="flex flex-wrap justify-center mt-20">
           <div className="p-2 w-full lg:w-1/2">
             <img src={groupPng} alt="Functions" />

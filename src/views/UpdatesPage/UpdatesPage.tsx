@@ -4,10 +4,20 @@ import VersionList from "./components/VersionList";
 
 const UpdatesPage = () => {
   return (
-    <div className="flex flex-col w-full h-full ">
+    <div className="flex flex-col w-full h-full bg-gray-50 p-6 font-inter">
+      {/* Page Titles */}
       <FirstTitle>Aktualizacje</FirstTitle>
       <MainTitle>Aktualizacje</MainTitle>
-      <div className="relative inline-block text-left pl-4 overflow-y-scroll max-h-[660px]">
+
+      {/* Updates List */}
+      <div className="relative overflow-y-auto max-h-[70vh] mt-6 p-6 bg-white rounded-lg shadow-md border border-gray-200">
+      <VersionList version="1.0.12 alpha - UI & Responsive update">
+        <h1 className='text-xl font-bold'>Zmiany</h1>
+        <li>-Zmienione całkowite UI strony</li>
+        <li>-Responsywność strony</li>
+        <h1 className='text-xl font-bold'>Poprawki</h1>
+        <li>-Poprawione liczne błędy</li>
+      </VersionList>
       <VersionList version="1.0.11 alpha">
         <h1 className='text-xl font-bold'>Zmiany</h1>
         <li>-Zwiększony limit nazwy folderu do 40 znaków</li>

@@ -22,12 +22,21 @@ const RemoveConfirmModal: FC<{isVisible: boolean, closeModal: () => void, folder
                 Czy na pewno chcesz usunąć?
               </div>
               <div className="flex p-9 px-44 justify-between items-center">
-              <button onClick={()=>{
-                  removeFolder({folderToRemove: folderToRemove, userID: props.userID});
-                  props.closeModal();
-              }} className="bg-secondary p-4 px-6 text-xl font-bold font-inter rounded-xl">TAK</button>
               <button
-              onClick={props.closeModal} className="bg-secondary p-4 px-6 text-xl font-bold font-inter rounded-xl">NIE</button>
+        onClick={() => {
+          removeFolder({ folderToRemove: folderToRemove, userID: props.userID });
+          props.closeModal();
+        }}
+        className="bg-secondary hover:bg-secondarylight text-white font-bold text-lg px-6 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105"
+      >
+        TAK
+      </button>
+      <button
+        onClick={props.closeModal}
+        className="bg-neutral-400 hover:bg-neutral-500 text-white font-bold text-lg px-6 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105"
+      >
+        NIE
+      </button>
               </div>
 
             </form>
