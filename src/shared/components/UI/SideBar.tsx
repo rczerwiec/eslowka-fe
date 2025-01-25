@@ -31,7 +31,7 @@ const SideBar = () => {
         </div>
 
         {/* Dolna część z informacją o wersji */}
-        <div className="absolute bottom-14 left-12 mx-auto text-center text-white text-xs py-4 border-t border-neutral-800">
+        <div className="absolute bottom-1 left-12 mx-auto text-center text-white text-xs py-4 border-t border-neutral-800">
           <div className="font-semibold">Esłówka</div>
           <div>Wersja: 1.0.12 alpha</div>
         </div>

@@ -74,7 +74,7 @@ const FoldersPage = () => {
         onClick={ReferenceModal.toggleModal}
         bgColor={Colors.MAIN}
         textColor={Colors.WHITE}
-        className="fixed bottom-20 left-8 z-20 h-16 w-16 rounded-full shadow-lg lg:hidden flex items-center justify-center"
+        className="fixed bottom-5 left-5 z-20 h-16 w-16 rounded-full shadow-lg lg:hidden flex items-center justify-center"
       >
         KOD REF.
       </Button>
@@ -82,7 +82,7 @@ const FoldersPage = () => {
         whileHover={{ scale: [null, 1.2, 1.1] }}
         transition={{ duration: 0.3 }}
         onClick={toggleModal}
-        className="fixed bottom-20 right-8 z-20 h-16 w-16 bg-secondary hover:bg-secondarylight rounded-full shadow-lg flex items-center justify-center cursor-pointer"
+        className="fixed bottom-5 right-5 z-20 h-16 w-16 bg-secondary hover:bg-secondarylight rounded-full shadow-lg flex items-center justify-center cursor-pointer"
       >
         <HiPlus className="text-3xl text-white" />
       </motion.div>

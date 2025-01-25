@@ -11,6 +11,11 @@ const UpdatesPage = () => {
 
       {/* Updates List */}
       <div className="relative overflow-y-auto max-h-[70vh] mt-6 p-6 bg-white rounded-lg shadow-md border border-gray-200">
+      <VersionList version="1.0.13 alpha - UI fixes">
+        <h1 className='text-xl font-bold'>Poprawki</h1>
+        <li>-Poprawione liczne błęd UI</li>
+        <li>-Poprawiony błąd z klawiaturą na urządzeniach mobilnych, która psuje UI</li>
+      </VersionList>
       <VersionList version="1.0.12 alpha - UI & Responsive update">
         <h1 className='text-xl font-bold'>Zmiany</h1>
         <li>-Zmienione całkowite UI strony</li>

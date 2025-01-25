@@ -104,7 +104,7 @@ const WordsInFolderPage: React.FC = () => {
   }, [isLoading, isError, wordsData, paginatedWords, folder, updateModal, navigate]);
 
   return ( 
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full ">
       {/* Header of the page displaying the folder name */}
       <FirstTitle>Foldery - {folder.folderName}</FirstTitle>
   
@@ -117,10 +117,13 @@ const WordsInFolderPage: React.FC = () => {
         </div>
   
         {/* Controls for navigation and actions */}
-        <div className="flex flex-wrap gap-2 justify-center items-center text-sm lg:text-base w-full lg:w-auto ">
+        <div className="flex flex-wrap gap-2 justify-center items-center text-sm lg:text-base w-full lg:w-auto max-lg:pt-4">
           {/* Current page display */}
           <div className="flex justify-center items-center text-fifth max-lg:hidden">
             Strona {page}/{availablePages}
+          </div>
+          <div className="flex justify-center items-center text-fifth ">
+            {page}/{availablePages}
           </div>
   
           {/* Button: Go to the previous page */}
@@ -144,7 +147,7 @@ const WordsInFolderPage: React.FC = () => {
           {/* Button: Open modal to add a new word */}
           <button
             onClick={toggleModal}
-            className="flex items-center gap-1 bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight"
+            className="max-lg:hidden flex items-center gap-1 bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight"
           >
             <HiPlus />
             <span>Nowe Słowo</span>
@@ -234,7 +237,7 @@ const WordsInFolderPage: React.FC = () => {
         whileHover={{ scale: [null, 1.2, 1.1] }}
         transition={{ duration: 0.3 }}
         onClick={toggleModal}
-        className="fixed bottom-20 right-8 z-20 h-16 w-16 bg-secondary hover:bg-secondarylight rounded-full shadow-lg flex items-center justify-center cursor-pointer"
+        className="fixed bottom-5 right-5 z-20 h-16 w-16 bg-secondary hover:bg-secondarylight rounded-full shadow-lg flex items-center justify-center cursor-pointer"
       >
         <HiPlus className="text-3xl text-white" />
       </motion.div>
@@ -242,7 +245,7 @@ const WordsInFolderPage: React.FC = () => {
       {/* Responsive Button: Copy the folder reference ID */}
       <button
         onClick={handleFolderIDCopy}
-        className="flex absolute w-1/4 lg:w-1/5 bottom-4 left-4 items-center gap-2 p-2 text-xs lg:text-sm hover:cursor-pointer hover:bg-secondarylight text-fifth rounded-lg"
+        className="flex absolute w-1/4 lg:w-1/5 bg-white bottom-5 left-5 items-center gap-2 p-2 text-xs lg:text-sm hover:cursor-pointer hover:bg-secondarylight text-fifth rounded-lg"
       >
         {copied ? <span>Skopiowano!</span> : <>REF:<FaCopy /></>}
       </button>
