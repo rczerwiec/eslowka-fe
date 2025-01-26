@@ -26,15 +26,18 @@ function StoriesGridComponent({ stories, onStorySelect, page, setAvailablePages 
     renderedStories = paginatedStories.map((story) => (
       <div
         key={story.id}
-        className="flex flex-col shadow-lg bg-white hover:bg-gray-100 hover:shadow-xl transition rounded-lg overflow-hidden"
+        className="flex flex-col shadow-lg bg-white hover:bg-gray-100 hover:shadow-xl transition rounded-lg overflow-hidden min-h-[200px]" // Minimalna wysokość
       >
+        {/* Górna sekcja karty */}
         <div className="flex justify-between items-center bg-secondary py-2 px-3">
           <div
             className="flex items-center gap-2 cursor-pointer"
             onClick={() => onStorySelect(story)}
           >
             <span
-              className={`p-2 rounded-md text-white text-sm font-semibold ${getLevelBgColor(story.level)}`}
+              className={`p-2 rounded-md text-white text-sm font-semibold ${getLevelBgColor(
+                story.level
+              )}`}
             >
               {story.level}
             </span>
@@ -47,12 +50,16 @@ function StoriesGridComponent({ stories, onStorySelect, page, setAvailablePages 
             <FaTrashAlt />
           </button>
         </div>
+
+        {/* Opis */}
         <div
           className="p-4 flex-1 text-gray-700 text-sm overflow-hidden cursor-pointer"
           onClick={() => onStorySelect(story)}
         >
           <p className="line-clamp-3 text-ellipsis overflow-hidden">{story.description}</p>
         </div>
+
+        {/* Dolna sekcja karty */}
         <div
           className="text-center text-white bg-secondarylight py-2 cursor-pointer"
           onClick={() => onStorySelect(story)}

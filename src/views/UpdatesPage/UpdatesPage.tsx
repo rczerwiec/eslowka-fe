@@ -11,6 +11,11 @@ const UpdatesPage = () => {
 
       {/* Updates List */}
       <div className="relative overflow-y-auto max-h-[70vh] mt-6 p-6 bg-white rounded-lg shadow-md border border-gray-200">
+      <VersionList version="1.13.2 alpha">
+        <h1 className='text-xl font-bold'>Poprawki</h1>
+        <li>-Naprawione UI w zakładce stories na urządzeniach mobilnych</li>
+        <li>-Poprawione skalowanie się rankingu</li>
+      </VersionList>
       <VersionList version="1.13.1 alpha">
         <h1 className='text-xl font-bold'>Poprawki</h1>
         <li>-Naprawiony błąd znikającego paska statystyk na urządzeniach IOS</li>
