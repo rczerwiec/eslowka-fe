@@ -11,26 +11,32 @@ const UpdatesPage = () => {
 
       {/* Updates List */}
       <div className="relative overflow-y-auto max-h-[70vh] mt-6 p-6 bg-white rounded-lg shadow-md border border-gray-200">
-      <VersionList version="1.0.13 alpha - UI fixes">
+      <VersionList version="1.13.1 alpha">
+        <h1 className='text-xl font-bold'>Poprawki</h1>
+        <li>-Naprawiony błąd znikającego paska statystyk na urządzeniach IOS</li>
+        <li>-Poprawione menu na stronie głównej</li>
+        <li>-Poprawione wychodzące poza ekran karty folderów</li>
+      </VersionList>
+      <VersionList version="1.13.0 alpha - UI fixes">
         <h1 className='text-xl font-bold'>Poprawki</h1>
         <li>-Poprawione liczne błęd UI</li>
         <li>-Poprawiony błąd z klawiaturą na urządzeniach mobilnych, która psuje UI</li>
       </VersionList>
-      <VersionList version="1.0.12 alpha - UI & Responsive update">
+      <VersionList version="1.12.0 alpha - UI & Responsive update">
         <h1 className='text-xl font-bold'>Zmiany</h1>
         <li>-Zmienione całkowite UI strony</li>
         <li>-Responsywność strony</li>
         <h1 className='text-xl font-bold'>Poprawki</h1>
         <li>-Poprawione liczne błędy</li>
       </VersionList>
-      <VersionList version="1.0.11 alpha">
+      <VersionList version="1.11.0 alpha">
         <h1 className='text-xl font-bold'>Zmiany</h1>
         <li>-Zwiększony limit nazwy folderu do 40 znaków</li>
         <li>-Dodana możliwośc usuwania historyjek</li>
         <h1 className='text-xl font-bold'>Poprawki</h1>
         <li>-Poprawione błędy z kopiowaniem poprzez kod referencyjny</li>
       </VersionList>
-      <VersionList version="1.0.10 alpha">
+      <VersionList version="1.10.0 alpha">
         <h1 className='text-xl font-bold'>Zmiany</h1>
           <li>-Dodane logo w lewym górnym rogu aplikacji</li>
           <li>-Cennik dodany również do zakładki "Premium"</li>
@@ -46,7 +52,7 @@ const UpdatesPage = () => {
         <li>-Poprawione błędy na stronie ustawień</li>
         <li>-Po wylogowaniu aplikacja nie wyrzuca już na stronę główną</li>
       </VersionList>
-      <VersionList version="1.0.9 alpha">
+      <VersionList version="1.9.0 alpha">
         <h1 className='text-xl font-bold'>Zmiany</h1>
           <li>-W folderze słówek poprawione UI prawego panelu</li>
         <h1 className='text-xl font-bold'>Poprawki</h1>
@@ -57,7 +63,7 @@ const UpdatesPage = () => {
           <li>-Jeśli jesteś w oknie logowania lub rejestracji, to jeśli jesteś zalogowany - aplikacja automatycznie Cię przeniesie do głównej strony aplikacji!</li>
           <li>-Jeśli jesteś w oknie aplikacji, to jeśli nie jesteś zalogowany - aplikacja automatycznie Cię przeniesie do okna logowania!</li>
       </VersionList>
-      <VersionList version="1.0.8 alpha">
+      <VersionList version="1.8.0 alpha">
         <h1 className='text-xl font-bold'>Zmiany</h1>
           <li>-Utworzona pierwsza wersja strony produktu</li>
           <li>-Możliwość edycji nazwy folderu poprzez dwukrotne kliknięcie myszką na nazwe (będąc w danym folderze)</li>
@@ -66,7 +72,7 @@ const UpdatesPage = () => {
           <li>-Optymalizacja backendu aplikacji</li>
           <li>-Optymalizacja api aplikacji</li>
       </VersionList>
-      <VersionList version="1.0.7 alpha">
+      <VersionList version="1.7.0 alpha">
         <h1 className='text-xl font-bold'>Zmiany</h1>
           <li>-Logo dodane do strony logowania i rejestracji.</li>
           <li>-Generowanie historyjek przeniesione do osobnego modala.</li>
@@ -78,7 +84,7 @@ const UpdatesPage = () => {
           <li>-Poprawione przełączenia między stronami w historyjkach</li>
           <li>-Progress bar w wybranej historyjce już działa </li>
       </VersionList>
-      <VersionList version="1.0.6 alpha">
+      <VersionList version="1.6.0 alpha">
         <h1 className='text-xl font-bold'>Zmiany</h1>
           <li>-Ćwicz Czytanie - dodana możliwość tworzenia własnych czytanek i uczenia się z nich</li>
           <li>-Dodane animacje do niektórych komponentów</li>
@@ -93,7 +99,7 @@ const UpdatesPage = () => {
           <li>-Naprawiony błąd, który nie zaliczał ćwiczenia mimo poprawnej odpowiedzi</li>
           <li>-Naprawiony błąd, który naliczał podwójnie słówka podcza importu</li>
       </VersionList>
-      <VersionList version="1.0.5 alpha">
+      <VersionList version="1.5.0 alpha">
           <li>-Dodana możliwość edycji słówek poprzez kliknięcie na nie</li>
           <li>-Poprawiona responsywność strony</li>
           <li>-Refaktoryzacja kodu źródłowego</li>
@@ -105,7 +111,7 @@ const UpdatesPage = () => {
           <li>-Poprawiony wygląd menu ustawień</li>
           <li>-Poprawiony ranking</li>
         </VersionList>
-        <VersionList version="1.0.4 alpha">
+        <VersionList version="1.4.0 alpha">
           <li>-Dodana możliwość zmiany nazwy użytkownika</li>
           <li>-Dodano więcej informacji do ustawień</li>
           <li>-Dodana funkcjonalność streaku dni</li>
@@ -115,7 +121,7 @@ const UpdatesPage = () => {
           <li>-Poprawiona możliwość kliknięcia w folder</li>
           <li>-Dodana pierwsza wersja Chatu z AI</li>
         </VersionList>
-        <VersionList version="1.0.3 alpha">
+        <VersionList version="1.3.0 alpha">
           <li>-Dodane zostało logo</li>
           <li>
             -Dodany system zdobywania doświadczenia oraz pierwsze 10 poziomów
@@ -124,7 +130,7 @@ const UpdatesPage = () => {
           <li>-Refaktoryzacja kodu źródłowego</li>
         </VersionList>
 
-        <VersionList version="1.0.2 alpha">
+        <VersionList version="1.2.0 alpha">
           <li>
             -Usunięte niezaimplementowane "puste strony", do czasu ich
             zaimplementowania
@@ -135,7 +141,7 @@ const UpdatesPage = () => {
             ich)
           </li>
         </VersionList>
-        <VersionList version="1.0.1 alpha">
+        <VersionList version="1.1.0 alpha">
           <li>
             -"Twoje Foldery" i "Kolekcje Słowek" dodane do menu w responsywnej
             wersji aplikacji

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import logo from "../../../shared/img/eslowka.png";
 import { navItems } from "../../../constants";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -6,10 +6,30 @@ import { IoCloseSharp } from "react-icons/io5";
 
 function LP_Navbar() {
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
+  const drawerRef = useRef<HTMLDivElement | null>(null); // Typ referencji określony jako HTMLDivElement
 
   const toggleNavbar = () => {
     setMobileDrawerOpen(!mobileDrawerOpen);
   };
+
+  // Close menu if clicked outside
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (
+        drawerRef.current &&
+        !drawerRef.current.contains(event.target as Node) && // Zapewnienie zgodności typu
+        mobileDrawerOpen
+      ) {
+        setMobileDrawerOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [mobileDrawerOpen]);
 
   return (
     <nav className="sticky top-0 z-50 py-3 bg-white shadow-md backdrop-blur-lg border-b border-gray-200 font-inter font-bold">
@@ -64,29 +84,32 @@ function LP_Navbar() {
 
         {/* Mobile Navigation Drawer */}
         {mobileDrawerOpen && (
-          <div className="fixed inset-0 z-40 bg-white shadow-lg p-6 flex flex-col items-center lg:hidden">
-            <ul className="space-y-4 text-gray-700">
+          <div
+            ref={drawerRef} // Attach ref to the drawer
+            className="fixed inset-0 z-60 bg-white min-h-[400px] shadow-lg p-6 flex flex-col items-center lg:hidden"
+          >
+            <ul className="space-y-4 text-gray-700 w-full">
               {navItems.map((item, index) => (
                 <li key={index}>
                   <a
                     href={item.href}
-                    className="block py-2 text-lg hover:text-secondary transition"
+                    className="block py-2 text-lg hover:text-secondary transition text-center"
                   >
                     {item.label}
                   </a>
                 </li>
               ))}
             </ul>
-            <div className="flex flex-col space-y-4 mt-8">
+            <div className="flex flex-col space-y-4 mt-8 w-full">
               <a
                 href="/login"
-                className="py-2 px-4 border border-secondary text-gray-800 rounded-md hover:bg-gray-100 transition"
+                className="py-2 px-4 border border-secondary text-gray-800 rounded-md hover:bg-gray-100 transition text-center"
               >
                 Zaloguj się
               </a>
               <a
                 href="/signup"
-                className="py-2 px-4 bg-gradient-to-r from-secondarylight to-secondary text-white rounded-md hover:shadow-lg transition"
+                className="py-2 px-4 bg-gradient-to-r from-secondarylight to-secondary text-white rounded-md hover:shadow-lg transition text-center"
               >
                 Rejestracja
               </a>

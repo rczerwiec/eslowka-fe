@@ -68,33 +68,43 @@ const FolderRenderUtil = (
       return (
         <div
           key={folder.id}
-          className="flex flex-col bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition duration-200"
+          className="flex flex-col bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition duration-200 max-w-full"
         >
           <div className="flex items-center justify-between bg-secondary p-4 text-white">
-            <div className="flex items-center gap-4 cursor-pointer" onClick={() => {
-              dispatch(change(folder));
-              navigate("/app/folders/words");
-            }}>
+            <div
+              className="flex items-center gap-4 cursor-pointer w-full truncate"
+              onClick={() => {
+                dispatch(change(folder));
+                navigate("/app/folders/words");
+              }}
+            >
               <TbFolderFilled className="text-2xl" />
-              <div className="text-lg font-semibold truncate">{folder.folderName}</div>
+              <div className="text-lg font-semibold truncate">
+                {folder.folderName}
+              </div>
             </div>
-            <div className="text-sm hidden max-lg:block">(Słówka: {wordAmount})</div>
           </div>
 
           <div className="p-4">
             <ProgressPanel percentage={percentage} />
-            <div className="mt-2 text-sm text-gray-600">Słówka: {wordAmount}</div>
+            <div className="mt-2 text-sm text-gray-600">
+              Słówka: {wordAmount}
+            </div>
           </div>
 
           <div className="flex justify-around items-center bg-gray-100 p-4">
             {renderActionButton(
-              <FaEdit className="text-lg" />, "Edytuj", () => {
+              <FaEdit className="text-lg" />,
+              "Edytuj",
+              () => {
                 dispatch(change(folder));
                 navigate("/app/folders/words");
               }
             )}
             {renderActionButton(
-              <FaPlayCircle className="text-lg text-green-500" />, "Ćwicz", () => {
+              <FaPlayCircle className="text-lg text-green-500" />,
+              "Ćwicz",
+              () => {
                 dispatch(change(folder));
                 navigate("/app/folders/training");
               }
@@ -122,7 +132,11 @@ const FolderRenderUtil = (
   // No Folders State
   if (isSuccess && folders.length === 0) {
     return {
-      renderedFolders: <div className="text-center text-gray-500">Brak folderów do wyświetlenia.</div>,
+      renderedFolders: (
+        <div className="text-center text-gray-500">
+          Brak folderów do wyświetlenia.
+        </div>
+      ),
       renderedFolderLength,
     };
   }

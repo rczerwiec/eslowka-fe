@@ -15,7 +15,7 @@ type Props = {
 
 const App = ({ children }: Props) => {
   const [loading, setLoading] = useState(true);
-  const [keyboardHeight, setKeyboardHeight] = useState<number>(0); // For handling keyboard height
+  const [viewportHeight, setViewportHeight] = useState<number>(window.innerHeight); // Obsługa wysokości okna na iOS
   const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
@@ -40,17 +40,14 @@ const App = ({ children }: Props) => {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.visualViewport) {
-        const viewportHeight = window.visualViewport.height;
-        const screenHeight = window.innerHeight;
-        const isKeyboardOpen = viewportHeight < screenHeight;
-        setKeyboardHeight(isKeyboardOpen ? screenHeight - viewportHeight : 0);
-      }
+      // Aktualizuj wysokość widoku na iOS, gdy klawiatura się otwiera
+      setViewportHeight(window.innerHeight);
     };
 
-    window.visualViewport?.addEventListener("resize", handleResize);
+    window.addEventListener("resize", handleResize);
+
     return () => {
-      window.visualViewport?.removeEventListener("resize", handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -58,11 +55,9 @@ const App = ({ children }: Props) => {
     <>
       {!user.userLoggedIn && <Navigate to={"/login"} replace={true} />}
       <div
-        className={`flex flex-col h-screen relative ${
-          keyboardHeight > 0 ? "pb-0" : ""
-        }`}
+        className="flex flex-col relative overflow-hidden"
         style={{
-          paddingBottom: `${keyboardHeight}px`, // Adjust padding for keyboard
+          height: `${viewportHeight}px`, // Ustaw wysokość widoku dynamicznie
         }}
       >
         <NavBar />
