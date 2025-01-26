@@ -47,8 +47,8 @@ const RankingPage = () => {
       {user.userName} {/* Nick obsługuje długie teksty */}
     </div>
   </div>
-  <div className="flex-shrink-0 text-sm text-gray-600 text-right w-1/3"> {/* Zabezpieczenie dla XP i level */}
-    <b>Level:</b> {user.level} | <b>XP:</b> {user.experience}
+  <div className="flex flex-col text-sm text-gray-600 text-right w-1/3"> {/* Zabezpieczenie dla XP i level */}
+  <span><b>Level:</b> {user.level} </span><span><b>XP:</b> {user.experience}</span>
   </div>
 </div>
 
@@ -61,7 +61,7 @@ const RankingPage = () => {
     <div className="flex flex-col items-center w-full h-full bg-gray-100 p-6">
       <FirstTitle>Ranking</FirstTitle>
       <MainTitle>Tablica Wyników</MainTitle>
-      <div className="w-full max-w-xl mt-4 rounded-lg bg-white shadow-md p-6">
+      <div className="w-full max-w-xl mt-4 rounded-lg bg-white shadow-md ">
         {content}
       </div>
     </div>
