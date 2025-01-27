@@ -12,6 +12,7 @@ export const navItems = [
   { label: 'Jak korzystać?', href: '#workflow' },
   { label: 'Cennik', href: '#pricing' },
   { label: 'Opinie', href: '#testimonials' },
+  { label: 'Regulamin', href: '/rules' },
 ];
 
 export const testimonials = [

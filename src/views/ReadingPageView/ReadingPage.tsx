@@ -82,13 +82,18 @@ function ReadingPage() {
             page={page}
             availablePages={availablePages}
           />
+          <span className="lg:hidden">
+          <CreateOwnStoryComponent level={level} language={language} allStories={allStories} />
+          </span>
           <StoriesGridComponent
             stories={stories}
             onStorySelect={setSelectedStory}
             page={page}
             setAvailablePages={setAvailablePages}
           />
+          <span className="max-lg:hidden">
           <CreateOwnStoryComponent level={level} language={language} allStories={allStories} />
+          </span>
         </div>
       ) : (
   <div className="flex flex-col gap-4 p-6 bg-white rounded-xl shadow-md font-inter">

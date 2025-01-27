@@ -16,7 +16,7 @@ function CreateOwnStoryComponent({ level, language, allStories }: IProps) {
 
   return (
     <>
-      <div className="flex justify-center items-center pb-6">
+      <div className="flex justify-center items-center lg:pb-6">
         <Button
           onClick={GenerateStoryModal.toggleModal}
           bgColor={Colors.SECONDARY}

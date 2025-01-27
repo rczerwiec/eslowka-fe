@@ -149,65 +149,76 @@ function AIWordModal({ isVisible, onClose, word}: IProps) {
   ////////////////////////////////
   return (
     <Modal isVisible={isVisible} onClose={onClose}>
-      <div className="absolute bg-whiteMain mt-20 z-20 h-2/4 w-full top-0 bg-white rounded xl:w-1/3 xl:left-0 xl:right-0 xl:mr-auto xl:ml-auto">
-        <div className="absolute flex flex-col p-8 shrink h-full w-full overflow-y-auto  scrollbar-hide">
-          <div className="font-inter font-bold text-3xl text-fifth z-10">
-            Słówko
-          </div>
+      <div className="absolute bg-whiteMain mt-20 p-4 z-20 h-2/4 w-full top-0 bg-white rounded xl:w-1/3 xl:left-0 xl:right-0 xl:mr-auto xl:ml-auto">
+      <h2 className="text-2xl font-bold text-gray-800 mb-4">Dodaj słówko</h2>
 
-          <div className="flex flex-col gap-2 font-inter ">
-            <div className="flex gap-2">
-            <div className="p-1 pl-0">Sugerowane tłumaczenie: </div>
-              <input
-                type="text"
-                className="bg-secondarylight rounded-md border border-solid border-main p-1"
-                value={formatedWord}
-                onChange={(e: any) => {
-                  setFormatedWord(e.target.value);
-                }}
-              ></input>
-            </div>
-            <div className="flex gap-2">
-              <div className="p-1 pl-0">Sugerowane tłumaczenie: </div>
-              <input
-                type="text"
-                className="bg-secondarylight rounded-md border border-solid border-main p-1"
-                value={translationWord}
-                onChange={(e: any) => {
-                  setTranslationWord(e.target.value);
-                }}
-              ></input>
-            </div>
+{/* Formularz */}
+<div className="flex flex-col gap-4">
+  {/* Pole: Słowo */}
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-1">
+      Słowo:
+    </label>
+    <input
+      type="text"
+      className="w-full rounded-md border border-gray-300 p-2 focus:ring-blue-500 focus:border-blue-500"
+      value={formatedWord}
+      onChange={(e: any) => setFormatedWord(e.target.value)}
+    />
+  </div>
 
-            <FolderSelector
-              userID={user.value}
-              options={options}
-              text="Wybierz folder docelowy:"
-              setFolder={setFolder}
-            />
-            {generatedWord ? (
-              <div className="flex gap-2">
-              <Button bgColor={Colors.SECONDARY} onClick={()=>{
-              setTranslation(formatedWord);
-              }}>
-                Wygeneruj Ponownie
-              </Button>
-              <Button bgColor={Colors.SECONDARY} onClick={()=>{
-                AddWordToFolder()
-              }}>
-                Dodaj do wybranego folderu
-              </Button></div>
-            ) : (
-              <Button bgColor={Colors.SECONDARY} onClick={()=>{
-                setTranslation(formatedWord);
-                }}>
-                Wygeneruj Tłumaczenie
-              </Button>
-            )}
-          </div>
-        </div>
-      </div>
-    </Modal>
+  {/* Pole: Tłumaczenie */}
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-1">
+      Tłumaczenie:
+    </label>
+    <input
+      type="text"
+      className="w-full rounded-md border border-gray-300 p-2 focus:ring-blue-500 focus:border-blue-500"
+      value={translationWord}
+      onChange={(e: any) => setTranslationWord(e.target.value)}
+    />
+  </div>
+
+  {/* Folder Selector */}
+  <div>
+    <FolderSelector
+      userID={user.value}
+      options={options}
+      text="Wybierz folder docelowy:"
+      setFolder={setFolder}
+    />
+  </div>
+
+  {/* Przycisk akcji */}
+  <div className="flex gap-4">
+    {generatedWord ? (
+      <>
+        <Button
+          bgColor={Colors.SECONDARY}
+          onClick={() => setTranslation(formatedWord)}
+        >
+          Wygeneruj Ponownie
+        </Button>
+        <Button
+          bgColor={Colors.SECONDARY}
+          onClick={AddWordToFolder}
+        >
+          Dodaj do folderu
+        </Button>
+      </>
+    ) : (
+      <Button
+        bgColor={Colors.SECONDARY}
+        onClick={() => setTranslation(formatedWord)}
+      >
+        Wygeneruj Tłumaczenie
+      </Button>
+    )}
+  </div>
+</div>
+</div>
+</Modal>
   );
 }
 

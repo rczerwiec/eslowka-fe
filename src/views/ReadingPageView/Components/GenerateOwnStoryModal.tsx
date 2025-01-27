@@ -277,102 +277,117 @@ function GenerateOwnModal({isVisible, onClose, level,language,allStories}: IModa
   };
 
   return (
-    <Modal isVisible={isVisible} onClose={onClose}>
-      <div className="absolute bg-whiteMain mt-20 z-20 h-2/4 w-full top-0 bg-white rounded xl:w-1/3 xl:left-0 xl:right-0 xl:mr-auto xl:ml-auto">
-        <div className="absolute flex flex-col p-8 shrink h-full w-full overflow-y-auto  scrollbar-hide">
-          <div className="font-inter font-bold text-3xl text-fifth z-10">
-            Generuj własną historię
-          </div>
+<Modal isVisible={isVisible} onClose={onClose}>
+  <div className="absolute bg-white rounded-lg shadow-xl mt-20 z-20 h-auto w-11/12 top-0 xl:w-1/3 xl:left-1/2 xl:transform xl:-translate-x-1/2 xl:mt-10">
+    <div className="flex flex-col p-6 h-full w-full overflow-y-auto scrollbar-hide">
+      <h2 className="font-inter font-bold text-3xl text-fifth text-center mb-6">
+        Generuj własną historię
+      </h2>
 
-          <div className="flex flex-col gap-2 font-inter ">
-            <div className="flex px-4 justify-center items-center pt-2">
-              {generatedDescription === "" ? (
-                <>
-                  {isLoading ? (
-                    <div>Ładowanie...</div>
-                  ) : (
-                    <div className="flex flex-col gap-3 justify-between items-center">
-                        <div className="flex flex-col justify-center">
-                        <div className="p-1 pl-0">Wpisz tytuł Twojej historii: </div>
-                        <div className="p-1 pl-0 text-xs text-fifth">Tytuł może być wpisany w dowolnym języku. Przetłumaczymy go dla Ciebie.</div>
-                    <input
-                    type="text"
-                    placeholder="np. Marta kocha tortille"
-                    className="bg-secondarylight rounded-md border border-solid border-main p-1"
-                    value={storyTitle}
-                    onChange={(e: any) => {
-                        setStoryTitle(e.target.value);
-                    }}
-                  ></input></div>
-                     <Button onClick={generateStory} bgColor={Colors.SECONDARY}>
-                    Wygeneruj własną historię
-                    </Button>
-                    </div>
-                  )}
-                </>
-              ) : (
-                <>
-                  {isLoading ? (
-                    <div>Ładowanie...</div>
-                  ) : (
-                    <div className="flex flex-col gap-1 font-inter">
-                      <h1 className="text-xl font-inter font-bold">Podgląd:</h1>
-                      <span>Tytuł:{generatedTitle}</span>
-                      <span>Opis:{generatedDescription}</span>
-                      <span>Poziom: {level}, Język: {language}</span>
-                      <input
-                    type="text"
-                    className="bg-secondarylight rounded-md border border-solid border-main p-1"
-                    value={storyTitle}
-                    onChange={(e: any) => {
-                        setStoryTitle(e.target.value);
-                    }}
-                  ></input>
-                      <Button
-                        onClick={generateStory}
-                        bgColor={Colors.SECONDARY}
-                      >
-                        Wygeneruj ponownie
-                      </Button>
-                      <Button
-                        onClick={() => {
-                          let newID = 0;
-                          console.log(allStories);
-                          if (allStories.length > 0) {
-                            newID = allStories[allStories.length - 1].id + 1;
-                          }
-                          if(level === undefined || language === undefined){
-                            language = "english";
-                            level = "A1"
-                          }
-                          onCreateStory({
-                            id: newID,
-                            description: generatedDescription,
-                            language: language,
-                            level: level,
-                            title: generatedTitle,
-                            words: generatedWords,
-                            wordAmount: 0,
-                            wordKnownAmount: 0,
-                          });
-                          setGeneratedDescription("");
-                          setGeneratedStory("");
-                          setGeneratedTitle("");
-                          onClose();
-                        }}
-                        bgColor={Colors.SECONDARY}
-                      >
-                        Dodaj do kolekcji
-                      </Button>
-                    </div>
-                  )}
-                </>
-              )}
+      <div className="flex flex-col gap-4 font-inter">
+        {generatedDescription === "" ? (
+          isLoading ? (
+            <div className="flex justify-center items-center text-lg text-gray-600">
+              Ładowanie...
             </div>
-          </div>
-        </div>
+          ) : (
+            <div className="flex flex-col gap-6">
+              <div className="text-center">
+                <p className="text-lg font-semibold">Wpisz tytuł Twojej historii:</p>
+                <p className="text-sm text-gray-500 mt-1">
+                  Tytuł może być wpisany w dowolnym języku. Przetłumaczymy go dla Ciebie.
+                </p>
+              </div>
+              <input
+                type="text"
+                placeholder="np. Marta kocha tortille"
+                className="w-full bg-secondarylight rounded-lg border border-main p-2 focus:ring-2 focus:ring-main focus:outline-none"
+                value={storyTitle}
+                onChange={(e: any) => {
+                  setStoryTitle(e.target.value);
+                }}
+              />
+              <Button
+                onClick={generateStory}
+                bgColor={Colors.SECONDARY}
+                className="w-full py-2 rounded-lg text-white font-medium shadow hover:shadow-lg hover:bg-opacity-90 transition duration-200"
+              >
+                Wygeneruj własną historię
+              </Button>
+            </div>
+          )
+        ) : (
+          isLoading ? (
+            <div className="flex justify-center items-center text-lg text-gray-600">
+              Ładowanie...
+            </div>
+          ) : (
+            <div className="flex flex-col gap-4">
+              <h3 className="text-xl font-semibold text-main">Podgląd:</h3>
+              <p className="text-gray-700">
+                <span className="font-semibold">Tytuł:</span> {generatedTitle}
+              </p>
+              <p className="text-gray-700">
+                <span className="font-semibold">Opis:</span> {generatedDescription}
+              </p>
+              <p className="text-gray-700">
+                <span className="font-semibold">Poziom:</span> {level || "A1"},{" "}
+                <span className="font-semibold">Język:</span> {language || "English"}
+              </p>
+              <input
+                type="text"
+                placeholder="Wprowadź tu nowy tytuł..."
+                className="w-full bg-secondarylight rounded-lg border border-main p-2 focus:ring-2 focus:ring-main focus:outline-none"
+                value={storyTitle}
+                onChange={(e: any) => {
+                  setStoryTitle(e.target.value);
+                }}
+              />
+              <Button
+                onClick={generateStory}
+                bgColor={Colors.SECONDARY}
+                className="w-full py-2 rounded-lg text-white font-medium shadow hover:shadow-lg hover:bg-opacity-90 transition duration-200"
+              >
+                
+                Wygeneruj ponownie
+              </Button>
+              <Button
+                onClick={() => {
+                  let newID = 0;
+                  if (allStories.length > 0) {
+                    newID = allStories[allStories.length - 1].id + 1;
+                  }
+                  if (level === undefined || language === undefined) {
+                    language = "english";
+                    level = "A1";
+                  }
+                  onCreateStory({
+                    id: newID,
+                    description: generatedDescription,
+                    language: language,
+                    level: level,
+                    title: generatedTitle,
+                    words: generatedWords,
+                    wordAmount: 0,
+                    wordKnownAmount: 0,
+                  });
+                  setGeneratedDescription("");
+                  setGeneratedStory("");
+                  setGeneratedTitle("");
+                  onClose();
+                }}
+                bgColor={Colors.SECONDARY}
+                className="w-full py-2 rounded-lg text-white font-medium shadow hover:shadow-lg hover:bg-opacity-90 transition duration-200"
+              >
+                Dodaj do kolekcji
+              </Button>
+            </div>
+          )
+        )}
       </div>
-    </Modal>
+    </div>
+  </div>
+</Modal>
   );
 }
 

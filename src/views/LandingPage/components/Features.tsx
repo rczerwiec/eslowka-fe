@@ -14,7 +14,7 @@ const Features = () => {
         </span>
         <h2 className="text-3xl sm:text-5xl lg:text-6xl mt-10 lg:mt-16 font-extrabold tracking-wide">
           Łatwo ucz się {" "}
-          <span className="bg-gradient-to-r from-secondarylight to-white text-transparent bg-clip-text">
+          <span className="bg-gradient-to-r from-white to-white text-transparent bg-clip-text">
             nowych słówek
           </span>
         </h2>

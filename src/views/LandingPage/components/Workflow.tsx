@@ -8,7 +8,7 @@ const Workflow = () => {
       <div id="workflow" className="mt-20 font-inter">
  <h2 className="text-3xl sm:text-5xl lg:text-6xl text-center mt-6 tracking-wide font-bold">
         Jak powinna wyglądać Twoja praca z {" "}
-        <span className="bg-gradient-to-r from-secondarylight to-white text-transparent bg-clip-text">
+        <span className="bg-gradient-to-r from-white to-white text-transparent bg-clip-text">
           naszą aplikacją?
         </span>
       </h2>

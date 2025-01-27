@@ -3,10 +3,12 @@ import logo from "../../../shared/img/eslowka.png";
 import { navItems } from "../../../constants";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoCloseSharp } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 function LP_Navbar() {
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const drawerRef = useRef<HTMLDivElement | null>(null); // Typ referencji określony jako HTMLDivElement
+  const navigate = useNavigate();
 
   const toggleNavbar = () => {
     setMobileDrawerOpen(!mobileDrawerOpen);
@@ -38,7 +40,9 @@ function LP_Navbar() {
           {/* Logo Section */}
           <div className="flex items-center flex-shrink-0">
             <img className="h-10 w-10 mr-2" src={logo} alt="logo" />
-            <span className="text-xl font-extrabold text-gray-800 tracking-tight">
+            <span onClick={()=>{
+              navigate('/')
+            }} className="text-xl font-extrabold text-gray-800 tracking-tight cursor-pointer">
               Esłówka.pl
             </span>
           </div>
@@ -86,7 +90,7 @@ function LP_Navbar() {
         {mobileDrawerOpen && (
           <div
             ref={drawerRef} // Attach ref to the drawer
-            className="fixed inset-0 z-60 bg-white min-h-[400px] shadow-lg p-6 flex flex-col items-center lg:hidden"
+            className="fixed inset-0 z-60 bg-white min-h-[450px] shadow-lg p-6 flex flex-col items-center lg:hidden"
           >
             <ul className="space-y-4 text-gray-700 w-full">
               {navItems.map((item, index) => (

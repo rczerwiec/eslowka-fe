@@ -8,7 +8,7 @@ const MainSection = () => {
       {/* Nagłówek */}
       <h1 className="text-4xl sm:text-6xl lg:text-7xl text-center tracking-wide font-bold">
         Najlepsza platforma do nauki {" "}
-        <span className="bg-gradient-to-r from-secondarylight to-white text-transparent text-transparent bg-clip-text animate-pulse">
+        <span className="bg-gradient-to-r from-white to-white text-transparent bg-clip-text animate-pulse">
           słówek online!
         </span>
       </h1>
@@ -27,7 +27,7 @@ const MainSection = () => {
         </a>
         <a
           href="#"
-          className="py-3 px-6 border border-secondary text-secondary rounded-lg hover:bg-secondary hover:text-white hover:scale-105 transition-transform"
+          className="py-3 px-6 border border-white text-white rounded-lg hover:bg-secondary hover:text-white hover:scale-105 transition-transform"
         >
           Dokumentacja
         </a>

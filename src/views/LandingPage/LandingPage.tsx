@@ -8,7 +8,6 @@ import Testimonials from "./components/Testimonials";
 import Footer from "./components/Footer";
 
 const LandingPage = () => {
-  const navigate = useNavigate();
 
   return (
     <div className="bg-gradient-to-r from-gradient_from to-gradient_to font-inter">
@@ -21,13 +20,13 @@ const LandingPage = () => {
         <div className="transition-opacity duration-500">
           <Features />
         </div>
-        <div className="bg-gray-100 py-16 px-2 rounded-lg shadow-md">
+        <div className=" py-16 px-2 rounded-lg">
           <Workflow />
         </div>
         <div className="transition-transform duration-500 transform hover:scale-105">
           <Pricing />
         </div>
-        <div className="bg-gray-900 text-white py-16 rounded-lg shadow-md">
+        <div className="bg-gray-900 text-white py-4 rounded-lg shadow-md">
           <Testimonials />
         </div>
       </div>

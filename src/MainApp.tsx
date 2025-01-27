@@ -20,6 +20,7 @@ import HearTraining from "./views/Folders/TrainingsPageview/Modes/HearTrainings/
 import HearTrainingReversed from "./views/Folders/TrainingsPageview/Modes/HearTrainings/HearTrainingReversed";
 import LandingPage from "./views/LandingPage/LandingPage";
 import CollectionsPage from './views/Collections/CollectionsPage';
+import LandingPageRules from "./views/LandingPage/LandingPageRules";
 
 const MainApp = () => {
   const router = createBrowserRouter([
@@ -76,6 +77,12 @@ const MainApp = () => {
       ),
     },
     {
+      path: "/rules",
+      element: (
+        <LandingPageRules/>
+      ),
+    },
+    {
       path: "/",
       element: (
         <LandingPage/>
@@ -118,6 +125,14 @@ const MainApp = () => {
       element: (
        <App>
         <RankingPage/>
+       </App>
+      ),
+    },
+    {
+      path: "/rules",
+      element: (
+       <App>
+        <LandingPageRules/>
        </App>
       ),
     },

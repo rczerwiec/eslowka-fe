@@ -1,15 +1,17 @@
-import FirstTitle from "../shared/components/FirstTitle";
-import MainTitle from "../shared/components/MainTitle";
+import FirstTitle from "../../shared/components/FirstTitle";
+import MainTitle from "../../shared/components/MainTitle";
+import Footer from "./components/Footer";
+import LP_Navbar from "./components/LP_Navbar";
 
-const RulesPage = () => {
+const LandingPageRules = () => {
   return (
-    <div className="flex flex-col w-full h-full bg-gray-50 p-6 font-inter">
-      {/* Page Titles */}
-      <FirstTitle >Regulamin</FirstTitle>
-      <MainTitle>Regulamin</MainTitle>
+    <div className="bg-gradient-to-r from-gradient_from to-gradient_to font-inter">
+      {/* Nawigacja */}
+      <LP_Navbar />
 
-      {/* Updates List */}
-      <div className="relative overflow-y-auto max-h-[70vh] mt-6 p-6 bg-white rounded-lg shadow-md border border-gray-200">
+      {/* Główna zawartość */}
+      <div className="max-w-7xl mx-auto pt-20 px-6 space-y-20">
+        <div className="relative overflow-y-auto max-h-[70vh] mt-6 p-6 bg-white rounded-lg shadow-md border border-gray-200">
         <h2 className="text-lg font-semibold text-gray-800 mt-4">1. Postanowienia ogólne</h2>
         <p className="text-gray-700 mt-2">
           1.1. Niniejszy regulamin określa zasady korzystania z aplikacji Esłówka (zwanej dalej "Aplikacją").
@@ -96,8 +98,11 @@ const RulesPage = () => {
 
         <p className="text-gray-600 mt-6">---<br />Data ostatniej aktualizacji: 27.01.2025</p>
       </div>
+      </div>
+      {/* Stopka */}
+      <Footer />
     </div>
   );
 };
 
-export default RulesPage;
+export default LandingPageRules;
