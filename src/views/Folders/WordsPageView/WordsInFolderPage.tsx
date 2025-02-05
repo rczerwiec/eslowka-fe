@@ -123,7 +123,7 @@ const WordsInFolderPage: React.FC = () => {
           <div className="flex justify-center items-center text-fifth max-lg:hidden">
             Strona {page}/{availablePages}
           </div>
-          <div className="flex justify-center items-center text-fifth ">
+          <div className="flex justify-center items-center text-fifth lg:hidden">
             {page}/{availablePages}
           </div>
   
