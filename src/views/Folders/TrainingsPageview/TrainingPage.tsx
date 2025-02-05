@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 const TrainingPage = () => {
   const navigate = useNavigate();
   const folder = useSelector((state: RootState) => state.folderProfile);
-
+  console.log(folder);
   useEffect(() => {
     if (folder.id === undefined) {
       navigate("/app/folders");

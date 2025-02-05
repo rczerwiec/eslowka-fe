@@ -4,18 +4,6 @@ import { TbFolderFilled } from "react-icons/tb";
 import { FaEdit, FaFolder, FaPlayCircle } from "react-icons/fa";
 import ProgressPanel from "../Components/ProgressPanelComponent";
 
-interface FolderRenderUtilProps {
-  folders: IFolder[];
-  isLoading: boolean;
-  isError: boolean;
-  isSuccess: boolean;
-  dispatch: unknown;
-  change: (folder: IFolder) => void;
-  navigate: (url: string) => void;
-  setCurrentFolder: (folder: IFolder) => void;
-  toggleConfirmationModal: () => void;
-}
-
 const FolderRenderUtil = (
   folders: IFolder[],
   isLoading: boolean,
@@ -80,7 +68,7 @@ const FolderRenderUtil = (
             >
               <TbFolderFilled className="text-2xl" />
               <div className="text-lg font-semibold truncate">
-                {folder.folderName}
+                {folder.folderName} ({folder.id})
               </div>
             </div>
           </div>

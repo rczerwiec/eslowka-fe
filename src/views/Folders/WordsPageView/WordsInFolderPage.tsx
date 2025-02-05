@@ -1,6 +1,6 @@
 //ICONS & SVG
 import React, { useEffect, useMemo, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { CSVLink } from "react-csv";
@@ -32,7 +32,7 @@ import UpdateWordsModal from "./Components/UpdateWordsModal";
 import ImportWordsModal from "./Components/ImportWordsModal";
 
 // Types
-import { IWord } from "../../../shared/store/slices/FolderSlice";
+import { change, IWord } from "../../../shared/store/slices/FolderSlice";
 
 const WordsInFolderPage: React.FC = () => {
   const { isVisible, toggleModal, closeModal } = useModal();
@@ -47,6 +47,7 @@ const WordsInFolderPage: React.FC = () => {
   const [newID, setNewID] = useState(0);
   const [copied, setCopied] = useState(false);
   const [data, setData] = useState([]);
+  const dispatch = useDispatch();
 
   const { data: wordsData, isLoading, isError } = useGetAllWordsInFolderQuery({
     folderID: folder.id,
@@ -155,7 +156,9 @@ const WordsInFolderPage: React.FC = () => {
   
           {/* Button: Navigate to training mode */}
           <button
-            onClick={() => navigate("/app/folders/training")}
+            onClick={() => {
+              dispatch(change(folder));
+              navigate("/app/folders/training")}}
             className="flex items-center gap-1 bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight"
           >
             <FaPlayCircle />
@@ -201,7 +204,7 @@ const WordsInFolderPage: React.FC = () => {
             data={wordsData || []}
             filename={"eslowka-eksport.csv"}
           >
-            Export Words
+            Eksportuj słówka
           </CSVLink>
   
           {/* Input for importing CSV files */}
@@ -209,7 +212,7 @@ const WordsInFolderPage: React.FC = () => {
   
           {/* Default voice settings for "Word" column */}
           <div className="max-lg:hidden flex flex-col gap-2 p-2 justify-center font-bold items-center shadow-lg mx-2 rounded-xl text-sm font-inter bg-white z-10 border-secondary border-y-2 border-x-2">
-            <label className="text-sm">Default voice for the "Word" column:</label>
+            <label className="text-sm">Domyślny głos dla kolumny "Słowo":</label>
             <LanguageSelector
               defaultVoice={true}
               selectedVoice={folder.defaultVoice}
@@ -220,7 +223,7 @@ const WordsInFolderPage: React.FC = () => {
   
           {/* Default voice settings for "Translation" column */}
           <div className="max-lg:hidden flex flex-col gap-2 p-2 justify-center font-bold items-center shadow-lg mx-2 rounded-xl text-sm font-inter bg-white z-10 border-secondary border-y-2 border-x-2">
-            <label className="text-sm">Default voice for the "Translation" column:</label>
+            <label className="text-sm">Domyślny głos dla kolumny "Tłumaczenie":</label>
             <LanguageSelector
               defaultVoice={false}
               selectedVoice={folder.defaultVoiceReversed}
@@ -245,7 +248,7 @@ const WordsInFolderPage: React.FC = () => {
       {/* Responsive Button: Copy the folder reference ID */}
       <button
         onClick={handleFolderIDCopy}
-        className="flex absolute w-1/4 lg:w-1/5 bg-white bottom-5 left-5 items-center gap-2 p-2 text-xs lg:text-sm hover:cursor-pointer hover:bg-secondarylight text-fifth rounded-lg"
+        className="flex lg:hidden absolute w-1/4 lg:w-1/5 bg-white bottom-5 left-5 items-center gap-2 p-2 text-xs lg:text-sm hover:cursor-pointer hover:bg-secondarylight text-fifth rounded-lg"
       >
         {copied ? <span>Skopiowano!</span> : <>REF:<FaCopy /></>}
       </button>

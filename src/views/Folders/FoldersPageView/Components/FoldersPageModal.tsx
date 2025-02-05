@@ -9,7 +9,7 @@ import { RootState, useCreateFolderMutation } from "../../../../shared/store";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-const FoldersPageModal: FC<{renderedFoldersLength: Number | undefined, isVisible: boolean, closeModal: () => void}> = (props): JSX.Element => {
+const FoldersPageModal: FC<{folders: IFolder[],renderedFoldersLength: number | undefined, isVisible: boolean, closeModal: () => void}> = (props): JSX.Element => {
 
     const [newFolder, setNewFolder] = useState("");
 
@@ -49,7 +49,8 @@ const FoldersPageModal: FC<{renderedFoldersLength: Number | undefined, isVisible
 
     const onSubmit = () => {
       setNewFolder("");
-      onCreateFolder({ id:props.renderedFoldersLength , folderName: newFolder, words: [], currentProgress: 0, maxProgress: 0, defaultVoice: "Microsoft Ryan Online (Natural) - English (United Kingdom)",  defaultVoiceReversed:"Microsoft Ryan Online (Natural) - English (United Kingdom)", referenceID:user.value+makeid(9)});
+      if(!props.renderedFoldersLength) return;
+      onCreateFolder({ id:props.folders[props.renderedFoldersLength-1].id+1 , folderName: newFolder, words: [], currentProgress: 0, maxProgress: 0, defaultVoice: "Microsoft Ryan Online (Natural) - English (United Kingdom)",  defaultVoiceReversed:"Microsoft Ryan Online (Natural) - English (United Kingdom)", referenceID:user.value+makeid(9)});
       props.closeModal();
     }
 
@@ -80,7 +81,7 @@ return(
         />
         <button
           type="submit"
-          className="flex items-center gap-2 px-6 py-3 bg-secondary text-white font-bold rounded-md hover:bg-secondarylight transition-transform transform hover:scale-105"
+          className="flex z-10 items-center gap-2 px-6 py-3 bg-secondary text-white font-bold rounded-md hover:bg-secondarylight transition-transform transform hover:scale-105"
         >
           <FaCheckCircle className="text-lg" />
           Utwórz Folder

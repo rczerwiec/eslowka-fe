@@ -13,9 +13,10 @@ interface IProps{
   renderedFoldersLength: number | undefined,
   isVisible: boolean,
   closeModal: () => void,
+  folders: IFolder[],
 }
 
-function FolderReferenceCodeModal({renderedFoldersLength, isVisible, closeModal} :IProps){
+function FolderReferenceCodeModal({renderedFoldersLength, folders, isVisible, closeModal} :IProps){
 
     const [referenceCode, setReferenceCode] = useState("");
     const response = useGetFolderByReferenceCodeQuery({referenceCode});
@@ -72,7 +73,7 @@ function FolderReferenceCodeModal({renderedFoldersLength, isVisible, closeModal}
           console.log(word);
           console.log(index);
           if(renderedFoldersLength){
-            word = {...word, folderId: renderedFoldersLength}
+            word = {...word, folderId: folders[renderedFoldersLength-1].id+1}
           }
           return word;
 
@@ -80,7 +81,7 @@ function FolderReferenceCodeModal({renderedFoldersLength, isVisible, closeModal}
 
 
         closeModal();
-        onCreateFolder({ id:renderedFoldersLength , folderName: folder.folderName, words: updatedWords, currentProgress: folder.currentProgress, maxProgress: folder.maxProgress, defaultVoice: folder.defaultVoice,  defaultVoiceReversed:folder.defaultVoiceReversed, referenceID:user.value+makeid(9)});
+        onCreateFolder({ id:folders[renderedFoldersLength!-1].id+1 , folderName: folder.folderName, words: updatedWords, currentProgress: folder.currentProgress, maxProgress: folder.maxProgress, defaultVoice: folder.defaultVoice,  defaultVoiceReversed:folder.defaultVoiceReversed, referenceID:user.value+makeid(9)});
       }
       if(response.isError){
         console.log("Error",response.error);

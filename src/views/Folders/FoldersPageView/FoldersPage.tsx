@@ -106,11 +106,13 @@ const FoldersPage = () => {
 
   {/* Modals */}
   <FoldersPageModal
+    folders = {response.data}
     renderedFoldersLength={folderRender?.renderedFolderLength || 0}
     isVisible={isVisible}
     closeModal={closeModal}
   />
   <FolderReferenceCodeModal
+    folders = {response.data}
     renderedFoldersLength={folderRender?.renderedFolderLength || 0}
     isVisible={ReferenceModal.isVisible}
     closeModal={ReferenceModal.closeModal}

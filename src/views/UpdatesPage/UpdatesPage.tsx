@@ -11,6 +11,14 @@ const UpdatesPage = () => {
 
       {/* Updates List */}
       <div className="relative overflow-y-auto max-h-[70vh] mt-6 p-6 bg-white rounded-lg shadow-md border border-gray-200">
+      <VersionList version="1.15.0 alpha - bug fixes">
+        <h1 className='text-xl font-bold'>Poprawki</h1>
+        <li>-Naprawione błędy z tworzeniem nowych zbiorów oraz kopiowaniem ich przez kod referencyjny.</li>
+        <li>-Naprawiony błąd z najeżdzającym się obrazkiem podczas tworzenia nowego folderu.</li>
+        <li>-Naprawiony błąd z przejściem do ćwiczeń po utworzeniu słówka/słówek w czystych folderach.</li>
+        <li>-Usunięto zduplikowany kod referencyjny w otwartym folderze w wersji desktopowej.</li>
+        <li>-Poprawine błędy w tłumaczeniu.</li>
+      </VersionList>
       <VersionList version="1.14.0 alpha">
       <h1 className='text-xl font-bold'>Zmiany</h1>
         <li>-Dodany regulamin do aplikacji</li>
