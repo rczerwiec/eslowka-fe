@@ -1,11 +1,10 @@
-import { FaInfoCircle } from "react-icons/fa";
+import { FaInfoCircle, FaTrophy } from "react-icons/fa";
 import { FaDatabase, FaDollarSign, FaRobot, FaBook } from "react-icons/fa6";
 import { IoMdSettings } from "react-icons/io";
 import { TbFolderFilled, TbSquareRoundedLetterW } from "react-icons/tb";
 import { MdOutlineImportContacts, MdOutlinePublishedWithChanges } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { RiLogoutBoxFill } from "react-icons/ri";
-import { PiRankingFill } from "react-icons/pi";
 
 interface DropDownComponentInterface{
     signOut:()=>void;
@@ -33,7 +32,7 @@ function DropDownComponent({signOut,hoverOn,hoverOff}:DropDownComponentInterface
        }} className="flex gap-2 block px-4 py-2 text-sm   text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><FaBook className="text-xl"/>Ćwicz Czytanie</a>
        <a onClick={()=>{navigate('/app/ranking')
         hoverOff();
-       }} className="flex gap-2 block px-4 py-2 text-sm   text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><PiRankingFill className="text-xl"/>Ranking</a>
+       }} className="flex gap-2 block px-4 py-2 text-sm   text-gray-700 hover:bg-secondarylight hover:cursor-pointer" role="menuitem" tabIndex={-1} id="menu-item-0"><FaTrophy className="text-xl"/>Ranking</a>
        </div>
       <div className="py-1" role="none">
       <a onClick={()=>{navigate('/app/settings')

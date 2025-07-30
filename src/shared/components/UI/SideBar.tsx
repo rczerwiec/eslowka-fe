@@ -1,5 +1,5 @@
 import { TbSquareRoundedLetterW, TbFolderFilled } from "react-icons/tb";
-import { PiRankingFill } from "react-icons/pi";
+import { FaTrophy } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { FaBook, FaRobot } from "react-icons/fa6";
 
@@ -10,7 +10,7 @@ const SideBar = () => {
     { label: "Moje Foldery", icon: <TbFolderFilled className="text-2xl" />, route: "/app/folders" },
     { label: "Chat AI", icon: <FaRobot className="text-2xl" />, route: "/app/ai" },
     { label: "Ćwicz Czytanie", icon: <FaBook className="text-2xl" />, route: "/app/read" },
-    { label: "Ranking", icon: <PiRankingFill className="text-2xl" />, route: "/app/ranking" },
+    { label: "Ranking", icon: <FaTrophy className="text-2xl" />, route: "/app/ranking" },
   ];
 
   return (
