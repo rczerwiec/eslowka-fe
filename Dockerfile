@@ -36,5 +36,7 @@ RUN npm run build
 # 2. Etap serwera
 FROM nginx:stable-alpine
 COPY --from=build /app/build /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
+
