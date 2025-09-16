@@ -8,15 +8,14 @@ const settingsApi = createApi({
   reducerPath: "settings",
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.REACT_APP_testApiUrl+"settings/",
-    prepareHeaders: async (headers, {getState}) => {
-      const store  = await getState() as RootState;
-      // console.log("myTOKEN",store.userProfile.token);
-      // console.log("UID",store.userProfile.value);
-      if (store) {
-        headers.set('Authorization', `${store.userProfile.token}`)
+    prepareHeaders: (headers, { getState }) => {
+      const store = getState() as RootState;
+      const token = store.userProfile.token;
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`);
       }
       return headers;
-  }
+    }
   }),
   tagTypes: ["User"],
   endpoints(builder) {
