@@ -11,6 +11,10 @@ const UpdatesPage = () => {
 
       {/* Updates List */}
       <div className="relative overflow-y-auto max-h-[70vh] mt-6 p-6 bg-white rounded-lg shadow-md border border-gray-200">
+      <VersionList version="1.15.2 alpha - major words bug fix">
+        <h1 className='text-xl font-bold'>Poprawki</h1>
+        <li>-Progress powtórzeń słówek jest teraz poprawnie liczony.</li>
+      </VersionList>
       <VersionList version="1.15.1 alpha - bug fixes">
         <h1 className='text-xl font-bold'>Poprawki</h1>
         <li>-Poprawiona informacja o ilości stron w otwartym folderze.</li>

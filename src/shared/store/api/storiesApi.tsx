@@ -7,15 +7,15 @@ import { RootState } from "../../store"
 const storiesApi = createApi({
   reducerPath: "stories",
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_testApiUrl+"stories/",
+    baseUrl: process.env.REACT_APP_testApiUrl + "stories/",
     prepareHeaders: (headers, { getState }) => {
       const store = getState() as RootState;
       const token = store.userProfile.token;
       if (token) {
-        headers.set('Authorization', `Bearer ${token}`);
+        headers.set("Authorization", `Bearer ${token}`);
       }
       return headers;
-    }
+    },
   }),
   tagTypes: ["Words", "Folders", "User", "Stories"],
   endpoints(builder) {

@@ -25,8 +25,8 @@ const AddWordsForm: FC<{
       word: "",
       translation: "",
       toggle: false,
-      words: Array(9).fill({
-        id: newID,
+      words: Array.from({ length: 9 }, (_, i) => ({
+        id: newID + i,
         word: "",
         translation: "",
         note: "",
@@ -35,7 +35,7 @@ const AddWordsForm: FC<{
         known: 0,
         streak: 0,
         reverseStreak: 0,
-      }),
+      })),
     },
     onSubmit: async (values) => {
       if (values.toggle) {

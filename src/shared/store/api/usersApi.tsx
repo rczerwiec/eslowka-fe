@@ -6,15 +6,15 @@ import { RootState } from ".."
 const usersApi = createApi({
   reducerPath: "users",
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_testApiUrl+"users/",
+    baseUrl: process.env.REACT_APP_testApiUrl + "users/",
     prepareHeaders: (headers, { getState }) => {
       const store = getState() as RootState;
       const token = store.userProfile.token;
       if (token) {
-        headers.set('Authorization', `Bearer ${token}`);
+        headers.set("Authorization", `Bearer ${token}`);
       }
       return headers;
-    }
+    },
   }),
   tagTypes: ["User"],
   endpoints(builder) {

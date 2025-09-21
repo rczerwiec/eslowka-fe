@@ -21,12 +21,17 @@ export const WordsTable: FC<{ renderedWords: JSX.Element | null }> = (
         <th className="rounded-tl-xl border-r-4 border-white">Słowo</th>
         <th className="border-r-4 border-white">Tłumaczenie</th>
         <th className="border-r-4 border-white max-lg:hidden">Status</th>
+        {isDevEnv && (
+          <th className="border-r-4 border-white max-lg:hidden">DEBUG: More info</th>
+        )}
         <th className="rounded-tr-xl w-14">Opcje</th>
       </tr>
       {props.renderedWords}
     </table>
   );
 };
+
+const isDevEnv = process.env.REACT_APP_testENV === "true";
 
 const WordRenderer: FC<{
   data: IWord[];
@@ -79,6 +84,9 @@ const WordRenderer: FC<{
             }}
             className="flex justify-center items-center gap-2 border-r-4 border-white"
           >
+            {isDevEnv && (
+              <a>ID:{word.id}</a>
+            )}
             {" "}
             {streakIcon}
             {word.word.slice(0, 20)}
@@ -97,6 +105,22 @@ const WordRenderer: FC<{
           <th className="border-r-4 border-white max-lg:hidden">
             <WordStatusForm word={word} />
           </th>
+          {isDevEnv && (
+            <th>
+              <a className="border-r-4 border-white max-lg:hidden">
+                Powtórzenia: {word.repeated}
+              </a>
+              <a className="border-r-4 border-white max-lg:hidden">
+                Znane: {word.known}
+              </a>
+              <a className="border-r-4 border-white max-lg:hidden">
+                Streak: {word.streak}
+              </a>
+              <a className="border-r-4 border-white max-lg:hidden">
+                ReverseStreak: {word.reverseStreak}
+              </a>
+            </th>
+          )}
           <th className="flex justify-start gap-3 items-center h-14 p-4">
             <FaTrashAlt
               className="hover:cursor-pointer hover:text-secondary"
@@ -129,7 +153,6 @@ const WordRenderer: FC<{
             className="h-14 bg-fourth font-inter font-medium text-xl max-lg:text-sm "
             key={word.id}
           >
-            <th className="border-r-4 border-white hidden">{word.id}</th>
             <th
               onClick={() => {
                 props.openUpdateModal();
@@ -137,6 +160,9 @@ const WordRenderer: FC<{
               }}
               className="flex justify-center items-center gap-2 border-r-4 border-white"
             >
+              {isDevEnv && (
+                <a>ID:{word.id}</a>
+              )}
               {" "}
               {streakIcon}
               {word.word.slice(0, 20)}
@@ -155,6 +181,22 @@ const WordRenderer: FC<{
             <th className="border-r-4 border-white max-lg:hidden">
               <WordStatusForm word={word} />
             </th>
+            {isDevEnv && (
+              <th>
+                <a className="border-r-4 border-white max-lg:hidden">
+                  Powtórzenia: {word.repeated}
+                </a>
+                <a className="border-r-4 border-white max-lg:hidden">
+                  Znane: {word.known}
+                </a>
+                <a className="border-r-4 border-white max-lg:hidden">
+                  Streak: {word.streak}
+                </a>
+                <a className="border-r-4 border-white max-lg:hidden">
+                  ReverseStreak: {word.reverseStreak}
+                </a>
+              </th>
+            )}
             <th className="flex justify-start gap-3 items-center h-14 p-4">
               <FaTrashAlt
                 className="hover:cursor-pointer hover:text-secondary "
@@ -167,6 +209,7 @@ const WordRenderer: FC<{
                   });
                 }}
               />
+
               <FiEdit
                 onClick={() => {
                   props.openUpdateModal();

@@ -6,15 +6,15 @@ import { RootState } from "..";
 const foldersApi = createApi({
   reducerPath: "folders",
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_testApiUrl+"folders/",
+    baseUrl: process.env.REACT_APP_testApiUrl + "folders/",
     prepareHeaders: (headers, { getState }) => {
       const store = getState() as RootState;
       const token = store.userProfile.token;
       if (token) {
-        headers.set('Authorization', `Bearer ${token}`);
+        headers.set("Authorization", `Bearer ${token}`);
       }
       return headers;
-    }
+    },
   }),
   tagTypes: ["Words", "Folders", "User", "Stories"],
   endpoints(builder) {
@@ -134,6 +134,7 @@ const foldersApi = createApi({
             method: "PATCH",
             body: data.updatedWord.word,
           };
+          
         },
       }),
       updateWordStatusAndStreak: builder.mutation({
