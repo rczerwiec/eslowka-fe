@@ -14,6 +14,7 @@ const UpdatesPage = () => {
       <VersionList version="1.15.2 alpha - major words bug fix">
         <h1 className='text-xl font-bold'>Poprawki</h1>
         <li>-Progress powtórzeń słówek jest teraz poprawnie liczony.</li>
+        <li>-Nie mozna usunac juz domyślnego folderu.</li>
       </VersionList>
       <VersionList version="1.15.1 alpha - bug fixes">
         <h1 className='text-xl font-bold'>Poprawki</h1>

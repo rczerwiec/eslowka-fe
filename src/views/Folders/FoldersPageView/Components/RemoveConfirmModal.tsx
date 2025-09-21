@@ -3,6 +3,7 @@ import { Modal } from "../../../../shared/components/Modal";
 import { useDeleteUserFolderMutation } from "../../../../shared/store";
 import { IFolder } from "../../../../shared/store/slices/FolderSlice";
 import { FC } from "react";
+import { toast } from "react-toastify";
 
 const RemoveConfirmModal: FC<{isVisible: boolean, closeModal: () => void, folder: IFolder | undefined, userID: string}> = (props): JSX.Element => {
     const [removeFolder] = useDeleteUserFolderMutation();
@@ -24,6 +25,10 @@ const RemoveConfirmModal: FC<{isVisible: boolean, closeModal: () => void, folder
               <div className="flex p-9 px-44 justify-between items-center">
               <button
         onClick={() => {
+          if(folderToRemove.id===0){
+            toast.error("Nie można usunąć domyślnego folderu!");
+            return;
+          }
           removeFolder({ folderToRemove: folderToRemove, userID: props.userID });
           props.closeModal();
         }}
