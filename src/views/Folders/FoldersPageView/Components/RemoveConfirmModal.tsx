@@ -27,9 +27,11 @@ const RemoveConfirmModal: FC<{isVisible: boolean, closeModal: () => void, folder
         onClick={() => {
           if(folderToRemove.id===0){
             toast.error("Nie można usunąć domyślnego folderu!");
-            return;
           }
-          removeFolder({ folderToRemove: folderToRemove, userID: props.userID });
+          else{
+            removeFolder({ folderToRemove: folderToRemove, userID: props.userID });
+            toast.success("Pomyślnie usunięto folder!");
+          }
           props.closeModal();
         }}
         className="bg-secondary hover:bg-secondarylight text-white font-bold text-lg px-6 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105"
