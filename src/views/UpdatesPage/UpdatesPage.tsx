@@ -16,6 +16,10 @@ const UpdatesPage = () => {
         <li>-Dodane kolekcje społeczności - foldery udostępnione przez użytkowników esłówka.pl</li>
         <li>-Dodano komunikat przypominający o aktywacji konta.</li>
         <li>-Strona z wyborem ćwiczeń została przeprojektowana.</li>
+        <li>-Strona z rankingami przeprojektowana.</li>
+        <li>-Strona z chatem AI przeprojektowana.</li>
+        <li>-Strona z czytankami przeprojektowana.</li>
+        <li>-Modale przeprojektowane.</li>
         <h1 className='text-xl font-bold'>Poprawki</h1>
         <li>-Liczne poprawki wizualnem</li>
         <li>-Naprawa licznych błędów - głównie z odświeżaniem</li>
