@@ -33,7 +33,11 @@ const LoginPage = () => {
 
     const unsubscribe = onAuthStateChanged(auth, (loggedUser) => {
       if (loggedUser) {
-        navigate("/app")// User is signed in
+        if (loggedUser.emailVerified) {
+          navigate("/app");
+        } else {
+          // stay on login page for unverified users, show toast from submit handler
+        }
       } else {
         console.log(null); // No user is signed in
       }
@@ -122,7 +126,7 @@ const LoginPage = () => {
       navigate('/')
     }} src={mainLogo}></img>
     </div>
-    {(user.userLoggedIn) && (<Navigate to={'/app'} replace={true}/> )}
+    {(user.userLoggedIn && authUser?.emailVerified) && (<Navigate to={'/app'} replace={true}/> )}
     <div className="flex flex-col h-screen
        items-center justify-center 
        bg-gradient-to-r from-gradient_from to-gradient_to">

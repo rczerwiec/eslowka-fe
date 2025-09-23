@@ -16,42 +16,49 @@ const RemoveConfirmModal: FC<{isVisible: boolean, closeModal: () => void, folder
         onClose={props.closeModal}
         isVisible={props.isVisible}
       >
-        <div className="absolute bg-whiteMain mt-20 z-20 h-1/4 w-full top-0 bg-white rounded xl:w-1/3 xl:left-0 xl:right-0 xl:mr-auto xl:ml-auto">
-          <div className="absolute flex flex-col p-8 shrink h-full w-full overflow-y-auto  scrollbar-hide z-10">
-            <form className="z-10">
-              <div className="font-inter font-bold text-2xl text-fifth z-10 truncate">
-                Czy na pewno chcesz usunąć?
-              </div>
-              <div className="flex p-9 px-44 justify-between items-center">
-              <button
-        onClick={() => {
-          if(folderToRemove.id===0){
-            toast.error("Nie można usunąć domyślnego folderu!");
-          }
-          else{
-            removeFolder({ folderToRemove: folderToRemove, userID: props.userID });
-            toast.success("Pomyślnie usunięto folder!");
-          }
-          props.closeModal();
-        }}
-        className="bg-secondary hover:bg-secondarylight text-white font-bold text-lg px-6 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105"
-      >
-        TAK
-      </button>
-      <button
-        onClick={props.closeModal}
-        className="bg-neutral-400 hover:bg-neutral-500 text-white font-bold text-lg px-6 py-3 rounded-lg shadow-md transition-transform transform hover:scale-105"
-      >
-        NIE
-      </button>
-              </div>
-
-            </form>
-            <div className="absolute top-0 right-0 pr-8 pt-6 text-3xl z-20 text-fifth ">
+        <div className="absolute bg-white mt-20 z-20 w-full top-0 bg-white rounded-lg shadow-xl xl:w-1/3 xl:left-0 xl:right-0 xl:mr-auto xl:ml-auto">
+          <div className="flex flex-col p-6 relative">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="font-inter font-bold text-xl text-fifth">
+                Potwierdź usunięcie
+              </h2>
               <BiSolidExit
-                className="hover:text-4xl hover:cursor-pointer"
+                className="text-2xl text-gray-500 hover:text-gray-700 cursor-pointer"
                 onClick={props.closeModal}
               />
+            </div>
+            
+            <div className="mb-6">
+              <p className="text-gray-700 text-base">
+                Czy na pewno chcesz usunąć folder <span className="font-semibold">"{props.folder?.folderName}"</span>?
+              </p>
+              <p className="text-sm text-gray-500 mt-2">
+                Ta operacja jest nieodwracalna.
+              </p>
+            </div>
+
+            <div className="flex gap-3 justify-end">
+              <button
+                onClick={props.closeModal}
+                className="px-4 py-2 text-gray-600 hover:text-gray-800 font-medium transition-colors"
+              >
+                Anuluj
+              </button>
+              <button
+                onClick={() => {
+                  if(folderToRemove.id===0){
+                    toast.error("Nie można usunąć domyślnego folderu!");
+                  }
+                  else{
+                    removeFolder({ folderToRemove: folderToRemove, userID: props.userID });
+                    toast.success("Pomyślnie usunięto folder!");
+                  }
+                  props.closeModal();
+                }}
+                className="bg-red-500 hover:bg-red-600 text-white font-medium px-4 py-2 rounded-md transition-colors"
+              >
+                Usuń
+              </button>
             </div>
           </div>
         </div>

@@ -31,6 +31,10 @@ export interface IFolder{
     defaultVoice: string;
     defaultVoiceReversed: string;
     referenceID: string;
+    isShared: boolean;
+    folderLanguage: string;
+    sharedCounter: number;
+    authorID: string | any;
   
 }
 
@@ -43,6 +47,10 @@ const initialState: IFolder = {
     defaultVoice: "Microsoft Ryan Online (Natural) - English (United Kingdom)",
     defaultVoiceReversed: "Microsoft Ryan Online (Natural) - English (United Kingdom)",
     referenceID: "",
+    isShared: false,
+    folderLanguage: "English",
+    sharedCounter: 0,
+    authorID: undefined,
  
 }
 
@@ -50,7 +58,7 @@ export const folderSlice = createSlice({
     name: "folderProfile",
     initialState: initialState,
     reducers: {
-        change: (state, action: PayloadAction<{id: number; folderName: string; words:IWord[], currentProgress: number, maxProgress: number, defaultVoice:string,defaultVoiceReversed:string, referenceID:string }>) => {
+        change: (state, action: PayloadAction<{id: number; folderName: string; words:IWord[], currentProgress: number, maxProgress: number, defaultVoice:string,defaultVoiceReversed:string, referenceID:string, isShared:boolean, folderLanguage:string, sharedCounter: number, authorID:string }>) => {
             state.id = action.payload.id;
             state.folderName = action.payload.folderName;
             state.words = action.payload.words;
@@ -59,6 +67,10 @@ export const folderSlice = createSlice({
             state.defaultVoice = action.payload.defaultVoice;
             state.defaultVoiceReversed = action.payload.defaultVoiceReversed;
             state.referenceID = action.payload.referenceID;
+            state.isShared = action.payload.isShared;
+            state.folderLanguage = action.payload.folderLanguage;
+            state.sharedCounter = action.payload.sharedCounter;
+            state.authorID = action.payload.authorID
           },
     }
 })

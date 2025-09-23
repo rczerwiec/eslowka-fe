@@ -11,6 +11,13 @@ const UpdatesPage = () => {
 
       {/* Updates List */}
       <div className="relative overflow-y-auto max-h-[70vh] mt-6 p-6 bg-white rounded-lg shadow-md border border-gray-200">
+      <VersionList version="1.16.0 alpha - Collections Update">
+        <h1 className='text-xl font-bold'>Zmiany</h1>
+        <li>-Dodane kolekcje społeczności - foldery udostępnione przez użytkowników esłówka.pl</li>
+        <li>-Dodano komunikat przypominający o aktywacji konta.</li>
+        <h1 className='text-xl font-bold'>Poprawki</h1>
+        <li>-Naprawa licznych błędów - głównie z odświeżaniem</li>
+      </VersionList>
       <VersionList version="1.15.2 alpha - major words bug fix">
         <h1 className='text-xl font-bold'>Poprawki</h1>
         <li>-Progress powtórzeń słówek jest teraz poprawnie liczony.</li>

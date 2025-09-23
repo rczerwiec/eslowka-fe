@@ -47,6 +47,15 @@ const foldersApi = createApi({
           };
         },
       }),
+      getAllSharedFolders: builder.query({
+        providesTags: ["Folders"],
+        query: () => {
+          return {
+            url: `/shared/all`,
+            method: "GET",
+          };
+        },
+      }),
       getAllWordsInFolder: builder.query({
         providesTags: ["Words"],
         query: (data: { folderID: string; userID: string }) => {
@@ -62,6 +71,16 @@ const foldersApi = createApi({
           return {
             url: `/${data.userID}/folders/${data.folderID}/randomWords`,
             method: "GET",
+          };
+        },
+      }),
+      incrementSharedCounter: builder.mutation({
+        invalidatesTags: ["Folders"],
+        query: (data: { folderMongoId: string }) => {
+          return {
+            url: `/shared/${data.folderMongoId}/increment`,
+            method: "PATCH",
+            body: {},
           };
         },
       }),
@@ -126,6 +145,26 @@ const foldersApi = createApi({
           };
         },
       }),
+      updateFolderSharing: builder.mutation({
+        invalidatesTags: ["Folders"],
+        query: (data:{isShared:boolean, userID: string, folderID: string}) => {
+          return {
+            url: `/${data.userID}/${data.folderID}/sharing`,
+            method: "PATCH",
+            body: {isShared: data.isShared},
+          };
+        },
+      }),
+      updateFolderLanguage: builder.mutation({
+        invalidatesTags: ["Folders"],
+        query: (data:{folderLanguage:string, userID: string, folderID: string}) => {
+          return {
+            url: `/${data.userID}/${data.folderID}/language`,
+            method: "PATCH",
+            body: {folderLanguage: data.folderLanguage},
+          };
+        },
+      }),
       updateWordDetails: builder.mutation({
         invalidatesTags: ["Words", "Folders"],
         query: (data:{updatedWord: INewWord, userID: string}) => {
@@ -175,17 +214,21 @@ export const {
   useGetUserFoldersQuery,
   useGetFolderByReferenceCodeQuery,
   useGetSingleFolderQuery,
+  useGetAllSharedFoldersQuery,
   useGetAllWordsInFolderQuery,
   useGetRandomFolderWordsQuery,
+  useIncrementSharedCounterMutation,
   useCreateFolderMutation,
   useCreateWordInFolderMutation,
   useCreateMultipleWordsInFolderMutation,
   useUpdateFolderDefaultVoiceMutation,
   useUpdateFolderSecondaryVoiceMutation,
   useUpdateFolderNameMutation,
+  useUpdateFolderSharingMutation,
+  useUpdateFolderLanguageMutation,
   useUpdateWordDetailsMutation,
   useUpdateWordStatusAndStreakMutation,
   useDeleteWordInFolderMutation,
-  useDeleteUserFolderMutation
+  useDeleteUserFolderMutation,
 } = foldersApi;
 export { foldersApi };

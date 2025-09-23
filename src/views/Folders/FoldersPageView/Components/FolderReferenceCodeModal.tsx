@@ -81,7 +81,7 @@ function FolderReferenceCodeModal({renderedFoldersLength, folders, isVisible, cl
 
 
         closeModal();
-        onCreateFolder({ id:folders[renderedFoldersLength!-1].id+1 , folderName: folder.folderName, words: updatedWords, currentProgress: folder.currentProgress, maxProgress: folder.maxProgress, defaultVoice: folder.defaultVoice,  defaultVoiceReversed:folder.defaultVoiceReversed, referenceID:user.value+makeid(9)});
+        onCreateFolder({ id:folders[renderedFoldersLength!-1].id+1 , folderName: folder.folderName, words: updatedWords, currentProgress: folder.currentProgress, maxProgress: folder.maxProgress, defaultVoice: folder.defaultVoice,  defaultVoiceReversed:folder.defaultVoiceReversed, referenceID:user.value+makeid(9), isShared:false,folderLanguage:folder.folderLanguage,sharedCounter:0, authorID: folder.authorID} );
       }
       if(response.isError){
         console.log("Error",response.error);

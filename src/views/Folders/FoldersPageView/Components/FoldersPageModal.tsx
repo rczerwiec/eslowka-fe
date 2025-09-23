@@ -50,7 +50,7 @@ const FoldersPageModal: FC<{folders: IFolder[],renderedFoldersLength: number | u
     const onSubmit = () => {
       setNewFolder("");
       if(!props.renderedFoldersLength) return;
-      onCreateFolder({ id:props.folders[props.renderedFoldersLength-1].id+1 , folderName: newFolder, words: [], currentProgress: 0, maxProgress: 0, defaultVoice: "Microsoft Ryan Online (Natural) - English (United Kingdom)",  defaultVoiceReversed:"Microsoft Ryan Online (Natural) - English (United Kingdom)", referenceID:user.value+makeid(9)});
+      onCreateFolder({ id:props.folders[props.renderedFoldersLength-1].id+1 , folderName: newFolder, words: [], currentProgress: 0, maxProgress: 0, defaultVoice: "Microsoft Ryan Online (Natural) - English (United Kingdom)",  defaultVoiceReversed:"Microsoft Ryan Online (Natural) - English (United Kingdom)", referenceID:user.value+makeid(9),isShared:false,folderLanguage:"Angielski",sharedCounter:0, authorID: user.value});
       props.closeModal();
     }
 

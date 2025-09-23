@@ -16,6 +16,9 @@ import {
   RootState,
   useGetAllWordsInFolderQuery,
   useUpdateFolderNameMutation,
+  useUpdateFolderSharingMutation,
+  useUpdateFolderLanguageMutation,
+  useFetchUserQuery,
 } from "../../../shared/store";
 import { useModal } from "../../../shared/components/Modal";
 
@@ -30,6 +33,7 @@ import WordRenderer, { WordsTable } from "./Components/WordRenderer";
 import AddWordsModal from "./Components/AddWordsModal";
 import UpdateWordsModal from "./Components/UpdateWordsModal";
 import ImportWordsModal from "./Components/ImportWordsModal";
+import { toast } from "react-toastify";
 
 // Types
 import { change, IWord } from "../../../shared/store/slices/FolderSlice";
@@ -47,6 +51,8 @@ const WordsInFolderPage: React.FC = () => {
   const [newID, setNewID] = useState(0);
   const [copied, setCopied] = useState(false);
   const [data, setData] = useState([]);
+  const [sharingPending, setSharingPending] = useState(false);
+  const [languagePending, setLanguagePending] = useState(false);
   const dispatch = useDispatch();
 
   const { data: wordsData, isLoading, isError } = useGetAllWordsInFolderQuery({
@@ -54,6 +60,9 @@ const WordsInFolderPage: React.FC = () => {
     userID: user.value,
   });
   const [renameFolder] = useUpdateFolderNameMutation();
+  const [updateSharing] = useUpdateFolderSharingMutation();
+  const [updateLanguage] = useUpdateFolderLanguageMutation();
+  const { data: authorData } = useFetchUserQuery(folder.authorID as string, { skip: !folder.authorID });
 
   useEffect(() => {
     if (!folder.words) {
@@ -209,6 +218,113 @@ const WordsInFolderPage: React.FC = () => {
   
           {/* Input for importing CSV files */}
           <CsvFileInput onFileLoad={handleFileLoad} />
+
+  
+          {/* shared folder settings and stats */}
+          <div className="max-lg:hidden flex flex-col gap-3 p-3 justify-center font-bold items-stretch shadow-lg mx-2 rounded-xl text-sm font-inter bg-white z-10 border-secondary border-y-2 border-x-2">
+            {folder.authorID && folder.authorID !== user.value && (
+              <div className="text-xs text-red-600 font-normal bg-red-50 p-2 rounded border border-red-200">
+                ⚠️ Tylko oryginalny autor folderu może go udostępniać
+              </div>
+            )}
+            <div className="flex items-center justify-between">
+              <label className="text-sm">Udostępnij folder</label>
+              <input
+                type="checkbox"
+                checked={!!folder.isShared}
+                onChange={async (e) => {
+                  const checked = e.target.checked;
+                  if ((folder.words?.length || 0) < 5) return;
+                  
+                  // Sprawdź czy użytkownik jest autorem folderu
+                  if (folder.authorID && folder.authorID !== user.value) {
+                    toast.error("Tylko autor może udostępniać ten folder");
+                    return;
+                  }
+                  
+                  try {
+                    setSharingPending(true);
+                    await updateSharing({ isShared: checked, userID: user.value, folderID: folder.id }).unwrap();
+                    dispatch(change({
+                      id: folder.id,
+                      folderName: folder.folderName,
+                      words: folder.words,
+                      currentProgress: folder.currentProgress,
+                      maxProgress: folder.maxProgress,
+                      defaultVoice: folder.defaultVoice,
+                      defaultVoiceReversed: folder.defaultVoiceReversed,
+                      referenceID: folder.referenceID,
+                      isShared: checked,
+                      folderLanguage: folder.folderLanguage,
+                      sharedCounter: folder.sharedCounter,
+                      authorID: folder.authorID,
+                    }));
+                    toast.success(checked ? "Folder udostępniony" : "Udostępnianie wyłączone");
+                  } catch (err) {
+                    toast.error("Nie udało się zapisać ustawienia udostępniania");
+                  } finally {
+                    setSharingPending(false);
+                  }
+                }}
+                disabled={(folder.words?.length || 0) < 5 || sharingPending || (folder.authorID && folder.authorID !== user.value)}
+                className="h-5 w-5"
+              />
+            </div>
+            {(folder.words?.length || 0) < 5 && (
+              <div className="text-xs text-gray-500 font-normal">Co najmniej 5 słów wymagane, aby udostępniać.</div>
+            )}
+            <div className="flex items-center justify-between">
+              <span className="text-sm">W kolekcjach</span>
+              <span className="text-fifth">{folder.sharedCounter ?? 0}</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-sm">Język</span>
+              <select
+                value={folder.folderLanguage}
+                onChange={async (e) => {
+                  const newLang = e.target.value;
+                  try {
+                    setLanguagePending(true);
+                    await updateLanguage({ folderLanguage: newLang, userID: user.value, folderID: folder.id }).unwrap();
+                    dispatch(change({
+                      id: folder.id,
+                      folderName: folder.folderName,
+                      words: folder.words,
+                      currentProgress: folder.currentProgress,
+                      maxProgress: folder.maxProgress,
+                      defaultVoice: folder.defaultVoice,
+                      defaultVoiceReversed: folder.defaultVoiceReversed,
+                      referenceID: folder.referenceID,
+                      isShared: folder.isShared,
+                      folderLanguage: newLang,
+                      sharedCounter: folder.sharedCounter,
+                      authorID: folder.authorID,
+                    }));
+                    toast.success("Zmieniono język folderu");
+                  } catch (err) {
+                    toast.error("Nie udało się zmienić języka folderu");
+                  } finally {
+                    setLanguagePending(false);
+                  }
+                }}
+                disabled={languagePending || (folder.authorID && folder.authorID !== user.value)}
+                className="h-9 w-40 rounded-md border border-gray-300 bg-white px-2 text-sm focus:outline-none focus:ring-2 focus:ring-main focus:border-transparent disabled:opacity-60"
+              >
+                <option value="Angielski">Angielski</option>
+                <option value="Niemiecki">Niemiecki</option>
+                <option value="Hiszpański">Hiszpański</option>
+                <option value="Francuski">Francuski</option>
+                <option value="Włoski">Włoski</option>
+              </select>
+            </div>
+            {(folder.authorID || authorData?.userName) && (
+              <div className="flex items-center justify-between">
+                <span className="text-sm">Autor</span>
+                <span className="text-fifth break-all text-right font-normal">{authorData?.userName || folder.authorID}</span>
+              </div>
+            )}
+          </div>
+
   
           {/* Default voice settings for "Word" column */}
           <div className="max-lg:hidden flex flex-col gap-2 p-2 justify-center font-bold items-center shadow-lg mx-2 rounded-xl text-sm font-inter bg-white z-10 border-secondary border-y-2 border-x-2">

@@ -1,20 +1,23 @@
 import {FC, useState } from "react";
-import { signOut } from "firebase/auth";
+import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../../../firebase/firebas";
 import { useSelector } from "react-redux";
 import { RootState, useFetchUserQuery } from "../../../store";
 import { toast } from "react-toastify";
 import logo from "../../../img/eslowka.png"
+import { HiExclamationCircle } from "react-icons/hi";
 import UserMenuComponent from "./components/UserMenuComponent";
 import StatsComponent from "./components/StatsComponent";
 
 const NavBar:FC<{}> = (props):JSX.Element => {
   const user = useSelector((state: RootState) => state.userProfile);
   const response = useFetchUserQuery(user.value);
-  
+  const auth = getAuth();
+  const authUser = auth.currentUser;
   const [dropDown, setDropDown] = useState(false);
   const navigate = useNavigate();
+
 
   const [display, setDisplay] = useState(false);
 
@@ -60,6 +63,13 @@ const NavBar:FC<{}> = (props):JSX.Element => {
       <div className="flex top-0 right-0 bg-gradient-to-r from-main to-secondary from-70% w-full h-14 justify-between items-center ">
         <Logo />
         <div className="flex gap-2 h-full justify-center items-center">
+          {authUser && !authUser.emailVerified && (
+            <div className="max-w-xl px-3 py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm shadow-sm flex items-center gap-2 text-white">
+              <HiExclamationCircle className="text-yellow-300 text-xl" />
+              <span className="font-semibold">Aktywuj konto</span>
+              <span className="text-sm opacity-90">Sprawdź e‑mail i kliknij link aktywacyjny.</span>
+            </div>
+          )}
           <PremiumButton/>
           <div
             className="h-full flex items-center justify-between

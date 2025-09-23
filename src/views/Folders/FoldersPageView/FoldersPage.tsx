@@ -18,6 +18,7 @@ import { motion } from "framer-motion";
 import Button from "../../../shared/components/Button";
 import { Colors } from "../../../shared/Enums/Stylings";
 import FolderReferenceCodeModal from "./Components/FolderReferenceCodeModal";
+import { getAuth } from "firebase/auth";
 
 const FoldersPage = () => {
   const user = useSelector((state: RootState) => state.userProfile);

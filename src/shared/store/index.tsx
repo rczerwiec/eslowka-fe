@@ -65,8 +65,12 @@ export {
   useUpdateFolderDefaultVoiceMutation,
   useUpdateFolderSecondaryVoiceMutation,
   useUpdateFolderNameMutation,
+  useUpdateFolderSharingMutation,
+  useUpdateFolderLanguageMutation,
   useUpdateWordDetailsMutation,
   useUpdateWordStatusAndStreakMutation,
   useDeleteWordInFolderMutation,
   useDeleteUserFolderMutation,
+  useIncrementSharedCounterMutation,
+  useGetAllSharedFoldersQuery,
 } from "./api/folderApi";
