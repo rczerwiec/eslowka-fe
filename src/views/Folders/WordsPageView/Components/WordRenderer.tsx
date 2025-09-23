@@ -201,8 +201,8 @@ const WordRenderer: FC<{
               <FaTrashAlt
                 className="hover:cursor-pointer hover:text-secondary "
                 onClick={() => {
-                  console.log(props.folder.id);
-                  console.log(word);
+                  //console.log(props.folder.id);
+                 //console.log(word);
                   removeWord({
                     wordToRemove: { word: word, folderID: props.folder.id },
                     userID: user.value,

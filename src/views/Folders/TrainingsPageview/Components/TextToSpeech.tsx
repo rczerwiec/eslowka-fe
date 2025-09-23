@@ -3,9 +3,10 @@ import { useEffect, useState } from "react";
 interface IProps{
     text:string
     voice?: SpeechSynthesisVoice;
+    listenButtonRef?: React.RefObject<HTMLButtonElement>;
 }
 
-function TextToSpeech({text,voice}:IProps){
+function TextToSpeech({text,voice,listenButtonRef}:IProps){
     const [isPaused, setIsPaused] = useState(false);
     const [utterance, setUtterance] = useState<any>(null);
     const [pitch, setPitch] = useState(1);
@@ -69,12 +70,16 @@ function TextToSpeech({text,voice}:IProps){
       const handleVolumeChange = (event:any) => {
         setVolume(parseFloat(event.target.value));
       };
-      console.log(voice);
+      //console.log(voice);
       return (
         <div className="flex flex-col items-center justify-center gap-2 font-thin text-5xl">
            
           <div className="flex gap-2">
-            <button className="text-lg text-white h-14 bg-secondary font-bold font-inter rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight" onClick={handlePlay}>
+            <button 
+              ref={listenButtonRef}
+              className="text-lg text-white h-14 bg-secondary font-bold font-inter rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight focus:outline-none focus:ring-2 focus:ring-secondary/40 transition-all duration-200" 
+              onClick={handlePlay}
+            >
               {isPaused ? "Kontynuuj" : "Słuchaj"}
             </button>
           </div>

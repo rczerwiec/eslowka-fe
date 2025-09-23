@@ -16,7 +16,7 @@ const SideBar = () => {
   ];
 
   return (
-    <div className="max-lg:hidden relative flex flex-col justify-between top-0 left-0 bg-main w-60  ax-lg:hidden shadow-lg">
+    <div className="max-lg:hidden relative flex flex-col justify-between top-0 left-0 bg-main w-60 ax-lg:hidden shadow-lg z-10">
       <div className="flex flex-col justify-between">
         {/* Górna część menu */}
         <div className="pt-2">

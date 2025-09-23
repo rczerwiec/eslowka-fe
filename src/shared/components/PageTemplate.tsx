@@ -24,7 +24,7 @@ function PageTemplate({ children, firstTitle, mainTitle, backButton, childrenBut
             </div>
           )}
         </div>
-        <div className="flex flex-col bg-white shadow-md rounded-lg  w-full  mx-auto">
+        <div className="flex flex-col bg-white shadow-md rounded-2xl  w-full  mx-auto">
           {children}
         </div>
       </div>

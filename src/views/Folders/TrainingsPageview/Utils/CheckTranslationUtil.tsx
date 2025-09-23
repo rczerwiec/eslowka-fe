@@ -42,7 +42,7 @@ function CheckTranslationUtil(
     word ===
     translation
   ) {
-    console.log(word+"-", translation)
+    //console.log(word+"-", translation)
     if (currentWord.known === 0 && currentWord.streak === 2) {
       known = 1;
     }

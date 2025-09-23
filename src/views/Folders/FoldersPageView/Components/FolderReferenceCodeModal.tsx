@@ -95,37 +95,48 @@ function FolderReferenceCodeModal({renderedFoldersLength, folders, isVisible, cl
 
 return (
   <Modal isVisible={isVisible} onClose={closeModal}>
-    <div className="absolute bg-whiteMain mt-20 z-20 h-2/4 w-full top-0 bg-white rounded xl:w-1/3 xl:left-0 xl:right-0 xl:mr-auto xl:ml-auto">
-      <div className="absolute flex flex-col p-8 shrink h-full w-full overflow-y-auto  scrollbar-hide">
-        <div className="font-inter font-bold text-3xl text-fifth z-10">
-          KOD REFERENCYJNY
-        </div>
-        <form
-          onSubmit={onSubmit}
-          className="flex flex-col justify-center items-center mt-8 z-10"
-        >
-          <div className="font-inter font-medium text-xl text-fifth">
-            Wprowadź Kod
+    <div className="relative bg-white/95 backdrop-blur-sm border border-gray-100 shadow-2xl rounded-2xl w-full max-w-md overflow-hidden">
+      {/* Close Button */}
+      <button
+        onClick={closeModal}
+        className="absolute top-4 right-4 z-30 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-all duration-200"
+      >
+        <BiSolidExit className="text-2xl" />
+      </button>
+      
+      {/* Content */}
+      <div className="p-8">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-secondary to-secondarylight rounded-full mb-4">
+            <span className="text-white text-2xl font-bold">#</span>
           </div>
-          <input
-            className="bg-fifth_light w-3/4 h-10 rounded-md p-3"
-            placeholder="Kod znajdziesz w folderze obok przycisku powrotu"
-            value={referenceCode}
-            onChange={(e) => setReferenceCode(e.target.value)}
-          ></input>
-          <button className="absolute bottom-0 right-0 pr-8 pb-6 text-3xl text-secondary hover:text-4xl hover:cursor-pointer">
-            <FaCheckCircle onClick={onSubmit} />
+          <h2 className="text-2xl font-bold text-gray-800 mb-2">Kod Referencyjny</h2>
+          <p className="text-gray-600">Wprowadź kod, aby zaimportować folder</p>
+        </div>
+
+        {/* Form */}
+        <form onSubmit={onSubmit} className="space-y-6">
+          <div className="space-y-2">
+            <label className="block text-sm font-semibold text-gray-700">
+              Wprowadź Kod
+            </label>
+            <input
+              className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all duration-200 outline-none"
+              placeholder="Kod znajdziesz w folderze obok przycisku powrotu"
+              value={referenceCode}
+              onChange={(e) => setReferenceCode(e.target.value)}
+            />
+          </div>
+          
+          <button
+            type="submit"
+            className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-secondary to-secondarylight text-white font-medium rounded-xl hover:shadow-lg transition-all duration-200"
+          >
+            <FaCheckCircle className="text-lg" />
+            Importuj Folder
           </button>
         </form>
-
-        <Character
-          alt="character2"
-          className="absolute z-0 w-3/6 bottom-0 left-auto"
-          character={character2}
-        />
-        <div className="absolute z-20 top-0 right-0 pr-8 pt-6 text-3xl text-fifth">
-          <BiSolidExit onClick={closeModal} className="hover:cursor-pointer" />
-        </div>
       </div>
     </div>
   </Modal>

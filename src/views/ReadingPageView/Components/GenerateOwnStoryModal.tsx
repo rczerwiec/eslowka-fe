@@ -74,7 +74,7 @@ function GenerateOwnModal({isVisible, onClose, level,language,allStories}: IModa
             " language. Answer should contain only the titles seperated with comma"
         );
 
-        console.log(countResult.totalTokens);
+        //console.log(countResult.totalTokens);
         if (countResult !== undefined) {
           if (countResult.totalTokens > 850) {
             toast.error("Przekroczono ilość tokenów!");
@@ -94,9 +94,9 @@ function GenerateOwnModal({isVisible, onClose, level,language,allStories}: IModa
           const responseTitle = response.response;
           title = responseTitle.text().toString();
           let titles = title.split(",");
-          console.log(titles);
+          //console.log(titles);
           title = titles[Math.floor(Math.random() * titles.length)];
-          console.log(title);
+          //console.log(title);
         })
         .catch((err) => {
           toast.error(
@@ -114,7 +114,7 @@ function GenerateOwnModal({isVisible, onClose, level,language,allStories}: IModa
  "translate this title:" + storyTitle + " to "+ language + ". Your answer should contain only the translated title"
       );
 
-      console.log(countResult.totalTokens);
+      //console.log(countResult.totalTokens);
       if (countResult !== undefined) {
         if (countResult.totalTokens > 850) {
           toast.error("Przekroczono ilość tokenów!");
@@ -148,7 +148,7 @@ function GenerateOwnModal({isVisible, onClose, level,language,allStories}: IModa
         title
              );
        
-             console.log(countResult.totalTokens);
+             //console.log(countResult.totalTokens);
              if (countResult !== undefined) {
                if (countResult.totalTokens > 850) {
                  toast.error("Przekroczono ilość tokenów!");
@@ -209,7 +209,7 @@ function GenerateOwnModal({isVisible, onClose, level,language,allStories}: IModa
             }
           );
 
-          console.log(arraysOfWords);
+          //console.log(arraysOfWords);
         })
         .catch((err) => {
           toast.error(
@@ -227,7 +227,7 @@ function GenerateOwnModal({isVisible, onClose, level,language,allStories}: IModa
         story
              );
        
-             console.log(shortStoryCountResult.totalTokens);
+             //console.log(shortStoryCountResult.totalTokens);
              if (shortStoryCountResult !== undefined) {
                if (shortStoryCountResult.totalTokens > 850) {
                  toast.error("Przekroczono ilość tokenów!");
@@ -245,7 +245,7 @@ function GenerateOwnModal({isVisible, onClose, level,language,allStories}: IModa
         .then((response) => {
           const responseDescription = response.response;
           description = responseDescription.text().toString();
-          console.log(description);
+          //console.log(description);
         })
         .catch((err) => {
           toast.error(
@@ -278,109 +278,167 @@ function GenerateOwnModal({isVisible, onClose, level,language,allStories}: IModa
 
   return (
 <Modal isVisible={isVisible} onClose={onClose}>
-  <div className="absolute bg-white rounded-lg shadow-xl mt-20 z-20 h-auto w-11/12 top-0 xl:w-1/3 xl:left-1/2 xl:transform xl:-translate-x-1/2 xl:mt-10">
-    <div className="flex flex-col p-6 h-full w-full overflow-y-auto scrollbar-hide">
-      <h2 className="font-inter font-bold text-3xl text-fifth text-center mb-6">
-        Generuj własną historię
-      </h2>
+  <div className="relative bg-white/95 backdrop-blur-sm border border-gray-100 shadow-2xl rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden z-[100]">
+    {/* Header */}
+    <div className="bg-gradient-to-r from-secondary to-secondarylight p-6 rounded-t-2xl">
+      <div className="text-center">
+        <div className="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-2xl mb-4">
+          <span className="text-white text-3xl">✨</span>
+        </div>
+        <h2 className="text-2xl font-bold text-white mb-2">Generuj własną historię</h2>
+        <p className="text-white/90 text-sm">Stwórz spersonalizowaną historię z AI</p>
+      </div>
+    </div>
 
-      <div className="flex flex-col gap-4 font-inter">
+    <div className="p-6 h-full w-full overflow-y-auto">
+      <div className="flex flex-col gap-6">
         {generatedDescription === "" ? (
           isLoading ? (
-            <div className="flex justify-center items-center text-lg text-gray-600">
-              Ładowanie...
+            <div className="flex flex-col items-center justify-center py-12">
+              <div className="animate-spin w-12 h-12 border-t-4 border-secondary rounded-full mb-4"></div>
+              <p className="text-lg font-medium text-gray-600">Czarek generuje historię...</p>
+              <p className="text-sm text-gray-500 mt-1">To może chwilę potrwać</p>
             </div>
           ) : (
-            <div className="flex flex-col gap-6">
+            <div className="space-y-6">
               <div className="text-center">
-                <p className="text-lg font-semibold">Wpisz tytuł Twojej historii:</p>
-                <p className="text-sm text-gray-500 mt-1">
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">Wpisz tytuł Twojej historii</h3>
+                <p className="text-gray-600 mb-3">
                   Tytuł może być wpisany w dowolnym języku. Przetłumaczymy go dla Ciebie.
                 </p>
+                <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-4">
+                  <div className="flex items-center gap-2 text-blue-700">
+                    <span className="text-lg">💡</span>
+                    <p className="text-sm font-medium">
+                      Wybierz poziom i język w menu nawigacji, żeby dopasować poziom i język historii
+                    </p>
+                  </div>
+                </div>
               </div>
-              <input
-                type="text"
-                placeholder="np. Marta kocha tortille"
-                className="w-full bg-secondarylight rounded-lg border border-main p-2 focus:ring-2 focus:ring-main focus:outline-none"
-                value={storyTitle}
-                onChange={(e: any) => {
-                  setStoryTitle(e.target.value);
-                }}
-              />
-              <Button
-                onClick={generateStory}
-                bgColor={Colors.SECONDARY}
-                className="w-full py-2 rounded-lg text-white font-medium shadow hover:shadow-lg hover:bg-opacity-90 transition duration-200"
-              >
-                Wygeneruj własną historię
-              </Button>
+              
+              <div className="space-y-4">
+                <input
+                  type="text"
+                  placeholder="np. Marta kocha tortille"
+                  className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all duration-200 outline-none text-lg"
+                  value={storyTitle}
+                  onChange={(e: any) => {
+                    setStoryTitle(e.target.value);
+                  }}
+                />
+                
+                <Button
+                  onClick={generateStory}
+                  bgColor={Colors.SECONDARY}
+                  className="w-full flex items-center justify-center gap-3 py-4 px-6 bg-gradient-to-r from-secondary to-secondarylight text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200"
+                >
+                  <span className="text-xl">🚀</span>
+                  <span>Wygeneruj własną historię</span>
+                </Button>
+              </div>
             </div>
           )
         ) : (
           isLoading ? (
-            <div className="flex justify-center items-center text-lg text-gray-600">
-              Ładowanie...
+            <div className="flex flex-col items-center justify-center py-12">
+              <div className="animate-spin w-12 h-12 border-t-4 border-secondary rounded-full mb-4"></div>
+              <p className="text-lg font-medium text-gray-600">Czarek generuje historię...</p>
+              <p className="text-sm text-gray-500 mt-1">To może chwilę potrwać</p>
             </div>
           ) : (
-            <div className="flex flex-col gap-4">
-              <h3 className="text-xl font-semibold text-main">Podgląd:</h3>
-              <p className="text-gray-700">
-                <span className="font-semibold">Tytuł:</span> {generatedTitle}
-              </p>
-              <p className="text-gray-700">
-                <span className="font-semibold">Opis:</span> {generatedDescription}
-              </p>
-              <p className="text-gray-700">
-                <span className="font-semibold">Poziom:</span> {level || "A1"},{" "}
-                <span className="font-semibold">Język:</span> {language || "English"}
-              </p>
-              <input
-                type="text"
-                placeholder="Wprowadź tu nowy tytuł..."
-                className="w-full bg-secondarylight rounded-lg border border-main p-2 focus:ring-2 focus:ring-main focus:outline-none"
-                value={storyTitle}
-                onChange={(e: any) => {
-                  setStoryTitle(e.target.value);
-                }}
-              />
-              <Button
-                onClick={generateStory}
-                bgColor={Colors.SECONDARY}
-                className="w-full py-2 rounded-lg text-white font-medium shadow hover:shadow-lg hover:bg-opacity-90 transition duration-200"
-              >
+            <div className="space-y-6">
+              {/* Podgląd historii */}
+              <div className="bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-xl p-6">
+                <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                  <span>📖</span>
+                  <span>Podgląd historii</span>
+                </h3>
                 
-                Wygeneruj ponownie
-              </Button>
-              <Button
-                onClick={() => {
-                  let newID = 0;
-                  if (allStories.length > 0) {
-                    newID = allStories[allStories.length - 1].id + 1;
-                  }
-                  if (level === undefined || language === undefined) {
-                    language = "english";
-                    level = "A1";
-                  }
-                  onCreateStory({
-                    id: newID,
-                    description: generatedDescription,
-                    language: language,
-                    level: level,
-                    title: generatedTitle,
-                    words: generatedWords,
-                    wordAmount: 0,
-                    wordKnownAmount: 0,
-                  });
-                  setGeneratedDescription("");
-                  setGeneratedStory("");
-                  setGeneratedTitle("");
-                  onClose();
-                }}
-                bgColor={Colors.SECONDARY}
-                className="w-full py-2 rounded-lg text-white font-medium shadow hover:shadow-lg hover:bg-opacity-90 transition duration-200"
-              >
-                Dodaj do kolekcji
-              </Button>
+                <div className="space-y-3">
+                  <div>
+                    <span className="font-semibold text-gray-700">Tytuł:</span>
+                    <p className="text-gray-800 font-medium">{generatedTitle}</p>
+                  </div>
+                  
+                  <div>
+                    <span className="font-semibold text-gray-700">Opis:</span>
+                    <p className="text-gray-800">{generatedDescription}</p>
+                  </div>
+                  
+                  <div className="flex gap-4 text-sm">
+                    <div className="flex items-center gap-1">
+                      <span className="px-2 py-1 bg-secondary/10 text-secondary rounded-md font-medium">
+                        {level || "A1"}
+                      </span>
+                      <span className="text-gray-600">Poziom</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <span className="px-2 py-1 bg-secondarylight/10 text-secondarylight rounded-md font-medium">
+                        {language || "English"}
+                      </span>
+                      <span className="text-gray-600">Język</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Nowy tytuł */}
+              <div className="space-y-4">
+                <h4 className="text-lg font-semibold text-gray-800">Chcesz wygenerować inną historię?</h4>
+                <input
+                  type="text"
+                  placeholder="Wprowadź nowy tytuł..."
+                  className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all duration-200 outline-none"
+                  value={storyTitle}
+                  onChange={(e: any) => {
+                    setStoryTitle(e.target.value);
+                  }}
+                />
+              </div>
+
+              {/* Przyciski akcji */}
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Button
+                  onClick={generateStory}
+                  bgColor={Colors.SECONDARY}
+                  className="flex-1 flex items-center justify-center gap-2 py-3 px-4 bg-gradient-to-r from-secondary to-secondarylight text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200"
+                >
+                  <span>🔄</span>
+                  <span>Wygeneruj ponownie</span>
+                </Button>
+                
+                <Button
+                  onClick={() => {
+                    let newID = 0;
+                    if (allStories.length > 0) {
+                      newID = allStories[allStories.length - 1].id + 1;
+                    }
+                    if (level === undefined || language === undefined) {
+                      language = "english";
+                      level = "A1";
+                    }
+                    onCreateStory({
+                      id: newID,
+                      description: generatedDescription,
+                      language: language,
+                      level: level,
+                      title: generatedTitle,
+                      words: generatedWords,
+                      wordAmount: 0,
+                      wordKnownAmount: 0,
+                    });
+                    setGeneratedDescription("");
+                    setGeneratedStory("");
+                    setGeneratedTitle("");
+                    onClose();
+                  }}
+                  bgColor={Colors.SECONDARY}
+                  className="flex-1 flex items-center justify-center gap-2 py-3 px-4 bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200"
+                >
+                  <span>✅</span>
+                  <span>Dodaj do kolekcji</span>
+                </Button>
+              </div>
             </div>
           )
         )}

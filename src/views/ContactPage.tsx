@@ -11,7 +11,7 @@ const ContactPage = () => {
       note: "",
     },
     onSubmit: (values) => {
-      console.log("Form submitted", values);
+      //onsole.log("Form submitted", values);
     },
   });
 

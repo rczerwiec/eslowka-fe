@@ -60,73 +60,94 @@ const UpdateWordForm: FC<{
   });
 
   return (
-    <form
-      onSubmit={formik.handleSubmit}
-      className="flex flex-col p-8 bg-white rounded-xl shadow-lg w-full max-w-md mx-auto"
-    >
-      <h2 className="font-bold text-2xl text-fifth mb-6 text-center">
-        Edytuj słowo - {props.folder.folderName}
-      </h2>
-
-      <div className="flex flex-col gap-4">
-        {/* Pole dla Słówka */}
-        <div className="flex flex-col">
-          <label htmlFor="word" className="font-medium text-fifth mb-2">
-            Słówko
-          </label>
-          <input
-            id="word"
-            name="word"
-            type="text"
-            className="bg-fifth_light p-4 rounded-md border border-neutral-300 focus:ring-2 focus:ring-secondary focus:outline-none"
-            placeholder="np. świnia"
-            value={formik.values.word}
-            onChange={formik.handleChange}
-          />
+    <div className="w-full max-w-2xl mx-auto">
+      <form
+        onSubmit={formik.handleSubmit}
+        className="bg-white/90 backdrop-blur-sm border border-gray-100 shadow-lg rounded-2xl p-8"
+      >
+        {/* Header */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-secondary to-secondarylight rounded-full mb-4">
+            <FaCheckCircle className="text-white text-2xl" />
+          </div>
+          <h2 className="text-2xl font-bold text-gray-800 mb-2">
+            Edytuj słowo
+          </h2>
+          <p className="text-gray-600">
+            Folder: <span className="font-semibold text-secondary">{props.folder.folderName}</span>
+          </p>
         </div>
 
-        {/* Pole dla Tłumaczenia */}
-        <div className="flex flex-col">
-          <label htmlFor="translation" className="font-medium text-fifth mb-2">
-            Tłumaczenie
-          </label>
-          <input
-            id="translation"
-            name="translation"
-            type="text"
-            className="bg-fifth_light p-4 rounded-md border border-neutral-300 focus:ring-2 focus:ring-secondary focus:outline-none"
-            placeholder="np. pig"
-            value={formik.values.translation}
-            onChange={formik.handleChange}
-          />
+        <div className="space-y-6">
+          {/* Pole dla Słówka */}
+          <div className="space-y-2">
+            <label htmlFor="word" className="block text-sm font-semibold text-gray-700">
+              Słówko
+            </label>
+            <input
+              id="word"
+              name="word"
+              type="text"
+              className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all duration-200 outline-none"
+              placeholder="np. świnia"
+              value={formik.values.word}
+              onChange={formik.handleChange}
+            />
+          </div>
+
+          {/* Pole dla Tłumaczenia */}
+          <div className="space-y-2">
+            <label htmlFor="translation" className="block text-sm font-semibold text-gray-700">
+              Tłumaczenie
+            </label>
+            <input
+              id="translation"
+              name="translation"
+              type="text"
+              className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all duration-200 outline-none"
+              placeholder="np. pig"
+              value={formik.values.translation}
+              onChange={formik.handleChange}
+            />
+          </div>
+
+          {/* Pole dla Notatki */}
+          <div className="space-y-2">
+            <label htmlFor="note" className="block text-sm font-semibold text-gray-700">
+              Notatka
+            </label>
+            <textarea
+              id="note"
+              name="note"
+              rows={3}
+              className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all duration-200 outline-none resize-none"
+              placeholder="np. używane gdy odnosimy się do osób starszych"
+              value={formik.values.note}
+              onChange={formik.handleChange}
+            />
+          </div>
         </div>
 
-        {/* Pole dla Notatki */}
-        <div className="flex flex-col">
-          <label htmlFor="note" className="font-medium text-fifth mb-2">
-            Notatka
-          </label>
-          <textarea
-            id="note"
-            name="note"
-            className="bg-fifth_light p-4 rounded-md border border-neutral-300 focus:ring-2 focus:ring-secondary focus:outline-none"
-            placeholder="np. używane gdy odnosimy się do osób starszych"
-            value={formik.values.note}
-            onChange={formik.handleChange}
-          ></textarea>
+        {/* Action Buttons */}
+        <div className="flex gap-3 mt-8 pt-6 border-t border-gray-100">
+          <button
+            type="button"
+            onClick={props.closeModal}
+            className="flex-1 px-6 py-3 text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-xl font-medium transition-all duration-200"
+          >
+            Anuluj
+          </button>
+          <Button
+            type="submit"
+            size={Sizes.XL3}
+            className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-secondary to-secondarylight text-white px-6 py-3 rounded-xl font-medium hover:shadow-lg transition-all duration-200"
+          >
+            <FaCheckCircle className="text-lg" />
+            Zapisz zmiany
+          </Button>
         </div>
-      </div>
-
-      <div className="flex justify-end mt-6">
-        <Button
-          type="submit"
-          size={Sizes.XL3}
-          className="flex items-center gap-2 bg-secondary text-white px-6 py-3 rounded-lg hover:bg-secondarylight transition"
-        >
-          <FaCheckCircle className="text-xl" /> Zapisz
-        </Button>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 };
 

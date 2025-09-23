@@ -18,10 +18,10 @@ const CollectionsPage = () => {
   const [incrementSharedCounter] = useIncrementSharedCounterMutation();
   useEffect(() => {
     if (response.isSuccess) {
-      console.log("Shared collections:", response.data);
+      //console.log("Shared collections:", response.data);
     }
     if (response.isError) {
-      console.log("Shared collections error:", response.error);
+      //console.log("Shared collections error:", response.error);
     }
   }, [response.isSuccess, response.isError, response.data, response.error]);
 

@@ -22,8 +22,21 @@ function Modal({ isVisible, onClose, children }: IProps) {
 
   return ReactDOM.createPortal(
     <>
-      <div className="fixed flex justify-center z-20 top-0 left-0 w-full h-full bg-transparent_gray" onClick={onClose}></div>
-      {children}
+      <div 
+        className="fixed inset-0 z-[90] bg-black/50 backdrop-blur-sm" 
+        onClick={onClose}
+      />
+      <div 
+        className="fixed inset-0 z-[100] flex items-center justify-center p-4 pointer-events-none"
+        onClick={onClose}
+      >
+        <div 
+          className="pointer-events-auto"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {children}
+        </div>
+      </div>
     </>,
     document.querySelector(".modal-container")!
   );

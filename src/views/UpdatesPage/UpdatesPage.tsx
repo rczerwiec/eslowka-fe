@@ -15,7 +15,9 @@ const UpdatesPage = () => {
         <h1 className='text-xl font-bold'>Zmiany</h1>
         <li>-Dodane kolekcje społeczności - foldery udostępnione przez użytkowników esłówka.pl</li>
         <li>-Dodano komunikat przypominający o aktywacji konta.</li>
+        <li>-Strona z wyborem ćwiczeń została przeprojektowana.</li>
         <h1 className='text-xl font-bold'>Poprawki</h1>
+        <li>-Liczne poprawki wizualnem</li>
         <li>-Naprawa licznych błędów - głównie z odświeżaniem</li>
       </VersionList>
       <VersionList version="1.15.2 alpha - major words bug fix">

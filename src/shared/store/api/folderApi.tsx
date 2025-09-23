@@ -31,7 +31,7 @@ const foldersApi = createApi({
       getFolderByReferenceCode: builder.query({
         providesTags: ["Folders"],
         query: (data: { referenceCode: string }) => {
-          console.log(data.referenceCode);
+          //console.log(data.referenceCode);
           return {
             url: `/getByReferenceCode/${data.referenceCode}/referenceCode/reference`,
             method: "GET",
@@ -117,7 +117,7 @@ const foldersApi = createApi({
       updateFolderDefaultVoice: builder.mutation({
         invalidatesTags: ["Words", "Folders"],
         query: (data:{voice:any, userID: string, folderID: string}) => {
-          console.log(data.voice)
+          //console.log(data.voice)
           return {
             url: `/${data.userID}/${data.folderID}/defaultVoice`,
             method: "PATCH",

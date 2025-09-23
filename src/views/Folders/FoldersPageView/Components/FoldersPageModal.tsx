@@ -57,46 +57,50 @@ const FoldersPageModal: FC<{folders: IFolder[],renderedFoldersLength: number | u
 
 return(
 <Modal isVisible={props.isVisible} onClose={props.closeModal}>
-<div className="absolute bg-whiteMain mt-20 z-20 h-2/4 w-full top-0 bg-white rounded xl:w-1/3 xl:left-0 xl:right-0 xl:mr-auto xl:ml-auto">
-  <div className="absolute flex flex-col p-8 shrink h-full w-full overflow-y-auto  scrollbar-hide">
-       {/* Header */}
-       <div className="flex justify-between items-center mb-6">
-        <h2 className="font-inter font-bold text-3xl text-fifth">Nowy Folder</h2>
-        <BiSolidExit
-          onClick={props.closeModal}
-          className="text-3xl text-fifth cursor-pointer hover:scale-110 transition-transform"
-        />
+  <div className="relative bg-white/95 backdrop-blur-sm border border-gray-100 shadow-2xl rounded-2xl w-full max-w-md overflow-hidden">
+    {/* Close Button */}
+    <button
+      onClick={props.closeModal}
+      className="absolute top-4 right-4 z-30 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-all duration-200"
+    >
+      <BiSolidExit className="text-2xl" />
+    </button>
+    
+    {/* Content */}
+    <div className="p-8">
+      {/* Header */}
+      <div className="text-center mb-8">
+        <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-secondary to-secondarylight rounded-full mb-4">
+          <FaCheckCircle className="text-white text-2xl" />
+        </div>
+        <h2 className="text-2xl font-bold text-gray-800 mb-2">Nowy Folder</h2>
+        <p className="text-gray-600">Utwórz nowy folder na słówka</p>
       </div>
 
-    {/* Form */}
-    <form onSubmit={onSubmit} className="flex flex-col items-center gap-6">
-        <label className="font-inter font-medium text-xl text-fifth">
-          Nazwa Folderu
-        </label>
-        <input
-          className="bg-fifth_light w-full max-w-md h-12 rounded-md px-4 text-base placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-secondary"
-          placeholder="np. Warzywa"
-          value={newFolder}
-          onChange={(e) => setNewFolder(e.target.value)}
-        />
+      {/* Form */}
+      <form onSubmit={onSubmit} className="space-y-6">
+        <div className="space-y-2">
+          <label className="block text-sm font-semibold text-gray-700">
+            Nazwa Folderu
+          </label>
+          <input
+            className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all duration-200 outline-none"
+            placeholder="np. Warzywa"
+            value={newFolder}
+            onChange={(e) => setNewFolder(e.target.value)}
+          />
+        </div>
+        
         <button
           type="submit"
-          className="flex z-10 items-center gap-2 px-6 py-3 bg-secondary text-white font-bold rounded-md hover:bg-secondarylight transition-transform transform hover:scale-105"
+          className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-secondary to-secondarylight text-white font-medium rounded-xl hover:shadow-lg transition-all duration-200"
         >
           <FaCheckCircle className="text-lg" />
           Utwórz Folder
         </button>
       </form>
-    
-  {/* Character Image */}
-  <Character
-        alt="character2"
-        className="absolute z-0 w-2/4 bottom-0 left-0 opacity-10"
-        character={character2}
-      />
-
+    </div>
   </div>
-</div>
 </Modal>)
 }
 

@@ -11,6 +11,7 @@ import { IWord } from "../../../../../shared/store/slices/FolderSlice";
 import { useFormik } from "formik";
 import CheckTranslationUtil from "../../Utils/CheckTranslationUtil";
 import FirstTitle from "../../../../../shared/components/FirstTitle";
+import MainTitle from "../../../../../shared/components/MainTitle";
 import Button from "../../../../../shared/components/Button";
 import RenderStatus from "../../Components/RenderStatus";
 import TextToSpeech from "../../Components/TextToSpeech";
@@ -40,9 +41,11 @@ const HearTraining = () => {
   const response = useFetchUserQuery(user.value);
   const inputRef = useRef<any>(null);
   const buttonRef = useRef<any>(null);
+  const listenButtonRef = useRef<any>(null);
   const [currentWord, setCurrentWord] = useState<IWord>({word: "Ładowanie...", id: -1, translation: "Ładowanie...", note: "", repeated: 0, known: 0, folderId: -1, streak:0, reverseStreak: 0});
   const [status, setStatus] = useState<number>(-1);
   const [voice, setVoice] = useState<SpeechSynthesisVoice>();
+  const [autoPlayTrigger, setAutoPlayTrigger] = useState(0);
 
   //IF INPUT IS NOT NULL - MAKE IT FOCUSED
   if(inputRef.current !== null && !isDisabled) {inputRef.current.focus();}
@@ -65,12 +68,34 @@ const HearTraining = () => {
         else{
           setStatus(data[data.length -1].known);
           setWordsState(data);
-          setCurrentWord(data[data.length -1])
+          setCurrentWord(data[data.length -1]);
+          setAutoPlayTrigger(prev => prev + 1); // Trigger auto-play
         }
 
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess])
+
+  // Auto-play when new word loads and focus on listen button
+  useEffect(() => {
+    if (autoPlayTrigger > 0 && currentWord.word !== "Ładowanie...") {
+      // Focus on listen button
+      if (listenButtonRef.current) {
+        listenButtonRef.current.focus();
+      }
+      // Auto-play the word
+      setTimeout(() => {
+        const synth = window.speechSynthesis;
+        const utterance = new SpeechSynthesisUtterance(currentWord.word);
+        if (voice) {
+          utterance.voice = voice;
+        }
+        utterance.rate = 0.8;
+        utterance.volume = 1;
+        synth.speak(utterance);
+      }, 500);
+    }
+  }, [autoPlayTrigger, currentWord.word, voice]);
 
   let streak = 0;
   let reversed = true;
@@ -108,7 +133,6 @@ const HearTraining = () => {
 
   //CHECK TRANSLATION - ON_BUTTON_CLICK BEFORE CHECK
   const setStatusBar = () => {
-    console.log(formik.values.translation.toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\u0142/g, "l"),wordsState[wordsState.length - 1].translation.toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").replace(/\u0142/g, "l" ))
     if (formik.values.translation.toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\u0142/g, "l") === wordsState[wordsState.length - 1].translation.toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").replace(/\u0142/g, "l").replaceAll('\n','')) {
       setButtonsState(["text-lg text-white hidden", "text-lg text-white h-14 bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight","font-bold text-green-600 text-5xl", "Dobrze!", "Błędne tłumaczenie!", "bg-fifth_light h-14 rounded-md w-96 p-3 font-thin text-base bg-green-200"]);
       setIsDisabled(true);
@@ -152,63 +176,75 @@ let ButtonInput = (
 
     return (
       <>
-        <div className="flex flex-col w-full h-full">
-          <FirstTitle>Ćwicz Słówka</FirstTitle>
-          <div
-            className="flex px-4 h-20 w-3/4 max-lg:w-full items-center justify-between
-                            text-black text-3xl font-medium"
-          >
-            <div className="max-lg:text-2xl">Mowa</div>
-            <div
-              onClick={() => {
-                navigate("/app/folders/training");
-              }}
-              className="flex items-center bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight"
-            >
-              <IoMdArrowRoundBack />
-              <div className="text-lg">Powrót </div>
+        <div className="relative flex w-full min-h-full bg-gray-50">
+          <div className="flex flex-col w-full max-w-6xl mx-auto px-6 py-6 lg:py-10">
+            <div className="flex items-center justify-between bg-white/80 backdrop-blur-sm border border-gray-100 shadow-sm rounded-2xl px-5 sm:px-6 py-4">
+              <MainTitle>Ze Słuchu</MainTitle>
+              <button
+                onClick={() => {
+                  navigate("/app/folders/training");
+                }}
+                className="inline-flex items-center gap-2 rounded-xl bg-secondary px-4 py-2 text-white transition hover:bg-secondarylight focus:outline-none focus:ring-2 focus:ring-secondary/40"
+              >
+                <IoMdArrowRoundBack />
+                <span>Powrót</span>
+              </button>
             </div>
-          </div>
-          <div
-            className="flex flex-col px-4 mb-2 w-3/4 max-lg:w-full items-center gap-8
-                text-black text-3xl font-medium"
-          >
-            <div className={ButtonsState[2]}>
-              {ButtonsState[3]} - {currentWord.translation}
-            </div>
-            <TextToSpeech voice={voice} text={currentWord.word} />
-            <form onSubmit={formik.handleSubmit}>
-              <div className="flex flex-col gap-2 items-center justify-center">
-                
-                <div className="text-sm font-inter font-thin text-fifth">
-                  {currentWord.note}
+
+            <div className="mt-8 flex flex-col items-center gap-8">
+              <div className={ButtonsState[2]}>
+                {ButtonsState[3]} - {currentWord.translation}
+              </div>
+              
+              {/* Enhanced audio section */}
+              <div className="bg-white/80 backdrop-blur-sm border border-gray-100 shadow-sm rounded-2xl p-6 w-full max-w-md">
+                <div className="flex flex-col items-center gap-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-3 h-3 bg-secondary rounded-full animate-pulse"></div>
+                    <h3 className="text-lg font-semibold text-gray-800">Słuchaj słówka</h3>
+                  </div>
+                  <TextToSpeech voice={voice} text={currentWord.word} listenButtonRef={listenButtonRef} />
+                  {currentWord.note && (
+                    <div className="text-sm text-gray-600 text-center italic">
+                      "{currentWord.note}"
+                    </div>
+                  )}
                 </div>
               </div>
-              {ButtonInput}
-            </form>
-            {/* STATUSY SŁÓWKA */}
-            <div className="flex flex-col justify-center items-center w-1/3 max-lg:w-full text-center font-inter gap-4">
-              {renderStatus}
-              <div className="flex text-center font-thin text-sm text-fifth">
-                Wybrany status określa, jak często dane słówko będzie pojawiało
-                się w ćwiczeniach. Status możesz zmieniać w dowolnej chwili,
-                zmienia on się również wraz z ilością powtórzeń danego słowa.
+
+              <form onSubmit={formik.handleSubmit}>
+                {ButtonInput}
+              </form>
+              <div className="w-full max-w-2xl">
+                <div className="bg-white/80 backdrop-blur-sm border border-gray-100 shadow-sm rounded-2xl p-6">
+                  <div className="flex flex-col items-center gap-6">
+                    <h3 className="text-lg font-semibold text-gray-800">Status słówka</h3>
+                    {renderStatus}
+                    <div className="text-center text-sm text-gray-600 leading-relaxed">
+                      Wybrany status określa, jak często dane słówko będzie pojawiało się w ćwiczeniach. Status możesz zmieniać w dowolnej chwili, zmienia on się również wraz z ilością powtórzeń danego słowa.
+                    </div>
+                    <div className="w-full">
+                      <h4 className="text-base font-medium text-gray-700 mb-3">Ustawienia głosu</h4>
+                      <LanguageSelector
+                        defaultVoice={true}
+                        setVoice={setVoice}
+                        selectedVoice={folder.defaultVoice}
+                        userID={user.value}
+                        folder={folder}
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
-              <LanguageSelector
-                defaultVoice={true}
-                setVoice={setVoice}
-                selectedVoice={folder.defaultVoice}
-                userID={user.value}
-                folder={folder}
-              />
             </div>
           </div>
+
+          <Character
+            alt="character1"
+            className="absolute z-0 w-1/5 bottom-0 right-0 max-lg:hidden"
+            character={character1}
+          />
         </div>
-        <Character
-          alt="character1"
-          className="absolute z-0 w-1/5 bottom-0 right-0 max-lg:hidden"
-          character={character1}
-        />
       </>
     );
 };

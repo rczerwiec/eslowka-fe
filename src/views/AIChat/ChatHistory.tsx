@@ -47,7 +47,7 @@ const ChatHistory = ({chatHistory}:IProps) => {
      
         }
         let color:string = ""
-        let position="justify-end items-right pl-16"
+        let position="justify-end items-right pl-16 pb-4"
         if(userType === "Ty:"){
             color = "bg-secondary"
             position = "pr-16"
@@ -55,21 +55,24 @@ const ChatHistory = ({chatHistory}:IProps) => {
 
         return (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
             className={"flex m-4 " + position}
             key={index}
           >
-            <div className={color + "  shadow-xl p-3 w-fit rounded-xl "}>
-              <div className="font-bold text-lg">{userType}</div>
-              <div className="p-1 text-base">
+            <div className={color + " shadow-lg p-4 w-fit max-w-[80%] rounded-2xl "}>
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                <div className="font-semibold text-sm text-gray/90">{userType}</div>
+              </div>
+              <div className="text-base leading-relaxed">
                 {message.role === "model" ? (
                   <span className="flex flex-wrap flex-col gap-1">
                     {renderedWords}
                   </span>
                 ) : (
-                  <p>
+                  <p className="text-white">
                     <ReactMarkdown>{message.parts[0].text}</ReactMarkdown>
                   </p>
                 )}
@@ -79,7 +82,12 @@ const ChatHistory = ({chatHistory}:IProps) => {
         );})
     return (
         <>
-        {currentChatHistory.length>0 ?         <motion.div className="flex flex-col overflow-y-scroll max-h-[550px] max-lg:max-h-[450px] max-w-[1300px] border border-solid border-fifth rounded-xl p-4">
+        {currentChatHistory.length>0 ?         
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="flex flex-col overflow-y-auto max-h-[550px] max-lg:max-h-[450px] space-y-2"
+        >
             {currentChatHistory}
         </motion.div>:<div></div>}
 

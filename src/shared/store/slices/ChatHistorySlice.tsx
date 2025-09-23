@@ -22,7 +22,7 @@ export const chatHistorySlice = createSlice({
     initialState: initialState,
     reducers: {
         change: (state, action: PayloadAction<{chatHistory: IChatHistoryPart[]}>) => {
-            console.log("PAYLOAD:",action.payload.chatHistory)
+            //console.log("PAYLOAD:",action.payload.chatHistory)
             state.object = action.payload.chatHistory;
           },
     }

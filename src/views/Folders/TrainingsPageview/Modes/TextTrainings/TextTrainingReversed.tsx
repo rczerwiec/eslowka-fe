@@ -18,6 +18,7 @@ import { IWord } from "../../../../../shared/store/slices/FolderSlice";
 import { useFormik } from "formik";
 import CheckTranslationUtil from "../../Utils/CheckTranslationUtil";
 import FirstTitle from "../../../../../shared/components/FirstTitle";
+import MainTitle from "../../../../../shared/components/MainTitle";
 import Button from "../../../../../shared/components/Button";
 import RenderStatus from "../../Components/RenderStatus";
 import IconStreak from "../../Components/IconStreak";
@@ -148,7 +149,6 @@ const TextTrainingReversed = () => {
 
   //CHECK TRANSLATION - ON_BUTTON_CLICK BEFORE CHECK
   const setStatusBar = () => {
-    console.log(formik.values.translation.toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\u0142/g, "l"),wordsState[wordsState.length - 1].word.toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").replace(/\u0142/g, "l" ))
     if (
       formik.values.translation
         .toLocaleLowerCase()
@@ -240,66 +240,55 @@ let ButtonInput = (
 
 return (
   <>
-    {/* Main container for the application */}
-    <div className="flex flex-col w-full h-full">
-      {/* Title of the training section */}
-      <FirstTitle>Ćwicz Słówka</FirstTitle>
-      <div
-        className="flex px-4 h-20 w-3/4 max-lg:w-full items-center justify-between
-                          text-black text-3xl font-medium"
-      >
-        {/* Subtitle indicating the reversed word translation */}
-        <div className="max-lg:text-2xl">Słówko - Tłumaczenie (Odwrotne)</div>
-        {/* Button for navigating back to the training folders */}
-        <div
-          onClick={() => {
-            navigate("/app/folders/training");
-          }}
-          className="flex items-center bg-secondary rounded-xl p-2 hover:cursor-pointer hover:bg-secondarylight"
-        >
-          <IoMdArrowRoundBack />
-          <div className="text-lg">Powrót </div>
+    <div className="relative flex w-full min-h-full bg-gray-50">
+      <div className="flex flex-col w-full max-w-6xl mx-auto px-6 py-6 lg:py-10">
+        <div className="flex items-center justify-between bg-white/80 backdrop-blur-sm border border-gray-100 shadow-sm rounded-2xl px-5 sm:px-6 py-4">
+          <MainTitle>Słówko - Tłumaczenie (Odwrotne)</MainTitle>
+          <button
+            onClick={() => {
+              navigate("/app/folders/training");
+            }}
+            className="inline-flex items-center gap-2 rounded-xl bg-secondary px-4 py-2 text-white transition hover:bg-secondarylight focus:outline-none focus:ring-2 focus:ring-secondary/40"
+          >
+            <IoMdArrowRoundBack />
+            <span>Powrót</span>
+          </button>
         </div>
-      </div>
-      <div
-        className="flex flex-col px-4 mb-2 w-3/4 max-lg:w-full items-center gap-8
-              text-black text-3xl font-medium"
-      >
-        {/* Displays the current word's status */}
-        <div className={ButtonsState[2]}>
-          {ButtonsState[3]} - {currentWord.word}
-        </div>
-        {/* Displays the translation of the current word and the streak icon */}
-        <div className="flex flex-col gap-2 items-center justify-center">
-          <div className="flex items-center justify-center gap-2 font-thin text-5xl">
-            {" "}
-            {currentWord.translation}
-            {streakIcon} {/* Icon for the current streak */}
+
+        <div className="mt-8 flex flex-col items-center gap-8">
+          <div className={ButtonsState[2]}>
+            {ButtonsState[3]} - {currentWord.word}
           </div>
-          {/* Displays additional notes for the current word */}
-          <div className="text-sm font-inter font-thin text-fifth">
-            {currentWord.note}
+          <div className="flex flex-col gap-2 items-center justify-center">
+            <div className="flex items-center justify-center gap-2 font-thin text-4xl sm:text-5xl">
+              {currentWord.translation}
+              {streakIcon}
+            </div>
+            <div className="text-sm font-inter font-thin text-fifth">
+              {currentWord.note}
+            </div>
           </div>
-        </div>
-        {/* Form that contains the ButtonInput component */}
-        <form onSubmit={formik.handleSubmit}>{ButtonInput}</form>
-        {/* Section for displaying the word status and explanation */}
-        <div className="flex flex-col justify-center items-center w-1/3 text-center font-inter gap-4">
-          {renderStatus}
-          <div className="flex text-center font-thin text-sm text-fifth">
-            Wybrany status określa, jak często dane słówko będzie pojawiało się
-            w ćwiczeniach. Status możesz zmieniać w dowolnej chwili, zmienia on
-            się również wraz z ilością powtórzeń danego słowa.
+          <form onSubmit={formik.handleSubmit}>{ButtonInput}</form>
+          <div className="w-full max-w-2xl">
+            <div className="bg-white/80 backdrop-blur-sm border border-gray-100 shadow-sm rounded-2xl p-6">
+              <div className="flex flex-col items-center gap-6">
+                <h3 className="text-lg font-semibold text-gray-800">Status słówka</h3>
+                {renderStatus}
+                <div className="text-center text-sm text-gray-600 leading-relaxed">
+                  Wybrany status określa, jak często dane słówko będzie pojawiało się w ćwiczeniach. Status możesz zmieniać w dowolnej chwili, zmienia on się również wraz z ilością powtórzeń danego słowa.
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
+      <Character
+        alt="character1"
+        className="absolute z-0 w-1/5 bottom-0 right-0 max-lg:hidden"
+        character={character1}
+      />
     </div>
-    {/* Displays a character illustration */}
-    <Character
-      alt="character1"
-      className="absolute z-0 w-1/5 bottom-0 right-0 max-lg:hidden"
-      character={character1}
-    />
   </>
 );
 };

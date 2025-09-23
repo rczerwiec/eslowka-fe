@@ -22,3 +22,19 @@ code {
 :root {
   font-family: "Poppins", sans-serif;
 }
+
+/* Dynamic tooltip positioning */
+.tooltip-top {
+  top: -2.5rem;
+}
+
+.tooltip-bottom {
+  top: 2.5rem;
+}
+
+/* Smart tooltip positioning based on viewport */
+@media (max-height: 600px) {
+  .tooltip-top {
+    top: 2.5rem;
+  }
+}

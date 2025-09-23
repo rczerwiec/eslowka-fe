@@ -28,7 +28,7 @@ const ImportWordsModal: FC<{isVisible: boolean, closeModal: () => void, folder: 
 
     const ImportWords = async (e:Event) =>{
         e.preventDefault();
-        console.log(props.folder)
+        //console.log(props.folder)
         if(props.folder.length ===0){
           toast.error("Błąd podczas importu! Przed importem, twój folder powinien mieć conajmniej jedno dodane słówko!");
         }
@@ -51,15 +51,15 @@ const ImportWordsModal: FC<{isVisible: boolean, closeModal: () => void, folder: 
                   return word.id;
                 }
               );
-              console.log(currentWordsIDs);
-              console.log(currentWordsIDs[currentWordsIDs.length - 1]);
+              //console.log(currentWordsIDs);
+              //console.log(currentWordsIDs[currentWordsIDs.length - 1]);
 
               //SET NEW ID TO WORDS
               const dataToAddWithNewIDs = dataToAdd.map(
                 (word: IWord, index: number) => {
                   word.id =
                     currentWordsIDs[currentWordsIDs.length - 1] + (index + 1);
-                  console.log("NEWID", word.id);
+                  //console.log("NEWID", word.id);
                   word.folderId = folderWords[0].folderId;
                   if(word.note === null) word.note= "";
                   return word;
@@ -81,8 +81,8 @@ const ImportWordsModal: FC<{isVisible: boolean, closeModal: () => void, folder: 
             
 
 
-        console.log("CURRENT DATA",folderWords);
-        console.log("DATA TO ADD",dataToAdd);
+        //console.log("CURRENT DATA",folderWords);
+        //console.log("DATA TO ADD",dataToAdd);
 
 
     }
@@ -90,16 +90,36 @@ const ImportWordsModal: FC<{isVisible: boolean, closeModal: () => void, folder: 
 
 return (
     <Modal isVisible={props.isVisible} onClose={props.closeModal}>
-    <div className="absolute bg-whiteMain mt-20 z-20 h-1/4 w-full top-0 bg-white rounded xl:w-1/3 xl:left-0 xl:right-0 xl:mr-auto xl:ml-auto">
-      <div className="font-inter p-8 text-center">Znaleziono {props.data.length} słówek, gotowych do zaimporotwania</div>
-      <div className="font-inter p-4 text-center font-bold">Chcesz je teraz zaimportować?</div>
-      <div className="absolute flex flex-col p-8 shrink h-full w-full overflow-y-auto scrollbar-hide z-10">
-            <form className="flex gap-2 justify-between">
-                <Button bgColor={Colors.SECONDARY} onClick={ImportWords}>TAK</Button>
-                <Button bgColor={Colors.SECONDARY} onClick={()=>{props.closeModal()}}>NIE</Button>
-            </form>
+      <div className="fixed inset-0 flex items-center justify-center p-4 z-50">
+        <div className="relative bg-white/95 backdrop-blur-sm border border-gray-100 shadow-2xl rounded-2xl w-full max-w-md overflow-hidden">
+          {/* Content */}
+          <div className="p-8 text-center">
+            <div className="mb-6">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-secondary to-secondarylight rounded-full mb-4">
+                <span className="text-white text-2xl font-bold">{props.data.length}</span>
+              </div>
+              <h2 className="text-2xl font-bold text-gray-800 mb-2">Import słówek</h2>
+              <p className="text-gray-600">Znaleziono {props.data.length} słówek gotowych do zaimportowania</p>
+            </div>
+            
+            <div className="flex gap-3">
+              <button
+                onClick={() => props.closeModal()}
+                className="flex-1 px-6 py-3 text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-xl font-medium transition-all duration-200"
+              >
+                Anuluj
+              </button>
+              <Button 
+                bgColor={Colors.SECONDARY} 
+                onClick={ImportWords}
+                className="flex-1 px-6 py-3 rounded-xl font-medium hover:shadow-lg transition-all duration-200"
+              >
+                Importuj słówka
+              </Button>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
     </Modal>
 )}
 

@@ -56,10 +56,7 @@ const SignUpPage = () => {
 
         //Send user object to database
         createUser(newUser).then(() => {
-          toast.success("Pomyślnie utworzono konto! Zostaniesz przekierowany!");
-          setTimeout(() => {
-            navigate("/login");
-          }, 5000);
+          toast.success("Pomyślnie utworzono konto! Zostałeś przekierowany!");
         });
       }
     ).catch(()=> {

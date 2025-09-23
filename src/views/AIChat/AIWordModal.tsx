@@ -74,7 +74,7 @@ function AIWordModal({ isVisible, onClose, word}: IProps) {
           " i zapisz tłumaczenie tylko jednym słowem"
       );
 
-      console.log(countResult.totalTokens);
+      //console.log(countResult.totalTokens);
       if (countResult !== undefined) {
         if (countResult.totalTokens > 850) {
           toast.error("Przekroczono ilość tokenów!");
@@ -86,7 +86,7 @@ function AIWordModal({ isVisible, onClose, word}: IProps) {
       const result = await model.generateContent("Przetłumacz słowo:"+word+" i zapisz tłumaczenie tylko jednym słowem");
       const response = await result.response;
       translation = response.text().toString();
-      console.log(word);
+      //console.log(word);
       setTranslationWord(translation);
       setGeneratedWord(true);
       setIsLoading(false);
@@ -95,15 +95,15 @@ function AIWordModal({ isVisible, onClose, word}: IProps) {
 
   //ADD THIS WORD TO CURRENT SELECTED FOLDER
   const AddWordToFolder = async () => {
-    console.log(folder);
+    //console.log(folder);
     if(folder){
     let newID = 0;
     if(folder.words.length !== 0 ){
-      console.log("długosc",folder.words.length)
-      console.log("poprzednie id",folder.words[folder.words.length - 1].id)
+      //console.log("długosc",folder.words.length)
+      //console.log("poprzednie id",folder.words[folder.words.length - 1].id)
       newID = (folder.words[folder.words.length - 1].id + 1)
     }
-    console.log("NOWE ID",newID);
+    //console.log("NOWE ID",newID);
 
     //to eliminate bug with /n in word
     const wordTranslation = translationWord.toString().replaceAll('\n','')
@@ -149,76 +149,89 @@ function AIWordModal({ isVisible, onClose, word}: IProps) {
   ////////////////////////////////
   return (
     <Modal isVisible={isVisible} onClose={onClose}>
-      <div className="absolute bg-whiteMain mt-20 p-4 z-20 h-2/4 w-full top-0 bg-white rounded xl:w-1/3 xl:left-0 xl:right-0 xl:mr-auto xl:ml-auto">
-      <h2 className="text-2xl font-bold text-gray-800 mb-4">Dodaj słówko</h2>
+      <div className="relative bg-white/95 backdrop-blur-sm border border-gray-100 shadow-2xl rounded-2xl w-full max-w-md overflow-hidden">
+        {/* Content */}
+        <div className="p-8">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-secondary to-secondarylight rounded-full mb-4">
+              <span className="text-white text-2xl font-bold">+</span>
+            </div>
+            <h2 className="text-2xl font-bold text-gray-800 mb-2">Dodaj słówko</h2>
+            <p className="text-gray-600">Dodaj nowe słówko do wybranego folderu</p>
+          </div>
 
-{/* Formularz */}
-<div className="flex flex-col gap-4">
-  {/* Pole: Słowo */}
-  <div>
-    <label className="block text-sm font-medium text-gray-700 mb-1">
-      Słowo:
-    </label>
-    <input
-      type="text"
-      className="w-full rounded-md border border-gray-300 p-2 focus:ring-blue-500 focus:border-blue-500"
-      value={formatedWord}
-      onChange={(e: any) => setFormatedWord(e.target.value)}
-    />
-  </div>
+          {/* Formularz */}
+          <div className="space-y-6">
+            {/* Pole: Słowo */}
+            <div className="space-y-2">
+              <label className="block text-sm font-semibold text-gray-700">
+                Słowo
+              </label>
+              <input
+                type="text"
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all duration-200 outline-none"
+                value={formatedWord}
+                onChange={(e: any) => setFormatedWord(e.target.value)}
+              />
+            </div>
 
-  {/* Pole: Tłumaczenie */}
-  <div>
-    <label className="block text-sm font-medium text-gray-700 mb-1">
-      Tłumaczenie:
-    </label>
-    <input
-      type="text"
-      className="w-full rounded-md border border-gray-300 p-2 focus:ring-blue-500 focus:border-blue-500"
-      value={translationWord}
-      onChange={(e: any) => setTranslationWord(e.target.value)}
-    />
-  </div>
+            {/* Pole: Tłumaczenie */}
+            <div className="space-y-2">
+              <label className="block text-sm font-semibold text-gray-700">
+                Tłumaczenie
+              </label>
+              <input
+                type="text"
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all duration-200 outline-none"
+                value={translationWord}
+                onChange={(e: any) => setTranslationWord(e.target.value)}
+              />
+            </div>
 
-  {/* Folder Selector */}
-  <div>
-    <FolderSelector
-      userID={user.value}
-      options={options}
-      text="Wybierz folder docelowy:"
-      setFolder={setFolder}
-    />
-  </div>
+            {/* Folder Selector */}
+            <div className="relative z-[70]">
+              <FolderSelector
+                userID={user.value}
+                options={options}
+                text="Wybierz folder docelowy:"
+                setFolder={setFolder}
+              />
+            </div>
 
-  {/* Przycisk akcji */}
-  <div className="flex gap-4">
-    {generatedWord ? (
-      <>
-        <Button
-          bgColor={Colors.SECONDARY}
-          onClick={() => setTranslation(formatedWord)}
-        >
-          Wygeneruj Ponownie
-        </Button>
-        <Button
-          bgColor={Colors.SECONDARY}
-          onClick={AddWordToFolder}
-        >
-          Dodaj do folderu
-        </Button>
-      </>
-    ) : (
-      <Button
-        bgColor={Colors.SECONDARY}
-        onClick={() => setTranslation(formatedWord)}
-      >
-        Wygeneruj Tłumaczenie
-      </Button>
-    )}
-  </div>
-</div>
-</div>
-</Modal>
+            {/* Przyciski akcji */}
+            <div className="flex gap-3">
+              {generatedWord ? (
+                <>
+                  <Button
+                    bgColor={Colors.SECONDARY}
+                    onClick={() => setTranslation(formatedWord)}
+                    className="flex-1 px-4 py-3 rounded-xl font-medium hover:shadow-lg transition-all duration-200"
+                  >
+                    Wygeneruj Ponownie
+                  </Button>
+                  <Button
+                    bgColor={Colors.SECONDARY}
+                    onClick={AddWordToFolder}
+                    className="flex-1 px-4 py-3 rounded-xl font-medium hover:shadow-lg transition-all duration-200"
+                  >
+                    Dodaj do folderu
+                  </Button>
+                </>
+              ) : (
+                <Button
+                  bgColor={Colors.SECONDARY}
+                  onClick={() => setTranslation(formatedWord)}
+                  className="w-full px-4 py-3 rounded-xl font-medium hover:shadow-lg transition-all duration-200"
+                >
+                  Wygeneruj Tłumaczenie
+                </Button>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </Modal>
   );
 }
 

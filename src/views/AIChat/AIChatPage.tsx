@@ -15,7 +15,7 @@ function AIChatPage() {
   const dispatch = useDispatch();
   const [chatHistory, setChatHistory] = useState<IChatHistoryPart[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  console.log(chatHistoryGlobal);
+  //console.log(chatHistoryGlobal);
   const handleUserInput = (e: any) => {
     setUserInput(e.target.value);
   };
@@ -56,7 +56,7 @@ function AIChatPage() {
       );
 
       const totalTokens = countResultTokensFromInput?.totalTokens;
-      console.log(totalTokens?.toString());
+      //console.log(totalTokens?.toString());
       if (totalTokens !== undefined) {
         if(totalTokens > 850) {
           toast.error("Przekroczono ilość tokenów!");
@@ -76,7 +76,7 @@ function AIChatPage() {
         const countResult = await model?.countTokens({
           generateContentRequest: { contents: await chatSession?.getHistory()},
         });
-        console.log("CHAT SESSION:",countResult?.totalTokens); // 10
+        //console.log("CHAT SESSION:",countResult?.totalTokens); // 10
         if (countResult !== undefined) {
           if(countResult.totalTokens > 1650) {
             toast.error("Przekroczono ilość tokenów!");
@@ -89,7 +89,7 @@ function AIChatPage() {
         response = await result.response.text();
       }
 
-      console.log("pushuje");
+      //console.log("pushuje");
       setChatHistory([
         ...chatHistory,
       ]);
@@ -108,55 +108,98 @@ function AIChatPage() {
   };
 
   return (
-    <div className="flex flex-col w-full h-full bg-gray-100 p-6">
-      <FirstTitle>ESłówka - Chat AI 1.0.2</FirstTitle>
-      <MainTitle>Chat AI</MainTitle>
-      <div className="container mx-auto px-4 py-8 font-inter">
-        {chatHistory.length > 0 ? (
-          <ChatHistory chatHistory={chatHistoryGlobal.object} />
-        ) : (
-          !isLoading && (
-            <div className="flex flex-col items-center justify-center max-h-[550px] max-lg:max-h-[450px] max-w-[1300px] border border-gray-300 rounded-xl p-6 text-gray-600 text-center">
-              Rozpocznij chat, wpisując swoją wiadomość poniżej!
-            </div>
-          )
-        )}
-        {isLoading && (
-          <div className="flex flex-col items-center justify-center max-h-[550px] max-lg:max-h-[450px] max-w-[1300px] border border-gray-300 rounded-xl p-6">
-            <div className="animate-spin w-12 h-12 border-t-4 border-secondary rounded-full"></div>
+    <div className="relative flex w-full min-h-full bg-gray-50">
+      <div className="flex flex-col w-full max-w-6xl mx-auto px-6 py-6 lg:py-10">
+        {/* Header */}
+        <div className="flex items-center justify-between bg-white/80 backdrop-blur-sm border border-gray-100 shadow-sm rounded-2xl px-5 sm:px-6 py-4 mb-8">
+          <div>
+            <MainTitle>Chat AI</MainTitle>
           </div>
-        )}
+          <div className="flex items-center gap-3">
+            <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+            <span className="text-sm text-gray-600">Czarek jest online</span>
+          </div>
+        </div>
 
-        <div className="flex flex-col mt-6 items-center gap-4">
-          <div className="text-lg font-semibold text-fifth">Wprowadź swoją wiadomość!</div>
+        {/* Chat Container */}
+        <div className="bg-white/90 backdrop-blur-sm border border-gray-100 shadow-lg rounded-2xl p-6 mb-6">
+          {chatHistory.length > 0 ? (
+            <ChatHistory chatHistory={chatHistoryGlobal.object} />
+          ) : (
+            !isLoading && (
+              <div className="flex flex-col items-center justify-center max-h-[550px] max-lg:max-h-[450px] border-2 border-dashed border-gray-200 rounded-xl p-12 text-center">
+                <div className="w-16 h-16 bg-gradient-to-r from-secondary to-secondarylight rounded-full flex items-center justify-center mb-4">
+                  <span className="text-white text-2xl">🤖</span>
+                </div>
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">Witaj w Chat AI!</h3>
+                <p className="text-gray-600 max-w-md">
+                  Jestem Czarek, Twój asystent do nauki języków. Zapytaj mnie o słówka, gramatykę lub poproś o pomoc w nauce!
+                </p>
+              </div>
+            )
+          )}
+          {isLoading && (
+            <div className="flex flex-col items-center justify-center max-h-[550px] max-lg:max-h-[450px] border-2 border-dashed border-gray-200 rounded-xl p-12">
+              <div className="flex flex-col items-center gap-4">
+                <div className="animate-spin w-12 h-12 border-t-4 border-secondary rounded-full"></div>
+                <p className="text-gray-600 font-medium">Czarek myśli...</p>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Input Section */}
+        <div className="bg-white/90 backdrop-blur-sm border border-gray-100 shadow-lg rounded-2xl p-6">
+          <div className="text-center mb-6">
+            <h3 className="text-lg font-semibold text-gray-800 mb-2">Napisz do Czarka</h3>
+            <p className="text-sm text-gray-600">Zadaj pytanie lub poproś o listę słówek do nauki</p>
+          </div>
+          
           <form
-            className="flex flex-col sm:flex-row justify-center items-center gap-2"
+            className="flex flex-col sm:flex-row gap-4"
             onSubmit={(e) => {
               e.preventDefault();
               sendMessage();
             }}
           >
-            <input
-              className="bg-gray-200 h-12 rounded-lg p-4 w-80 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-secondary"
-              type="text"
-              placeholder="Twoja wiadomość"
-              value={userInput}
-              onChange={handleUserInput}
-            />
+            <div className="flex-1">
+              <input
+                className="w-full h-12 px-4 bg-gray-50 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all duration-200 outline-none"
+                type="text"
+                placeholder="Np. 'Wygeneruj listę słówek o jedzeniu po niemiecku'"
+                value={userInput}
+                onChange={handleUserInput}
+                disabled={isLoading}
+              />
+            </div>
             <button
-              className="bg-secondary text-white font-bold text-lg px-8 py-3 rounded-lg hover:bg-secondary-dark transition duration-200"
+              className="flex items-center justify-center gap-2 bg-gradient-to-r from-secondary to-secondarylight text-white font-semibold px-6 py-3 rounded-xl hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               type="submit"
               disabled={isLoading}
             >
-              Wyślij
+              {isLoading ? (
+                <>
+                  <div className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full"></div>
+                  Wysyłanie...
+                </>
+              ) : (
+                <>
+                  <span>Wyślij</span>
+                  <span>📤</span>
+                </>
+              )}
             </button>
           </form>
-          <button
-            className="bg-red-500 text-white font-bold text-lg px-8 py-3 rounded-lg hover:bg-red-600 transition duration-200"
-            onClick={clearChat}
-          >
-            Wyczyść Chat
-          </button>
+          
+          <div className="flex justify-center mt-4">
+            <button
+              className="flex items-center gap-2 text-red-500 hover:text-red-600 hover:bg-red-50 px-4 py-2 rounded-lg transition-all duration-200"
+              onClick={clearChat}
+            >
+              <span>🗑️</span>
+              <span className="font-medium">Wyczyść Chat</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
